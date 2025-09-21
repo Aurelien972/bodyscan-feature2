@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import { useUserStore } from '../system/store/userStore';
-import { useOverlayStore } from '../system/store/overlayStore';
+import { useOverlayStore } from '../system/store/overlayStore.ts';
 
 import { LoadingFallback } from './components/LoadingFallback';
 import { Header } from './shell/Header/Header';
