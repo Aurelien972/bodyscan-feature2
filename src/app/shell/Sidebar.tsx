@@ -13,14 +13,15 @@ interface NavItemProps {
   to: string;
   icon: keyof typeof ICONS;
   label: string;
-  badge?: string;
-  badgeClass?: string;
+  subtitle: string;
+  isPrimary?: boolean;
   isActive?: boolean;
+  circuitColor?: string;
 }
 
-const NavItem = React.memo(({ to, icon, label, badge, badgeClass, isActive }: NavItemProps) => {
+const NavItem = React.memo(({ to, icon, label, subtitle, isPrimary = false, isActive, circuitColor }: NavItemProps) => {
   const Icon = ICONS[icon];
-  const circuitColor = getCircuitColor(to);
+  const itemColor = circuitColor || getCircuitColor(to);
   const { sidebarClick } = useFeedback();
 
   const handleNavItemClick = (e: React.MouseEvent) => {
@@ -29,45 +30,13 @@ const NavItem = React.memo(({ to, icon, label, badge, badgeClass, isActive }: Na
     logger.trace('SIDEBAR', 'NavItem click triggered', { to, label, currentPath: window.location.pathname });
   };
 
-  // TwinForge active state styles
-  const activeStyles = isActive ? {
-    backgroundColor: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', // Indigo fumé 10%
-    border: '1px solid color-mix(in srgb, var(--color-plasma-cyan) 12%, transparent)', // Bordure cyan 12%
-    borderRadius: '20px', // Pill shape
-    height: '40px',
-    position: 'relative' as const,
-    // Liseré vertical cyan sur le bord gauche
-    '::before': {
-      content: '""',
-      position: 'absolute',
-      left: '-3px',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      width: '2px',
-      height: '24px',
-      backgroundColor: 'color-mix(in srgb, var(--color-plasma-cyan) 12%, transparent)',
-      borderRadius: '1px'
-    }
-  } : {};
-
   return (
     <div className="relative">
-      {/* Liseré vertical cyan pour l'état actif */}
-      {isActive && (
-        <div
-          className="absolute left-[-12px] top-1/2 transform -translate-y-1/2 w-[2px] h-[24px] rounded-[1px]"
-          style={{
-            backgroundColor: 'color-mix(in srgb, var(--color-plasma-cyan) 12%, transparent)',
-            zIndex: 10
-          }}
-        />
-      )}
-      
       <Link
         to={to}
         className={`
-          sidebar-item group flex items-center gap-3 px-3 py-2 rounded-xl
-          transition-all duration-200 focus-ring
+          sidebar-item ${isPrimary ? 'sidebar-item--primary' : ''} 
+          group flex items-center gap-3 focus-ring
           ${isActive 
             ? 'text-white shadow-sm' 
             : 'text-white/70 hover:bg-white/5 hover:text-white'
@@ -80,30 +49,30 @@ const NavItem = React.memo(({ to, icon, label, badge, badgeClass, isActive }: Na
         onMouseDown={(e) => {
           logger.trace('SIDEBAR', 'NavItem mouse down', { to, label });
         }}
-        style={isActive ? {
-          backgroundColor: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', // Indigo fumé 10%
-          border: '1px solid color-mix(in srgb, var(--color-plasma-cyan) 12%, transparent)', // Bordure cyan 12%
-          borderRadius: '20px', // Pill shape
-          height: '40px'
-        } : {}}
         aria-current={isActive ? 'page' : undefined}
       >
         <SpatialIcon 
           Icon={Icon} 
-          size={16} 
-          color={isActive ? 'var(--color-plasma-cyan)' : '#94A3B8'} // TwinForge colors
+          size={isPrimary ? 20 : 16} 
           className={`sidebar-item-icon ${isActive ? '' : 'opacity-80 group-hover:opacity-100'}`}
+          color={isActive ? itemColor : undefined}
+          style={isActive ? { 
+            color: itemColor,
+            filter: `drop-shadow(0 0 8px ${itemColor}60)`
+          } : undefined}
         />
-        <span className={`sidebar-item-label font-medium text-xs truncate ${
-          isActive ? 'text-white' : 'text-white/82'
-        }`}>
-          {label}
-        </span>
-        {badge && (
-          <span className={`ml-auto text-xs ${badgeClass || 'text-white/40'}`}>
-            {badge}
-          </span>
-        )}
+        <div className="flex-1 min-w-0">
+          <div className={`sidebar-item-label font-medium ${isPrimary ? 'text-sm' : 'text-xs'} truncate ${
+            isActive ? 'text-white' : 'text-white/82'
+          }`}>
+            {label}
+          </div>
+          <div className={`sidebar-item-subtitle text-xxs truncate ${isPrimary ? 'mt-0.5' : 'mt-0'} ${
+            isActive ? 'text-white/70' : 'text-white/50'
+          }`}>
+            {subtitle}
+          </div>
+        </div>
       </Link>
     </div>
   );
@@ -112,28 +81,44 @@ NavItem.displayName = 'NavItem';
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="space-y-1">
-    <h3 className="sidebar-section-title" role="heading" aria-level="3">
-      {title}
-    </h3>
+    {title && (
+      <h3 className={`sidebar-section-title ${getSectionClass(title)}`} role="heading" aria-level="3">
+        {title}
+      </h3>
+    )}
     <div className="space-y-1">
       {children}
     </div>
   </div>
 );
 
+/**
+ * Get section-specific CSS class for visual differentiation
+ */
+function getSectionClass(title: string): string {
+  switch (title) {
+    case 'Rituels du Forgeron':
+      return 'sidebar-section--daily-tracking';
+    case 'Ateliers du Forgeron':
+      return 'sidebar-section--forge-tools';
+    case 'Mon Profil':
+      return 'sidebar-section--profile';
+    default:
+      return '';
+  }
+}
+
 const Sidebar = React.memo(({ className = '' }: { className?: string }) => {
   const location = useLocation();
-  const { sessionInfo } = useUserStore();
-  const userRole = sessionInfo?.role || 'user';
   const isActive = useCallback((path: string) => location.pathname === path, [location.pathname]);
   
   // Log sidebar render
   React.useEffect(() => {
-    logger.trace('SIDEBAR', 'Component rendered', { userRole, currentPath: location.pathname });
-  }, [userRole, location.pathname]);
+    logger.trace('SIDEBAR', 'Component rendered', { currentPath: location.pathname });
+  }, [location.pathname]);
 
-  // Get navigation structure for current role
-  const navigation = navFor(userRole);
+  // Get navigation structure
+  const navigation = navFor();
 
   return (
     <aside
@@ -141,12 +126,12 @@ const Sidebar = React.memo(({ className = '' }: { className?: string }) => {
         sticky top-[88px] left-0
         h-[calc(100dvh-104px)]
         w-full
-        sidebar-glass rounded-2xl visionos-grid
+        sidebar-glass-enhanced rounded-2xl visionos-grid
       `}
       role="complementary"
       aria-label="Main navigation"
     >
-      <div className="sidebar-content space-y-4 flex-1 pt-0">
+      <div className="sidebar-content space-y-3 flex-1 pt-2">
         
         {/* Dynamic Navigation Based on Role */}
         {navigation.map((section) => (
@@ -157,9 +142,10 @@ const Sidebar = React.memo(({ className = '' }: { className?: string }) => {
                 to={item.to}
                 icon={item.icon}
                 label={item.label}
-                badge={item.badge}
-                badgeClass={item.badge ? "text-[10px] text-brand-primary" : undefined}
+                subtitle={item.subtitle}
+                isPrimary={item.isPrimary}
                 isActive={isActive(item.to)}
+                circuitColor={item.circuitColor}
               />
             ))}
           </Section>
@@ -169,5 +155,6 @@ const Sidebar = React.memo(({ className = '' }: { className?: string }) => {
   );
 });
 Sidebar.displayName = 'Sidebar';
+
 
 export default Sidebar;
