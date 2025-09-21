@@ -38,6 +38,7 @@ export default {
       // Typography scale
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1.5' }],
+        'xxs': ['0.6875rem', { lineHeight: '1.4' }],
         'sm': ['0.875rem', { lineHeight: '1.5' }],
         'base': ['clamp(0.875rem, 0.75rem + 0.5vw, 1rem)', { lineHeight: '1.5' }],
         'lg': ['clamp(1rem, 0.875rem + 0.5vw, 1.125rem)', { lineHeight: '1.4' }],
