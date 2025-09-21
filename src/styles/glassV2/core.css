@@ -1,0 +1,43 @@
+/* =========================================
+   GLASS V2 CORE VARIABLES - Phase 9.77
+   ========================================= */
+
+:root {
+  /* =========================================
+     ADAPTIVE GLASS SYSTEM - CONSOLIDATED
+     Uses the new centralized variables from variables.css
+     ========================================= */
+  
+  /* Adaptive Glass Properties - Mapped to centralized system */
+  --glass-blur-adaptive: var(--glass-blur-base);
+  --glass-opacity-adaptive: var(--glass-opacity-base);
+  --glass-saturate-adaptive: var(--glass-saturate-base);
+  
+  /* Orbe Central - Uses centralized variables */
+  --orbe-glass-blur: var(--orbe-blur-enhanced);
+  --orbe-glass-saturate: var(--orbe-saturate-enhanced);
+  --orbe-glass-opacity: var(--orbe-opacity-enhanced);
+  --orbe-glass-border: var(--orbe-border-enhanced);
+  --orbe-glass-shadow: var(--orbe-shadow-enhanced);
+  
+  /* Orbe Glass Layers - Uses centralized opacity */
+  --orbe-glass-layers: 
+    radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, transparent 70%),
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12) 0%, transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(255,255,255,0.06) 0%, transparent 50%),
+    var(--glass-opacity-base);
+  
+  /* Performance Optimizations - Standardized */
+  --gpu-acceleration: translateZ(0);
+  --will-change-transform: transform;
+  --will-change-opacity: opacity;
+  --will-change-filter: filter;
+  --will-change-auto: auto;
+  
+  /* Glass Tint */
+  --glass-tint: rgba(255, 255, 255, 0.03);
+  
+  /* Glass Colors */
+  --glass-shadow-color: rgba(0, 0, 0, 0.2);
+  --glass-highlight: rgba(255, 255, 255, 0.1);
+}

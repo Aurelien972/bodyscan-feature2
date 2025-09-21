@@ -1,0 +1,379 @@
+/* =========================================
+   MAIN STYLES INDEX - TwinForge VisionOS 26 Optimized
+   Structure finale consolidée et optimisée
+   ========================================= */
+
+/* =========================================
+   ORDRE D'IMPORT CRITIQUE - Ne pas modifier
+   1. Fonts & Reset (base critique)
+   2. Variables & Core (système de design)
+   3. Brand & Adaptive (identité et adaptation)
+   4. Animations (système d'animation centralisé)
+   5. Glass System (glassmorphism unifié)
+   6. Components (composants spécialisés)
+   7. Layout & Typography (structure et texte)
+   8. Optimizations (performance et responsive)
+   9. Effects & Utilities (effets et utilitaires)
+   ========================================= */
+
+/* =========================================
+   PHASE 1: BASE CRITIQUE
+   ========================================= */
+@import './base/fonts.css';
+@import './base/reset.css';
+@import './base/backgrounds.css';
+
+/* =========================================
+   PHASE 2: SYSTÈME DE DESIGN CENTRALISÉ
+   ========================================= */
+@import './glassV2/variables.css';
+@import './glassV2/core.css';
+@import './glassV2/brand.css';
+@import './glassV2/adaptive.css';
+
+/* =========================================
+   PHASE 3: SYSTÈME D'ANIMATION UNIFIÉ
+   ========================================= */
+@import './glassV2/animations.css';
+
+/* =========================================
+   PHASE 4: SYSTÈME GLASSMORPHISM HARMONISÉ
+   ========================================= */
+@import './glassV2/cards.css';
+@import './glassV2/variants.css';
+@import './glassV2/utilities.css';
+@import './components/glass/_base.css';
+
+/* =========================================
+   PHASE 5: COMPOSANTS SPÉCIALISÉS
+   ========================================= */
+@import './components/common/_buttons-chips.css';
+@import './components/inputs.css';
+@import './components/loading.css';
+@import './components/tabs/_tabs.css';
+@import './components/sidebar/sidebar.css';
+@import './components/new-mobile-bottom-bar.css';
+@import './components/meals/meals.css';
+@import './components/body-scan.css';
+@import './components/header/_liquid-glass.css';
+@import './components/bodyscan/_variables.css';
+@import './components/bodyscan/_base.css';
+@import './components/bodyscan/_capture.css';
+@import './components/bodyscan/_processing.css';
+@import './components/bodyscan/_review.css';
+@import './components/bodyscan/_celebration.css';
+@import './components/bodyscan/_utilities.css';
+@import './components/celebration-animations.css';
+@import './components/avatar/_insights.css';
+
+/* =========================================
+   PHASE 6: LAYOUT ET TYPOGRAPHY
+   ========================================= */
+@import './layout/grid.css';
+@import './typography/visionos.css';
+
+/* =========================================
+   PHASE 7: OPTIMISATIONS CONSOLIDÉES
+   ========================================= */
+@import './optimizations/responsive.css';
+@import './optimizations/performance.css';
+@import './mobile/touch.css';
+
+/* =========================================
+   PHASE 8: EFFETS ET UTILITAIRES
+   ========================================= */
+@import './effects/circuits.css';
+@import './effects/motion.css';
+@import './utilities/inline-style-overrides.css';
+@import './utilities/debug.css';
+
+/* =========================================
+   ENFORCEMENT GLOBAL - ÉLÉMENTS CRITIQUES
+   Positionnement fixe pour les éléments flottants
+   ========================================= */
+
+/* CRITICAL: FAB System - Positionnement fixe global */
+.fab-nexus-forge {
+  position: fixed !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  -webkit-transform-style: preserve-3d !important;
+  transform-style: preserve-3d !important;
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  z-index: 9999 !important;
+}
+
+.quick-action-menu {
+  position: fixed !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  -webkit-transform-style: preserve-3d !important;
+  transform-style: preserve-3d !important;
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  z-index: 9998 !important;
+}
+
+/* CRITICAL: Header System - Positionnement fixe global */
+.header-liquid-glass {
+  position: fixed !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  -webkit-transform-style: preserve-3d !important;
+  transform-style: preserve-3d !important;
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  z-index: 9997 !important;
+}
+
+/* CRITICAL: Mobile Drawer - Positionnement fixe global */
+.mobile-drawer-panel {
+  position: fixed !important;
+  isolation: isolate !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  contain: layout style paint !important;
+  z-index: 9999 !important;
+}
+
+/* =========================================
+   TAILWIND INTEGRATION
+   ========================================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Body Scan specific animations */
+@keyframes guide-breathing-animation {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.01);
+    opacity: 0.4;
+  }
+}
+
+/* Body Scan Analysis Animations */
+@keyframes scanLineVertical {
+  0% { transform: translateX(-100%) translateZ(0); }
+  100% { transform: translateX(calc(100vw + 100%)) translateZ(0); }
+}
+
+@keyframes scanLineHorizontal {
+  0% { transform: translateY(-100%) translateZ(0); }
+  100% { transform: translateY(calc(100vh + 100%)) translateZ(0); }
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes gridCellPulse {
+  0%, 100% { 
+    opacity: 0.3;
+    background-color: color-mix(in srgb, var(--color-plasma-cyan) 5%, transparent);
+  }
+  50% { 
+    opacity: 0.6;
+    background-color: color-mix(in srgb, var(--color-plasma-cyan) 10%, transparent);
+  }
+}
+
+@keyframes keypointPulse {
+  0%, 100% { 
+    opacity: 0.8;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--color-plasma-cyan) 80%, transparent);
+  }
+  50% { 
+    opacity: 1.0;
+    box-shadow: 0 0 20px color-mix(in srgb, var(--color-plasma-cyan) 100%, transparent);
+  }
+}
+
+@keyframes analysisZone {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1) translateZ(0);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.2) translateZ(0);
+    opacity: 0.4;
+  }
+}
+
+@keyframes aiFocus {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes dataParticle {
+  0% { 
+    transform: translateY(0) rotate(0deg) translateZ(0);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { 
+    transform: translateY(-100px) rotate(360deg) translateZ(0);
+    opacity: 0;
+  }
+}
+
+/* TwinForge Spatial Animations */
+@keyframes spatial-shimmer {
+  0% { transform: translateX(-100%) translateZ(0); }
+  50% { transform: translateX(100%) translateZ(0); }
+  100% { transform: translateX(100%) translateZ(0); }
+}
+
+@keyframes spatial-glow-pulse {
+  0%, 100% { 
+    opacity: 0.6;
+    transform: scale(1.5) translateZ(0);
+  }
+  50% { 
+    opacity: 0.9;
+    transform: scale(1.7) translateZ(0);
+  }
+}
+
+@keyframes energy-flow {
+  0% { transform: translateX(-100%) translateZ(0); }
+  100% { transform: translateX(200%) translateZ(0); }
+}
+/* =========================================
+/* Contained Energy Flow - Stays within button boundaries */
+@keyframes energy-flow-contained {
+  0% { 
+    transform: translateX(-100%) translateZ(0); 
+    opacity: 0;
+  }
+  10% { 
+    opacity: 1;
+  }
+  90% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%) translateZ(0); 
+    opacity: 0;
+  }
+}
+
+   LEGACY SUPPORT - Compatibilité navigateurs anciens
+ /*  ========================================= */
+/*   ========================================= */
+
+/* Fallback pour backdrop-filter non supporté */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)) !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+  }
+  
+  .btn-glass {
+    background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+  }
+}
+
+/* Fallback pour color-mix non supporté */
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+  }
+  
+  .btn-glass--primary {
+    background: rgba(61, 19, 179, 0.8) !important;
+    border-color: rgba(24, 227, 255, 0.6) !important;
+  }
+}
+
+/* Fallback pour transform 3D non supporté */
+@supports not (transform: translateZ(0)) {
+  .gpu-layer,
+  .transform-gpu,
+  .breathing-icon,
+  .icon-pulse-css,
+  .particle-css {
+    transform: none !important;
+  }
+}
+
+/* =========================================
+   PERFORMANCE MONITORING - Développement uniquement
+   ========================================= */
+
+/* Cache les éléments de debug en production */
+.tsqd-open-btn-container,
+.tsqd-open-btn,
+[data-testid="react-query-devtools"],
+.perf-monitor,
+.performance-debug,
+.fps-counter {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* =========================================
+   DOCUMENTATION DES VARIABLES PRINCIPALES
+   Référence rapide pour les développeurs
+   ========================================= */
+
+/*
+VARIABLES PRINCIPALES DISPONIBLES :
+
+COULEURS BRAND :
+--brand-primary: #3D13B3 (Deep Forge Indigo)
+--brand-accent: #18E3FF (Plasma Cyan)
+--color-ember-copper: #FF7A45
+
+GLASS SYSTEM :
+--glass-blur-base: 16px
+--glass-saturate-base: 140%
+--glass-opacity-base: rgba(255, 255, 255, 0.06)
+--glass-border-base: rgba(255, 255, 255, 0.18)
+
+ANIMATIONS :
+--animation-duration-fast: 150ms
+--animation-duration-medium: 250ms
+--animation-ease-glass: cubic-bezier(0.16, 1, 0.3, 1)
+
+INTERACTIONS :
+--interaction-scale-hover: 1.02
+--interaction-scale-active: 0.98
+--interaction-scale-tap: 0.95
+
+SPACING (8px grid) :
+--spacing-xs: 4px
+--spacing-sm: 8px
+--spacing-md: 16px
+--spacing-lg: 24px
+--spacing-xl: 32px
+
+Z-INDEX SYSTEM :
+--z-base: 1
+--z-dropdown: 10
+--z-modal: 30
+--z-header: 60
+--z-fab: 70
+*/

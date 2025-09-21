@@ -1,0 +1,22 @@
+/* src/styles/components/body-scan.css */
+
+/* Import BodyScan-specific variables */
+@import './bodyscan/_variables.css';
+
+/* Import base styles for BodyScan components */
+@import './bodyscan/_base.css';
+
+/* Import styles for the photo capture step */
+@import './bodyscan/_capture.css';
+
+/* Import styles for the immersive processing step */
+@import './bodyscan/_processing.css';
+
+/* Import styles for the review step */
+@import './bodyscan/_review.css';
+
+/* Import styles for the celebration step */
+@import './bodyscan/_celebration.css';
+
+/* Import any BodyScan-specific utilities */
+@import './bodyscan/_utilities.css';

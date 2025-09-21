@@ -1,0 +1,80 @@
+/* =========================================
+   GLASS VARIANTS - Phase 9.77
+   ========================================= */
+
+/* Variantes optimisées */
+.glass-card-lg {
+  composes: glass-card;
+  box-shadow: var(--glass-shadow-lg);
+  backdrop-filter: blur(var(--glass-blur-lg));
+}
+
+.glass-card-xl {
+  composes: glass-card;
+  border-radius: var(--glass-radius-xl);
+  box-shadow: var(--glass-shadow-xl);
+  backdrop-filter: blur(var(--glass-blur-xl));
+}
+
+/* Boutons Glass */
+.glass-button {
+  composes: glass-card;
+  padding: 0.75rem 1.25rem;
+  color: white;
+  font-weight: 500;
+  min-height: 44px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.glass-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Surfaces larges */
+.glass-surface {
+  background: var(--glass-bg-gradient);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+/* Éléments flottants */
+.glass-floating {
+  composes: glass-card;
+  position: fixed;
+  z-index: 50;
+}
+
+.glass-floating.slide-up {
+  animation: glass-slide-up 300ms var(--glass-ease) forwards;
+}
+
+@keyframes glass-slide-up {
+  from { transform: var(--gpu-acceleration) translateY(100%); opacity: 0; }
+  to { transform: var(--gpu-acceleration) translateY(0); opacity: 1; }
+}
+
+/* Sidebar Glass */
+.sidebar-glass {
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 24px;
+  box-shadow: 
+    0 12px 36px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: all 200ms var(--glass-ease);
+}
+
+.sidebar-glass:hover {
+  background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}

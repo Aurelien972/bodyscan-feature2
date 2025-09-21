@@ -1,0 +1,136 @@
+/* =========================================
+   BODYSCAN CELEBRATION STYLES - Optimisé
+   ========================================= */
+
+.bodyscan-celebration-container {
+  position: relative;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  padding: var(--spacing-xl);
+}
+
+/* --- fond & glow --- */
+.celebration-background-effects { position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 0; border-radius: inherit; }
+.celebration-ambient-glow {
+  position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(circle at center, var(--celebration-color, #22C55E), transparent 70%);
+  opacity: .15; animation: celebration-ambient-glow var(--celebration-glow-duration) ease-in-out infinite;
+  transform: translateZ(0); will-change: opacity, transform;
+}
+@keyframes celebration-ambient-glow { 0%,100%{ opacity:.15; transform: scale(1);} 50%{ opacity:.25; transform: scale(1.02);} }
+
+/* --- particules --- */
+.celebration-particle {
+  position: absolute; width: var(--celebration-particle-size); height: var(--celebration-particle-size); border-radius: 50%;
+  background: radial-gradient(circle, var(--celebration-color, #22C55E), color-mix(in srgb, var(--celebration-color, #22C55E) 80%, transparent));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--celebration-color, #22C55E) 80%, transparent), 0 0 24px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent);
+  animation: celebration-particle-float var(--celebration-particle-duration) ease-in-out infinite;
+  transform: translateZ(0); will-change: transform, opacity; backface-visibility: hidden;
+}
+/* positions (12) */
+.celebration-particle--1 { left: 15%; top: 20%; animation-delay: 0s; }    .celebration-particle--2 { left: 23%; top: 35%; animation-delay: .3s; }
+.celebration-particle--3 { left: 31%; top: 50%; animation-delay: .6s; }    .celebration-particle--4 { left: 39%; top: 65%; animation-delay: .9s; }
+.celebration-particle--5 { left: 47%; top: 20%; animation-delay: 1.2s; }   .celebration-particle--6 { left: 55%; top: 35%; animation-delay: 1.5s; }
+.celebration-particle--7 { left: 63%; top: 50%; animation-delay: 1.8s; }   .celebration-particle--8 { left: 71%; top: 65%; animation-delay: 2.1s; }
+.celebration-particle--9 { left: 79%; top: 20%; animation-delay: 2.4s; }   .celebration-particle--10{ left: 87%; top: 35%; animation-delay: 2.7s; }
+.celebration-particle--11{ left: 95%; top: 50%; animation-delay: 3.0s; }   .celebration-particle--12{ left:103%; top: 65%; animation-delay: 3.3s; }
+@keyframes celebration-particle-float {
+  0%,100%{ transform: translateY(0) scale(1); opacity:.8; }
+  25%{ transform: translateY(-10px) scale(1.1); opacity:1; }
+  50%{ transform: translateY(-5px)  scale(.9);  opacity:.9; }
+  75%{ transform: translateY(-15px) scale(1.05); opacity:1; }
+}
+
+/* --- rayons --- */
+.celebration-ray {
+  position: absolute; width: var(--celebration-ray-width); height: var(--celebration-ray-height); border-radius: 9999px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent), transparent);
+  top: 10%; transform-origin: bottom center; animation: celebration-ray-pulse var(--celebration-ray-duration) ease-in-out infinite;
+}
+.celebration-ray--1{ left:30%; animation-delay:0s; } .celebration-ray--2{ left:42%; animation-delay:.4s; } .celebration-ray--3{ left:54%; animation-delay:.8s; }
+.celebration-ray--4{ left:66%; animation-delay:1.2s;} .celebration-ray--5{ left:78%; animation-delay:1.6s;} .celebration-ray--6{ left:90%; animation-delay:2s; }
+@keyframes celebration-ray-pulse { 0%,100%{ opacity:.3; transform: scaleY(1) rotate(0deg);} 50%{ opacity:.7; transform: scaleY(1.2) rotate(2deg);} }
+
+/* --- icône centrale --- */
+.celebration-icon-container { position: relative; width: var(--celebration-icon-size); height: var(--celebration-icon-size); margin: 0 auto 3rem; transform: translateZ(0); will-change: transform; backface-visibility: hidden; }
+.celebration-icon-outer-glow { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent), transparent 70%); filter: blur(8px); animation: celebration-icon-outer-glow var(--celebration-glow-duration) ease-in-out infinite; }
+.celebration-icon-inner-container {
+  position: absolute; inset: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--celebration-color, #22C55E) 30%, transparent), color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent));
+  border: 2px solid var(--celebration-color, #22C55E);
+  box-shadow: 0 0 60px color-mix(in srgb, var(--celebration-color, #22C55E) 90%, transparent), inset 0 4px 0 rgba(255,255,255,.3);
+  animation: celebration-icon-inner-glow var(--celebration-glow-duration) ease-in-out infinite;
+}
+.celebration-icon-pulse-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent); animation: celebration-icon-pulse-ring 1.5s ease-out infinite; }
+.celebration-icon-pulse-ring--2 { animation-delay: .5s; } .celebration-icon-pulse-ring--3 { animation-delay: 1s; }
+@keyframes celebration-icon-outer-glow { 0%,100%{ opacity:.6; transform: scale(1);} 50%{ opacity:.9; transform: scale(1.05);} }
+@keyframes celebration-icon-inner-glow { 0%,100%{ box-shadow: 0 0 60px color-mix(in srgb, var(--celebration-color, #22C55E) 90%, transparent), inset 0 4px 0 rgba(255,255,255,.3);} 50%{ box-shadow: 0 0 80px color-mix(in srgb, var(--celebration-color, #22C55E) 100%, transparent), 0 0 120px color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent), inset 0 4px 0 rgba(255,255,255,.4);} }
+@keyframes celebration-icon-pulse-ring { 0%{ transform: scale(1); opacity:.8; } 100%{ transform: scale(1.5); opacity:0; } }
+
+/* --- textes & CTA --- */
+.celebration-title-glow {
+  color: var(--celebration-color, #22C55E);
+  text-shadow: 0 0 20px color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent), 0 0 40px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent);
+  animation: celebration-title-glow-pulse var(--celebration-glow-duration) ease-in-out infinite;
+}
+@keyframes celebration-title-glow-pulse { 0%,100%{ text-shadow: 0 0 20px color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent), 0 0 40px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent);} 50%{ text-shadow: 0 0 30px color-mix(in srgb, var(--celebration-color, #22C55E) 80%, transparent), 0 0 60px color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent), 0 0 80px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent);} }
+
+.celebration-cta-container { display: flex; justify-content: center; position: relative; z-index: 10; margin-top: 2rem; }
+.celebration-cta-button {
+  position: relative; overflow: hidden; transition: all var(--glass-transition-medium); cursor: pointer; user-select: none; touch-action: manipulation;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--celebration-color, #22C55E) 80%, transparent), color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent));
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent), 0 0 60px color-mix(in srgb, var(--celebration-color, #22C55E) 30%, transparent);
+  border: 2px solid var(--celebration-color, #22C55E); color: #0B0F1A;
+}
+.celebration-cta-button:hover { transform: scale(1.03) translateZ(0); box-shadow: 0 16px 50px color-mix(in srgb, var(--celebration-color, #22C55E) 50%, transparent), 0 0 80px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent); }
+.celebration-cta-button:active { transform: scale(.97) translateZ(0); }
+.celebration-cta-button:disabled { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+.celebration-cta-shimmer { position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent); animation: celebration-cta-shimmer-movement 2s ease-in-out infinite; }
+.celebration-cta-sparkle { position: absolute; width: .5rem; height: .5rem; border-radius: 50%; background: #fff; animation: celebration-cta-sparkle-twinkle 1.5s ease-in-out infinite; }
+.celebration-cta-sparkle--1{ left:20%; top:30%; } .celebration-cta-sparkle--2{ left:40%; top:70%; animation-delay:.5s; } .celebration-cta-sparkle--3{ left:60%; top:30%; animation-delay:1s; } .celebration-cta-sparkle--4{ left:80%; top:70%; animation-delay:1.5s; }
+@keyframes celebration-cta-shimmer-movement { 0%{ transform: translateX(-100%);} 50%{ transform: translateX(100%);} 100%{ transform: translateX(100%);} }
+@keyframes celebration-cta-sparkle-twinkle { 0%,100%{ opacity:0; transform: scale(0);} 50%{ opacity:1; transform: scale(1);} }
+
+/* --- confettis --- */
+.celebration-confetti-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; border-radius: inherit; }
+.celebration-confetti { position: absolute; width: var(--celebration-confetti-width); height: var(--celebration-confetti-height); border-radius: 9999px; background: linear-gradient(180deg, var(--celebration-color, #22C55E), color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent)); top: -10%; animation: celebration-confetti-fall var(--celebration-confetti-duration) ease-in infinite; }
+.celebration-confetti--1{ left:10%;  } .celebration-confetti--2{ left:20%; animation-delay:.5s; } .celebration-confetti--3{ left:30%; animation-delay:1s; }
+.celebration-confetti--4{ left:40%; animation-delay:1.5s; } .celebration-confetti--5{ left:50%; animation-delay:2s; } .celebration-confetti--6{ left:60%; animation-delay:2.5s; }
+.celebration-confetti--7{ left:70%; animation-delay:3s; } .celebration-confetti--8{ left:80%; animation-delay:3.5s; }
+@keyframes celebration-confetti-fall { 0%{ transform: translateY(0) rotate(0deg); opacity:1; } 100%{ transform: translateY(120vh) rotate(360deg); opacity:0; } }
+
+/* --- contenu --- */
+.celebration-main-content { position: relative; text-align: center; padding: 3rem 0 4rem; z-index: 10; max-width: 800px; margin: 0 auto; }
+
+/* --- responsive --- */
+@media (max-width: 768px) {
+  :root { --celebration-icon-size: 6rem; --celebration-particle-size: .625rem; --celebration-ray-height: 4rem; --celebration-particle-count: var(--celebration-particle-count-mobile); }
+  .bodyscan-celebration-container { padding: var(--spacing-lg); min-height: calc(100vh - 160px); }
+  .celebration-main-content { padding: 2rem 0 3rem; }
+  .celebration-icon-inner-container { inset: 1rem !important; }
+  .celebration-cta-container { margin-top: 1.5rem; }
+  .celebration-cta-button { padding: 1rem 2rem; font-size: 1rem; min-height: 56px; }
+  .celebration-particle:nth-child(n+7),
+  .celebration-ray:nth-child(n+5),
+  .celebration-confetti:nth-child(n+5) { display: none; }
+}
+
+/* --- reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .celebration-ambient-glow,
+  .celebration-particle,
+  .celebration-ray,
+  .celebration-icon-outer-glow,
+  .celebration-icon-inner-glow,
+  .celebration-icon-pulse-ring,
+  .celebration-title-glow,
+  .celebration-cta-shimmer,
+  .celebration-cta-sparkle,
+  .celebration-confetti { animation: none !important; }
+  .celebration-ambient-glow{ opacity:.2 !important; transform: scale(1) !important; }
+}

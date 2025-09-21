@@ -1,0 +1,122 @@
+/* =========================================
+   GLASS V2 UTILITIES - Phase 9.77
+   ========================================= */
+
+@import './cards/index.css';
+@import './variants.css';
+
+/* Performance helpers */
+.will-change-transform { will-change: transform; }
+.will-change-auto { will-change: auto; }
+
+/* Force pill shape utility class */
+.force-pill-shape {
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  border-top-left-radius: 999px !important;
+  border-top-right-radius: 999px !important;
+  border-bottom-left-radius: 999px !important;
+  border-bottom-right-radius: 999px !important;
+}
+
+/* Button shape enforcement for VisionOS 26 */
+.body-scan-page button:not(.no-pill),
+.body-scan-page [role="button"]:not(.no-pill),
+.body-scan-page .btn-glass:not(.no-pill),
+.body-scan-page .btn-glass--primary:not(.no-pill),
+.body-scan-page .btn-glass--secondary-nav:not(.no-pill) {
+  border-radius: 999px !important;
+  border-top-left-radius: 999px !important;
+  border-top-right-radius: 999px !important;
+  border-bottom-left-radius: 999px !important;
+  border-bottom-right-radius: 999px !important;
+  -webkit-border-radius: 999px !important;
+  -moz-border-radius: 999px !important;
+  overflow: hidden !important;
+}
+
+/* CRITICAL: Force pill shape on motion.button elements specifically */
+.body-scan-page motion-button,
+.body-scan-page [data-framer-component-type="motion.button"] {
+  border-radius: 999px !important;
+  border-top-left-radius: 999px !important;
+  border-top-right-radius: 999px !important;
+  border-bottom-left-radius: 999px !important;
+  border-bottom-right-radius: 999px !important;
+  -webkit-border-radius: 999px !important;
+  -moz-border-radius: 999px !important;
+  overflow: hidden !important;
+}
+
+/* Spatial Icon Glow */
+.spatial-icon {
+  position: relative;
+  transition: transform 200ms var(--glass-ease);
+}
+
+/* TwinForge hover effects for spatial icons */
+@media (hover: hover) and (pointer: fine) {
+  .spatial-icon:hover {
+    transform: scale(1.02) translateZ(0);
+  }
+  
+  .spatial-icon:hover::after {
+    opacity: 0.6;
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none), (pointer: coarse) {
+  .spatial-icon:hover {
+    transform: none !important;
+  }
+  
+  .spatial-icon:hover::after {
+    opacity: 0 !important;
+  }
+}
+
+
+/* Logo style Montserrat ExtraBold jaune */
+.header-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+  color: var(--brand-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  text-shadow: none; /* Idle: aucun glow persistant */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  transition: transform 200ms var(--glass-ease), opacity 200ms var(--glass-ease);
+}
+
+.header-logo:hover {
+  transform: scale(1.04);
+  opacity: 0.95;
+  /* Hover: glow cyan discret - rayon perçu 8px, opacité 6% */
+  text-shadow: 0 0 8px color-mix(in srgb, var(--color-plasma-cyan) 6%, transparent);
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --glass-blur: 8px;
+    --glass-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 0 15px rgba(255, 255, 255, 0.03);
+  }
+  .header-logo {
+    font-size: 1.25rem;
+  }
+}

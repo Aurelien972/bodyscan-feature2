@@ -1,0 +1,100 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dual Ingot Symbol: 2 lingots inclinés formant T (négatif) et F (positif) -->
+  <!-- Proportions: rapport 1:1, épaisseur traits: 12% du côté, rayon d'angle: 10% -->
+  
+  <!-- Background for negative space T -->
+  <rect width="32" height="32" fill="transparent"/>
+  
+  <!-- Left Ingot (T negative space creator) -->
+  <path 
+    d="M6 8 L14 6 L16 14 L8 16 Z" 
+    fill="#3D13B3" 
+    stroke="none"
+    style="transform-origin: center;"
+  />
+  
+  <!-- Right Ingot (F positive space creator) -->
+  <path 
+    d="M18 6 L26 8 L24 16 L16 14 Z" 
+    fill="#3D13B3" 
+    stroke="none"
+    style="transform-origin: center;"
+  />
+  
+  <!-- Top Horizontal Bar (connects both ingots) -->
+  <rect 
+    x="8" 
+    y="6" 
+    width="16" 
+    height="3.84" 
+    rx="1.6" 
+    ry="1.6" 
+    fill="#3D13B3"
+  />
+  
+  <!-- Middle Horizontal Bar (F shape) -->
+  <rect 
+    x="16" 
+    y="12" 
+    width="8" 
+    height="3.84" 
+    rx="1.6" 
+    ry="1.6" 
+    fill="#3D13B3"
+  />
+  
+  <!-- Vertical Connector (T stem) -->
+  <rect 
+    x="14.08" 
+    y="8" 
+    width="3.84" 
+    height="16" 
+    rx="1.6" 
+    ry="1.6" 
+    fill="#3D13B3"
+  />
+  
+  <!-- Copper line overlay for ignition animation (initially hidden) -->
+  <line 
+    x1="0" 
+    y1="16" 
+    x2="32" 
+    y2="16" 
+    stroke="#FF7A45" 
+    stroke-width="2.56" 
+    stroke-linecap="round"
+    opacity="0"
+    class="copper-ignition-line"
+    style="transform: translateX(-100%);"
+  />
+  
+  <!-- Cyan glow overlay for hover/active states (initially hidden) -->
+  <g class="cyan-glow-overlay" opacity="0">
+    <filter id="cyan-glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <use href="#main-symbol" filter="url(#cyan-glow)" fill="#18E3FF" opacity="0.08"/>
+  </g>
+  
+  <!-- Main symbol group for easy referencing -->
+  <g id="main-symbol">
+    <use href="#left-ingot"/>
+    <use href="#right-ingot"/>
+    <use href="#top-bar"/>
+    <use href="#middle-bar"/>
+    <use href="#vertical-connector"/>
+  </g>
+  
+  <!-- Define reusable elements -->
+  <defs>
+    <path id="left-ingot" d="M6 8 L14 6 L16 14 L8 16 Z"/>
+    <path id="right-ingot" d="M18 6 L26 8 L24 16 L16 14 Z"/>
+    <rect id="top-bar" x="8" y="6" width="16" height="3.84" rx="1.6" ry="1.6"/>
+    <rect id="middle-bar" x="16" y="12" width="8" height="3.84" rx="1.6" ry="1.6"/>
+    <rect id="vertical-connector" x="14.08" y="8" width="3.84" height="16" rx="1.6" ry="1.6"/>
+  </defs>
+</svg>

@@ -1,0 +1,226 @@
+/* =========================================
+   BRAND INTEGRATION - Phase 9.77 (Optimized)
+   Centralized brand tokens & utility mappings
+   ========================================= */
+
+:root{
+  /* Brand Core */
+  --brand-primary:#3D13B3;       /* Deep Forge Indigo */
+  --brand-accent:#18E3FF;        /* Plasma Cyan */
+  --brand-secondary:#18E3FF;     /* Alias */
+  --brand-bg:#0B0E17;            /* Obsidian */
+
+  /* TwinForge Identity */
+  --color-deep-forge-indigo:#3D13B3;
+  --color-plasma-cyan:#18E3FF;
+  --color-ember-copper:#FF7A45;
+
+  /* Neutrals */
+  --color-obsidian:#0B0E17;
+  --color-graphite-fog:#121826;
+  --color-silver-mist:#9CA3AF;
+
+  /* Text */
+  --text-primary:#F2F6FF;
+  --text-secondary:#C7D2FE;
+  --text-muted:#9CA3AF;
+  --text-icon-idle:#94A3B8;
+  --text-icon-active:var(--color-plasma-cyan);
+
+  /* Depth wells */
+  --color-depth-well-c1:#4C1D95;
+  --color-depth-well-c2:color-mix(in srgb, var(--color-depth-well-c1) 80%, black);
+  --color-depth-well-c3:color-mix(in srgb, var(--color-depth-well-c1) 70%, black);
+
+  /* Caustics / noise */
+  --color-chroma-noise:#A0A0A0;
+  --caustic-opacity-desktop-1:1%;
+  --caustic-opacity-desktop-2:.8%;
+  --caustic-opacity-mobile-1:.5%;
+  --caustic-opacity-mobile-2:.4%;
+
+  /* Feature color families */
+  --color-body-scan-primary:var(--color-plasma-cyan);
+  --color-body-scan-secondary:var(--brand-primary);
+  --color-body-scan-accent:#A855F7;
+  --color-body-scan-success:#22C55E;
+  --color-body-scan-warning:#F59E0B;
+  --color-body-scan-error:#EF4444;
+
+  --color-nutrition-primary:#10B981;
+  --color-nutrition-secondary:#22C55E;
+  --color-nutrition-accent:#34D399;
+  --color-nutrition-calories:#FF4500;
+  --color-nutrition-proteins:#EF4444;
+  --color-nutrition-carbs:#F59E0B;
+  --color-nutrition-fats:#8B5CF6;
+  --color-nutrition-fiber:#06B6D4;
+  --color-nutrition-vitamins:#EC4899;
+
+  --color-activity-primary:#3B82F6;
+  --color-activity-secondary:#60A5FA;
+  --color-activity-accent:#1D4ED8;
+
+  --color-fasting-primary:#F59E0B;
+  --color-fasting-secondary:#FBBF24;
+  --color-fasting-accent:#D97706;
+
+  --color-health-primary:#EF4444;
+  --color-health-secondary:#F87171;
+  --color-health-accent:#DC2626;
+
+  --color-training-primary:#A855F7;
+  --color-training-secondary:#C084FC;
+  --color-training-accent:#9333EA;
+
+  --color-emotions-primary:#F59E0B;
+  --color-emotions-secondary:#FBBF24;
+  --color-emotions-accent:#D97706;
+
+  --color-fridge-primary:#EC4899;
+  --color-fridge-secondary:#F472B6;
+  --color-fridge-accent:#DB2777;
+
+  /* Circuit mapping */
+  --circuit-body-scan:var(--color-body-scan-primary);
+  --circuit-avatar:var(--color-body-scan-primary);
+  --circuit-twinforge:var(--brand-accent);
+  --circuit-meals:var(--color-nutrition-primary);
+  --circuit-fasting:var(--color-fasting-primary);
+  --circuit-activity:var(--color-activity-primary);
+  --circuit-emotions:var(--color-emotions-primary);
+  --circuit-fridge:var(--color-fridge-primary);
+  --circuit-videos:var(--color-health-primary);
+  --circuit-training:var(--color-training-primary);
+  --circuit-health:var(--color-health-primary);
+
+  /* Glass 3D effects (tokens) */
+  --glass-3d-inset-top:inset 0 1px 0 rgba(255,255,255,.15);
+  --glass-3d-inset-bottom:inset 0 -1px 0 rgba(0,0,0,.1);
+  --glass-3d-inset-left:inset 1px 0 0 rgba(255,255,255,.08);
+  --glass-3d-inset-right:inset -1px 0 0 rgba(0,0,0,.08);
+  --glass-3d-external:0 4px 16px rgba(0,0,0,.2), 0 0 20px rgba(255,255,255,.05);
+
+  --glass-child-3d-inset-top:inset 0 1px 0 rgba(255,255,255,.12);
+  --glass-child-3d-inset-bottom:inset 0 -1px 0 rgba(0,0,0,.08);
+  --glass-child-3d-inset-left:inset 1px 0 0 rgba(255,255,255,.06);
+  --glass-child-3d-inset-right:inset -1px 0 0 rgba(0,0,0,.06);
+  --glass-child-3d-external:0 2px 8px rgba(0,0,0,.15);
+
+  --glass-3d-hover-inset-top:inset 0 2px 0 rgba(255,255,255,.2);
+  --glass-3d-hover-inset-bottom:inset 0 -2px 0 rgba(0,0,0,.15);
+  --glass-3d-hover-external:0 8px 32px rgba(0,0,0,.3), 0 0 30px rgba(255,255,255,.08);
+
+  --glass-child-3d-hover-inset-top:inset 0 1px 0 rgba(255,255,255,.18);
+  --glass-child-3d-hover-inset-bottom:inset 0 -1px 0 rgba(0,0,0,.12);
+  --glass-child-3d-hover-inset-left:inset 1px 0 0 rgba(255,255,255,.08);
+  --glass-child-3d-hover-inset-right:inset -1px 0 0 rgba(0,0,0,.08);
+  --glass-child-3d-hover-external:0 4px 16px rgba(0,0,0,.25), 0 0 12px rgba(255,255,255,.08);
+
+  --glass-3d-active-inset-top:inset 0 1px 0 rgba(255,255,255,.25);
+  --glass-3d-active-inset-bottom:inset 0 -1px 0 rgba(0,0,0,.2);
+  --glass-3d-active-external:0 2px 8px rgba(0,0,0,.4);
+  --glass-child-3d-active-external:0 1px 4px rgba(0,0,0,.3);
+
+  /* Hover system */
+  --glass-hover-color:color-mix(in srgb, var(--brand-primary) 8%, transparent);
+  --glass-hover-border:color-mix(in srgb, var(--color-plasma-cyan) 25%, transparent);
+  --glass-hover-shadow:var(--glass-shadow-lg);
+  --glass-hover-blur:blur(var(--glass-blur-lg)) saturate(var(--glass-saturate-lg));
+
+  /* Touch feedback */
+  --glass-touch-scale:var(--interaction-scale-tap);
+  --glass-touch-shadow:inset 0 6px 12px rgba(0,0,0,.4), inset 0 2px 4px rgba(0,0,0,.6);
+
+  /* Sparkle & diffusion */
+  --glass-sparkle:linear-gradient(135deg, color-mix(in srgb, var(--color-silver-mist) 12%, transparent) 0%, transparent 50%, color-mix(in srgb, var(--color-silver-mist) 6%, transparent) 100%);
+  --glass-light-diffusion:radial-gradient(circle at center, color-mix(in srgb, var(--color-silver-mist) 10%, transparent) 0%, transparent 70%);
+
+  /* Ambient layers */
+  --ambient-grad-primary:radial-gradient(1200px 800px at 50% -10%, color-mix(in srgb, var(--brand-primary) 16%, transparent), transparent 60%);
+  --ambient-grad-secondary:radial-gradient(900px 600px at 80% 10%, color-mix(in srgb, var(--color-plasma-cyan) 10%, transparent), transparent 55%);
+  --ambient-grad-accent:radial-gradient(700px 500px at 20% 30%, color-mix(in srgb, var(--color-ember-copper) 8%, transparent), transparent 60%);
+  --ambient-base:linear-gradient(135deg, var(--color-obsidian) 0%, var(--color-graphite-fog) 55%, var(--color-obsidian) 100%);
+  --ambient-noise-opacity:.035;
+  --ambient-shadow-sm:drop-shadow(0 2px 8px rgba(0,0,0,.15));
+  --ambient-shadow-md:drop-shadow(0 4px 16px rgba(0,0,0,.20));
+  --ambient-shadow-lg:drop-shadow(0 8px 32px rgba(0,0,0,.25));
+
+  /* Glass card surface presets */
+  --glass-card-background-gradient:radial-gradient(1100px 720px at 50% -10%, rgba(255,255,255,.08), transparent 58%), linear-gradient(180deg, rgba(18,24,40,.78), rgba(14,18,32,.86));
+  --glass-light-diffusion-optimized:linear-gradient(135deg, rgba(255,255,255,.06) 0%, transparent 70%);
+
+  /* Specialized (Orbe) */
+  --orbe-blur-enhanced:var(--glass-blur-xl);
+  --orbe-saturate-enhanced:var(--glass-saturate-lg);
+  --orbe-opacity-enhanced:var(--glass-opacity-xl);
+  --orbe-border-enhanced:var(--glass-border-xl);
+  --orbe-shadow-enhanced:var(--glass-shadow-xl);
+  --orbe-glass-material:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.12) 0%, transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(255,255,255,.06) 0%, transparent 50%),
+    var(--glass-opacity-base);
+  --orbe-depth-near:translateZ(2px);
+  --orbe-depth-mid:translateZ(1px);
+  --orbe-depth-far:translateZ(.5px);
+
+  /* Tailwind mapping (consume CSS vars in config) */
+  --color-primary-500:var(--brand-primary);
+  --color-primary-400:var(--brand-primary);
+  --color-primary-300:color-mix(in srgb, var(--brand-primary) 80%, white);
+  --color-primary-200:color-mix(in srgb, var(--brand-primary) 60%, white);
+  --color-primary-100:color-mix(in srgb, var(--brand-primary) 40%, white);
+  --color-primary-50: color-mix(in srgb, var(--brand-primary) 20%, white);
+
+  --color-secondary-500:var(--brand-secondary);
+  --color-secondary-400:var(--brand-secondary);
+  --color-secondary-300:color-mix(in srgb, var(--brand-secondary) 80%, white);
+  --color-secondary-200:color-mix(in srgb, var(--brand-secondary) 60%, white);
+  --color-secondary-100:color-mix(in srgb, var(--brand-secondary) 40%, white);
+  --color-secondary-50: color-mix(in srgb, var(--brand-secondary) 20%, white);
+
+  --color-accent-500:var(--brand-accent);
+  --color-accent-400:var(--brand-accent);
+  --color-accent-300:color-mix(in srgb, var(--brand-accent) 80%, white);
+  --color-accent-200:color-mix(in srgb, var(--brand-accent) 60%, white);
+  --color-accent-100:color-mix(in srgb, var(--brand-accent) 40%, white);
+  --color-accent-50: color-mix(in srgb, var(--brand-accent) 20%, white);
+
+  /* Brand surface/text */
+  --brand-surface:color-mix(in srgb, var(--brand-primary) 6%, transparent);
+  --brand-text:#FFFFFF;
+  --text-on-indigo-light:#F2F6FF;
+  --brand-primary-soft:rgba(255,255,255,.06);
+  --brand-text-on-primary:#FFFFFF;
+  --glass-highlight:rgba(255,255,255,.12);
+  --brand-warning:#EF4444;
+  --brand-warning-light:#F87171;
+  --brand-warning-dark:#B91C1C;
+  --brand-warning-bg:rgba(239,68,68,.1);
+  --brand-warning-border:rgba(239,68,68,.3);
+}
+
+/* Tenant overrides */
+:root[data-tenant="demo-coach"]{
+  --brand-primary:#66E3FF; --brand-accent:#FF6B9D; --brand-bg:#0A0E1A; --brand-surface:rgba(102,227,255,.06);
+}
+:root[data-tenant="fitness-pro"]{
+  --brand-primary:#10B981; --brand-accent:#F59E0B; --brand-bg:#064E3B; --brand-surface:rgba(16,185,129,.06);
+}
+
+/* Small utilities (opt-in) */
+.brand-primary{ color:var(--brand-primary); }
+.brand-accent{ color:var(--brand-accent); }
+.brand-bg{ background:var(--brand-bg); }
+.brand-surface{ background:var(--brand-surface); }
+.brand-text{ color:var(--brand-text); }
+.brand-border{ border-color:color-mix(in srgb, var(--brand-primary) 30%, transparent); }
+.brand-shadow{ box-shadow:0 4px 20px color-mix(in srgb, var(--brand-primary) 20%, transparent); }
+.brand-glow{ box-shadow:0 0 20px color-mix(in srgb, var(--brand-primary) 40%, transparent); }
+
+/* Fallback for browsers without color-mix */
+@supports not (color: color-mix(in srgb, red 50%, white)){
+  .brand-border{ border-color:rgba(61,19,179,.3); }
+  .brand-shadow{ box-shadow:0 4px 20px rgba(61,19,179,.2); }
+  .brand-glow{ box-shadow:0 0 20px rgba(61,19,179,.4); }
+}

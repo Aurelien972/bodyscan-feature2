@@ -1,0 +1,311 @@
+/* =========================================
+   BODYSCAN BASE STYLES - Module Spécialisé
+   Styles de base pour tous les composants BodyScan
+   ========================================= */
+
+/* =========================================
+   CONTENEURS PRINCIPAUX
+   ========================================= */
+
+.bodyscan-container {
+  position: relative;
+  overflow: visible;
+  min-height: auto;
+  padding: var(--spacing-lg);
+  gap: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.bodyscan-step {
+  position: relative;
+  z-index: 1;
+  min-height: auto;
+  overflow: visible;
+  padding: var(--spacing-md);
+  gap: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.bodyscan-step > * {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* =========================================
+   GRILLES SPÉCIALISÉES
+   ========================================= */
+
+.bodyscan-history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.bodyscan-history-card {
+  transition: all var(--glass-transition-medium);
+  cursor: pointer;
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+}
+
+.bodyscan-history-card:hover {
+  transform: translateY(-2px) scale(1.01) translateZ(0);
+  box-shadow: 
+    var(--glass-shadow-lg),
+    0 0 20px color-mix(in srgb, var(--color-body-scan-primary) 15%, transparent);
+}
+
+.bodyscan-history-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   CARTES DE BASE BODYSCAN
+   ========================================= */
+
+.bodyscan-card {
+  background: 
+    radial-gradient(circle at 30% 20%, var(--color-body-scan-tint) 0%, transparent 60%),
+    var(--glass-opacity-base);
+  border: 1px solid var(--color-body-scan-border);
+  backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  border-radius: var(--glass-radius-xl);
+  box-shadow: 
+    var(--glass-shadow-base),
+    0 0 20px var(--color-body-scan-glow);
+  transition: all var(--glass-transition-medium);
+  overflow: hidden;
+  padding: var(--spacing-lg);
+  margin: var(--spacing-md) 0;
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  
+  /* Force rounded corners with backdrop-filter */
+  -webkit-clip-path: inset(0 round var(--glass-radius-xl));
+  clip-path: inset(0 round var(--glass-radius-xl));
+}
+
+.bodyscan-card:hover {
+  background: 
+    radial-gradient(circle at 30% 20%, var(--color-body-scan-tint-enhanced) 0%, transparent 60%),
+    var(--glass-opacity-lg);
+  border-color: var(--color-body-scan-border-hover);
+  box-shadow: 
+    var(--glass-shadow-lg),
+    0 0 30px var(--color-body-scan-glow-enhanced);
+  transform: translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0);
+  z-index: var(--z-dropdown);
+  position: relative;
+  overflow: visible;
+}
+
+/* =========================================
+   VARIANTES DE CARTES SPÉCIALISÉES
+   ========================================= */
+
+.bodyscan-card--priority {
+  border-color: color-mix(in srgb, var(--color-body-scan-error) 30%, transparent);
+  background: 
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-error) 8%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-base);
+  box-shadow: 
+    var(--glass-shadow-base),
+    0 0 20px color-mix(in srgb, var(--color-body-scan-error) 15%, transparent);
+}
+
+.bodyscan-card--summary {
+  border-color: color-mix(in srgb, var(--color-body-scan-warning) 30%, transparent);
+  background: 
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-warning) 8%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-base);
+  box-shadow: 
+    var(--glass-shadow-base),
+    0 0 20px color-mix(in srgb, var(--color-body-scan-warning) 15%, transparent);
+}
+
+.bodyscan-card--info {
+  border-color: color-mix(in srgb, var(--color-body-scan-primary) 25%, transparent);
+  background: 
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-primary) 8%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-base);
+}
+
+.bodyscan-card--priority {
+  border-color: color-mix(in srgb, var(--color-body-scan-error) 30%, transparent);
+  background: 
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-error) 8%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-base);
+  box-shadow: 
+    var(--glass-shadow-base),
+    0 0 20px color-mix(in srgb, var(--color-body-scan-error) 15%, transparent);
+}
+
+/* =========================================
+   BADGES DE STATUT GÉNÉRIQUES
+   ========================================= */
+
+.bodyscan-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--capture-status-badge-padding);
+  border-radius: var(--capture-status-badge-radius);
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-md));
+  border: 1px solid;
+  transition: all var(--glass-transition-medium);
+  position: relative;
+  overflow: visible;
+  min-height: 32px;
+  white-space: nowrap;
+}
+
+.bodyscan-status-badge--pending {
+  background: rgba(96, 165, 250, 0.15);
+  border-color: rgba(96, 165, 250, 0.3);
+  color: rgb(96, 165, 250);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.2);
+}
+
+.bodyscan-status-badge--active {
+  background: 
+    linear-gradient(135deg, 
+      var(--color-body-scan-tint-medium), 
+      color-mix(in srgb, var(--color-body-scan-accent) 15%, transparent)
+    ),
+    var(--glass-opacity-md);
+  border-color: var(--color-body-scan-border);
+  color: var(--color-body-scan-primary);
+  box-shadow: 
+    0 0 20px var(--color-body-scan-glow),
+    var(--glass-3d-inset-top);
+  animation: bodyscan-status-glow 2s var(--animation-ease-smooth) infinite;
+}
+
+.bodyscan-status-badge--success {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: rgb(34, 197, 94);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.3);
+}
+
+.bodyscan-status-badge--error {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: rgb(239, 68, 68);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.3);
+}
+
+/* =========================================
+   ICÔNES DE STATUT
+   ========================================= */
+
+.bodyscan-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--capture-status-icon-size);
+  height: var(--capture-status-icon-size);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  transition: all 200ms var(--glass-ease);
+  flex-shrink: 0;
+}
+
+.bodyscan-status-badge--active .bodyscan-status-icon {
+  background: var(--color-body-scan-tint-medium);
+  box-shadow: 0 0 8px var(--color-body-scan-glow);
+}
+
+.bodyscan-status-badge--success .bodyscan-status-icon {
+  background: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+/* =========================================
+   TEXTE DE STATUT
+   ========================================= */
+
+.bodyscan-status-text {
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  flex: 1;
+  text-align: left;
+}
+
+/* =========================================
+   ANIMATIONS DE BASE
+   ========================================= */
+
+@keyframes bodyscan-status-glow {
+  0%, 100% { 
+    box-shadow: 
+      0 0 20px var(--color-body-scan-glow),
+      var(--glass-3d-inset-top);
+  }
+  50% { 
+    box-shadow: 
+      0 0 30px var(--color-body-scan-glow-enhanced),
+      0 0 60px var(--color-body-scan-glow),
+      var(--glass-3d-hover-inset-top);
+  }
+}
+
+/* =========================================
+   OPTIMISATIONS PERFORMANCE
+   ========================================= */
+
+.bodyscan-gpu-optimized {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.bodyscan-container,
+.bodyscan-step,
+.bodyscan-card {
+  contain: layout style paint;
+}
+
+/* =========================================
+   SUPPORT MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+  .bodyscan-status-badge {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.6875rem;
+  }
+  
+  .bodyscan-status-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}
+
+/* =========================================
+   SUPPORT REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .bodyscan-status-badge--active {
+    animation: none !important;
+    box-shadow: 
+      0 0 20px var(--color-body-scan-glow),
+      var(--glass-3d-inset-top) !important;
+  }
+}

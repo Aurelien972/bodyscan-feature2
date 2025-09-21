@@ -1,0 +1,124 @@
+/* =========================================
+   BODYSCAN PROCESSING STYLES - Optimisé
+   ========================================= */
+
+.immersive-analysis-container { position: relative; overflow: visible; z-index: 1; }
+
+/* --- card + Safari rounded fix --- */
+.analysis-photo-card {
+  position: relative;
+  background: var(--glass-opacity-base);
+  border: 1px solid var(--color-body-scan-border);
+  backdrop-filter: blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  border-radius: var(--glass-radius-xl);
+  box-shadow: var(--glass-shadow-md), 0 0 20px var(--color-body-scan-glow);
+  transition: all var(--glass-transition-medium);
+  overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+          mask-image: radial-gradient(white, black);
+}
+.analysis-photo-card--front {
+  background: radial-gradient(circle at 30% 20%, var(--color-body-scan-tint) 0%, transparent 60%), var(--glass-opacity-base);
+}
+.analysis-photo-card--profile {
+  background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-accent) 8%, transparent) 0%, transparent 60%), var(--glass-opacity-base);
+  border-color: var(--color-body-scan-accent-border);
+  box-shadow: var(--glass-shadow-md), 0 0 20px var(--color-body-scan-accent-glow);
+}
+.analysis-photo-card:hover {
+  transform: translateY(-2px) scale(1.01) translateZ(0);
+  box-shadow: var(--glass-shadow-lg), 0 0 30px var(--color-body-scan-glow-enhanced);
+}
+
+/* --- status badge --- */
+.analysis-status-badge {
+  display: flex; align-items: center; gap: .5rem; padding: .5rem .75rem; border-radius: var(--glass-radius-md);
+  font-size: .75rem; font-weight: 600;
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-md));
+  border: 1px solid var(--color-body-scan-border);
+  background: linear-gradient(135deg, var(--color-body-scan-tint-medium), color-mix(in srgb, var(--color-body-scan-accent) 15%, transparent)), var(--glass-opacity-md);
+  color: var(--color-body-scan-primary);
+  box-shadow: 0 0 16px var(--color-body-scan-glow), var(--glass-3d-inset-top);
+  animation: analyzing-pulse var(--grid-pulse-speed) var(--animation-ease-smooth) infinite;
+}
+
+/* --- photos --- */
+.analysis-photo { transition: all var(--glass-transition-medium); border-radius: var(--glass-radius-lg); }
+.analysis-photo:hover { transform: scale(1.02) translateZ(0); }
+
+/* --- scan lines --- */
+.scan-line-vertical { position: absolute; top: 0; bottom: 0; width: var(--scan-line-width); background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--scan-color, var(--color-body-scan-primary)) 80%, transparent) 45%, transparent 100%); opacity: var(--scan-line-opacity); animation: scanLineVertical var(--scan-line-speed) linear infinite; transform: translateZ(0); will-change: transform; }
+.scan-line-horizontal { position: absolute; left: 0; right: 0; height: var(--scan-line-width); background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--scan-color, var(--color-body-scan-primary)) 80%, transparent) 50%, transparent 100%); opacity: var(--scan-line-opacity); animation: scanLineHorizontal var(--scan-line-speed) linear infinite; transform: translateZ(0); will-change: transform; }
+
+/* --- grid --- */
+.analysis-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: 1px; opacity: var(--grid-opacity-base); animation: gridPulse var(--grid-pulse-speed) ease-in-out infinite; transform: translateZ(0); will-change: opacity; }
+.grid-cell { border: 1px solid color-mix(in srgb, var(--grid-color, var(--color-body-scan-primary)) 30%, transparent); background: color-mix(in srgb, var(--grid-color, var(--color-body-scan-primary)) 5%, transparent); animation: gridCellPulse calc(var(--grid-pulse-speed) * 1.5) ease-in-out infinite; animation-delay: calc(var(--cell-index, 0) * .1s); transform: translateZ(0); will-change: opacity, background-color; }
+
+/* --- keypoints --- */
+.body-keypoints { position: absolute; inset: 0; pointer-events: none; }
+.keypoint {
+  position: absolute; width: var(--keypoint-size); height: var(--keypoint-size); border-radius: 50%; background: var(--keypoint-color, var(--color-body-scan-primary));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--keypoint-color, var(--color-body-scan-primary)) 80%, transparent);
+  opacity: var(--keypoint-opacity-base);
+  animation: keypointPulse var(--keypoint-pulse-speed) ease-in-out infinite;
+  animation-delay: calc(var(--keypoint-index, 0) * .2s);
+  transform: translate(-50%, -50%) translateZ(0); will-change: opacity, box-shadow;
+}
+.keypoint::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--keypoint-color, var(--color-body-scan-primary)) 40%, transparent); animation: keypointRing calc(var(--keypoint-pulse-speed) * 2) ease-in-out infinite; animation-delay: inherit; }
+
+/* --- analysis zones + focus --- */
+.analysis-zone {
+  position: absolute; width: var(--analysis-zone-size); height: var(--analysis-zone-size); border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--zone-color, var(--color-body-scan-primary)) calc(var(--zone-intensity, .5) * 60%), transparent) 0%, transparent 70%);
+  opacity: calc(var(--zone-intensity, .5) * .8);
+  animation: analysisZone var(--analysis-zone-speed) ease-in-out infinite;
+  transform: translate(-50%, -50%) translateZ(0); will-change: transform, opacity;
+}
+.ai-focus-overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 30%, color-mix(in srgb, var(--focus-color, var(--color-body-scan-primary)) 15%, transparent) 70%, transparent 100%); opacity: var(--ai-focus-opacity); animation: aiFocus var(--ai-focus-speed) ease-in-out infinite; transform: translateZ(0); will-change: opacity; }
+.ai-focus-overlay--profile { background: radial-gradient(ellipse at center, transparent 25%, color-mix(in srgb, var(--focus-color, var(--color-body-scan-primary)) 15%, transparent) 65%, transparent 100%); }
+
+/* --- data flow --- */
+.data-flow-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.data-particle { position: absolute; width: var(--data-particle-size); height: var(--data-particle-size); border-radius: 50%; background: var(--particle-color, var(--color-body-scan-primary)); box-shadow: 0 0 12px color-mix(in srgb, var(--particle-color, var(--color-body-scan-primary)) 80%, transparent); animation: dataParticle var(--data-particle-speed) ease-in-out infinite; animation-delay: calc(var(--particle-index, 0) * .3s); transform: translateZ(0); will-change: transform, opacity; }
+
+/* --- keyframes --- */
+@keyframes scanLineVertical { 0%{ transform: translateX(-100%) translateZ(0);} 100%{ transform: translateX(calc(100vw + 100%)) translateZ(0);} }
+@keyframes scanLineHorizontal{ 0%{ transform: translateY(-100%) translateZ(0);} 100%{ transform: translateY(calc(100vh + 100%)) translateZ(0);} }
+@keyframes gridPulse { 0%,100%{ opacity: var(--grid-opacity-base);} 50%{ opacity: var(--grid-opacity-pulse);} }
+@keyframes gridCellPulse { 0%,100%{ opacity:.3; background-color: color-mix(in srgb, var(--grid-color, var(--color-body-scan-primary)) 5%, transparent);} 50%{ opacity:.6; background-color: color-mix(in srgb, var(--grid-color, var(--color-body-scan-primary)) 10%, transparent);} }
+@keyframes keypointPulse { 0%,100%{ opacity: var(--keypoint-opacity-base); box-shadow: 0 0 12px color-mix(in srgb, var(--keypoint-color, var(--color-body-scan-primary)) 80%, transparent);} 50%{ opacity: var(--keypoint-opacity-pulse); box-shadow: 0 0 20px color-mix(in srgb, var(--keypoint-color, var(--color-body-scan-primary)) 100%, transparent);} }
+@keyframes keypointRing { 0%{ transform: scale(1) translateZ(0); opacity:.6; } 100%{ transform: scale(2) translateZ(0); opacity:0; } }
+@keyframes analysisZone { 0%,100%{ transform: translate(-50%, -50%) scale(1) translateZ(0); opacity: calc(var(--zone-intensity, .5) * .8);} 50%{ transform: translate(-50%, -50%) scale(1.2) translateZ(0); opacity: calc(var(--zone-intensity, .5) * .4);} }
+@keyframes aiFocus { 0%,100%{ opacity: var(--ai-focus-opacity);} 50%{ opacity: var(--ai-focus-opacity-peak);} }
+@keyframes dataParticle { 0%{ transform: translateY(0) rotate(0deg) translateZ(0); opacity:0;} 10%{ opacity:1;} 90%{ opacity:1;} 100%{ transform: translateY(-100px) rotate(360deg) translateZ(0); opacity:0;} }
+
+/* --- perf contain --- */
+.scan-line-vertical,
+.scan-line-horizontal,
+.analysis-grid,
+.grid-cell,
+.keypoint,
+.analysis-zone,
+.ai-focus-overlay,
+.data-particle { contain: layout style paint; transform: translateZ(0); backface-visibility: hidden; }
+
+/* --- responsive --- */
+@media (max-width: 768px) {
+  :root { --keypoint-size: 6px; --analysis-zone-size: 48px; --data-particle-size: 8px; --scan-line-width: 3px; }
+  .analysis-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+}
+
+/* --- reduced motion & high contrast --- */
+@media (prefers-reduced-motion: reduce) {
+  .scan-line-vertical, .scan-line-horizontal, .analysis-grid, .grid-cell, .keypoint, .analysis-zone, .ai-focus-overlay, .data-particle, .analysis-status-badge { animation: none !important; }
+  .keypoint { opacity: var(--keypoint-opacity-pulse) !important; }
+  .analysis-grid { opacity: var(--grid-opacity-pulse) !important; }
+  .ai-focus-overlay { opacity: var(--ai-focus-opacity-peak) !important; }
+}
+@media (prefers-contrast: high) {
+  .scan-line-vertical, .scan-line-horizontal { opacity: 1 !important; }
+  .keypoint { border: 2px solid currentColor; }
+  .grid-cell { border-color: currentColor; }
+}

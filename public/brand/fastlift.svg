@@ -1,0 +1,31 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- FASTLIFT AI Logo -->
+  <defs>
+    <linearGradient id="fastliftGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD400;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#FFC100;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFB300;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="rgba(11,15,26,0.9)" stroke="url(#fastliftGradient)" stroke-width="2"/>
+  
+  <!-- Lightning bolt icon -->
+  <path d="M128 40L100 120H140L128 216L156 136H116L128 40Z" 
+        fill="url(#fastliftGradient)" 
+        filter="url(#glow)"
+        stroke="rgba(255,212,0,0.3)" 
+        stroke-width="1"/>
+  
+  <!-- AI accent dot -->
+  <circle cx="180" cy="80" r="8" fill="#22D3EE" opacity="0.8"/>
+  <circle cx="180" cy="80" r="4" fill="#FFFFFF" opacity="0.9"/>
+</svg>

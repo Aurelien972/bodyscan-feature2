@@ -1,0 +1,328 @@
+/* =========================================
+   MEAL SCAN – VisionOS 26 TwinForge (Optimized)
+   ========================================= */
+
+/* Nutrition palette */
+:root{
+  --nutrition-primary:#10B981;
+  --nutrition-secondary:#22C55E;
+  --nutrition-accent:#34D399;
+  --nutrition-calories:#F59E0B;
+  --nutrition-proteins:#EF4444;
+  --nutrition-carbs:#F59E0B;
+  --nutrition-fats:#8B5CF6;
+  --nutrition-fiber:#06B6D4;
+  --nutrition-vitamins:#EC4899;
+
+  /* Back-compat aliases */
+  --color-nutrition-primary:var(--nutrition-primary);
+  --color-nutrition-secondary:var(--nutrition-secondary);
+  --color-activity-primary:var(--nutrition-accent);
+  --scan-primary:var(--nutrition-primary);
+}
+
+/* ===== Anim classes (use centralized keyframes where possible) ===== */
+.meal-capture-enter{ animation:slide-enter var(--animation-duration-slow) var(--animation-ease-glass) forwards; }
+.urgent-forge-glow-css{ animation:urgent-forge-glow-css 2s var(--animation-ease-smooth) infinite; }
+.dynamic-particle-css{ animation:dynamic-particle-float-css var(--animation-duration-slow) var(--animation-ease-smooth) infinite; }
+.dynamic-particle-css--1{animation-delay:0s;} .dynamic-particle-css--2{animation-delay:.3s;}
+.dynamic-particle-css--3{animation-delay:.6s;} .dynamic-particle-css--4{animation-delay:.9s;}
+.dynamic-particle-css--5{animation-delay:1.2s;} .dynamic-particle-css--6{animation-delay:1.5s;}
+.dynamic-shimmer-css{ animation:dynamic-shimmer-css var(--animation-duration-slow) var(--animation-ease-smooth) infinite; }
+.metric-badge-enter{ animation:metric-badge-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; opacity:0; }
+
+.hero-metrics-enter{ animation:slide-enter var(--animation-duration-slower) var(--animation-ease-glass) forwards; }
+.progression-glow-css{ animation:forge-glow var(--animation-duration-slower) var(--animation-ease-smooth) infinite; }
+.progression-icon-glow-css{ animation:icon-breathing-css var(--animation-duration-slow) var(--animation-ease-smooth) infinite; }
+.metric-card-enter{ animation:scale-enter var(--animation-duration-slow) var(--animation-ease-glass) forwards; opacity:0; }
+.metric-value-enter{ animation:scale-enter var(--animation-duration-slow) var(--animation-ease-bounce) forwards; opacity:0; }
+.metric-icon-glow-css{ animation:icon-pulse-css var(--animation-duration-slow) var(--animation-ease-smooth) infinite; }
+.metric-icon-static{ transform:scale(1.02) translateZ(0); }
+.metric-particle-css{ animation:particle-float var(--animation-duration-slow) var(--animation-ease-smooth) infinite; }
+.metric-particle-css--1{animation-delay:0s;} .metric-particle-css--2{animation-delay:.7s;} .metric-particle-css--3{animation-delay:1.4s;}
+.status-badge-enter{ animation:scale-enter var(--animation-duration-slow) var(--animation-ease-bounce) forwards; opacity:0; }
+
+.chart-enter{ animation:slide-enter var(--animation-duration-slow) var(--animation-ease-glass) forwards; }
+.chart-enter-right{ animation:slide-enter-right var(--animation-duration-slow) var(--animation-ease-glass) forwards; }
+.score-scale-enter{ animation:scale-enter var(--animation-duration-slow) var(--animation-ease-bounce) forwards; opacity:0; }
+.legend-item-enter{ animation:slide-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; opacity:0; }
+
+.heatmap-enter{ animation:slide-enter var(--animation-duration-slow) var(--animation-ease-glass) forwards; }
+.heatmap-cell-enter{ animation:scale-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; opacity:0; }
+.heatmap-cell-enter:hover{ transform:scale(var(--interaction-scale-hover)) translateZ(0); z-index:10; transition:transform var(--glass-transition-fast); }
+
+.meal-group-enter{ animation:slide-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; }
+.meal-item-enter{ animation:slide-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; opacity:0; }
+.macro-card-enter{ animation:scale-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; opacity:0; }
+
+.modal-backdrop-enter{ animation:fade-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; }
+.modal-content-enter{ animation:scale-enter var(--animation-duration-medium) var(--animation-ease-glass) forwards; }
+
+/* ===== Layout harmonization (grouped to avoid repetition) ===== */
+.meal-scan-flow,
+.meal-scan-step,
+.meal-scan-step > *,
+.meal-capture-container,
+.meal-analysis-container,
+.meal-results-container,
+.meal-capture-container > *,
+.meal-analysis-container > *,
+.meal-results-container > *,
+.meal-scan-step motion-div,
+.meal-scan-step [data-framer-component-type="motion.div"],
+.meal-analysis-container motion-div,
+.meal-results-container motion-div,
+.meal-capture-container motion-div{
+  position:relative; z-index:1; min-height:auto;
+}
+
+/* Cards elevation on hover (shared) */
+.meal-scan-step .glass-card,
+.glass-card--analysis,
+.glass-card--progress,
+.glass-card--foods-detected,
+.glass-card--photo-analyzed,
+.glass-card--capture,
+.glass-card--ready-processing,
+.glass-card--summary{
+  position:relative; z-index:10; overflow:visible;
+}
+.meal-scan-step .glass-card:hover,
+.glass-card--analysis:hover,
+.glass-card--progress:hover,
+.glass-card--foods-detected:hover,
+.glass-card--photo-analyzed:hover,
+.glass-card--capture:hover,
+.glass-card--ready-processing:hover,
+.glass-card--summary:hover{
+  z-index:50; transform:translateY(-2px) scale(1.01) translateZ(0);
+}
+
+/* Capture */
+.meal-capture-guide{ transition:transform 300ms var(--glass-ease), box-shadow 300ms var(--glass-ease); }
+.meal-capture-guide:hover{
+  transform:translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0);
+  box-shadow:0 8px 32px rgba(0,0,0,.2), 0 0 30px rgba(16,185,129,.15);
+  z-index:var(--z-dropdown);
+}
+
+/* Status badge */
+.capture-status-badge{
+  display:flex; align-items:center; gap:.5rem;
+  padding:.5rem .75rem; border-radius:var(--glass-radius-md);
+  font-size:.75rem; font-weight:600; position:relative; overflow:visible;
+  backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-md));
+  border:1px solid; transition:all var(--glass-transition-medium);
+}
+.capture-status-badge--pending{
+  background:rgba(96,165,250,.15); border-color:rgba(96,165,250,.3); color:rgb(96,165,250);
+  box-shadow:0 0 12px rgba(96,165,250,.2);
+}
+.capture-status-badge--captured{
+  background:linear-gradient(135deg,
+              color-mix(in srgb, var(--color-nutrition-primary) 20%, transparent),
+              color-mix(in srgb, var(--color-nutrition-secondary) 30%, transparent)),
+            var(--glass-opacity-md);
+  border-color:color-mix(in srgb, var(--color-nutrition-primary) 50%, transparent);
+  color:var(--color-nutrition-primary);
+  box-shadow:0 0 20px color-mix(in srgb, var(--color-nutrition-primary) 40%, transparent), var(--glass-3d-inset-top);
+  animation:captured-glow 2s var(--animation-ease-smooth) infinite;
+}
+.capture-status-badge--analyzing{
+  background:linear-gradient(135deg,
+              color-mix(in srgb, var(--color-nutrition-primary) 20%, transparent),
+              color-mix(in srgb, var(--color-activity-primary) 15%, transparent)),
+            var(--glass-opacity-md);
+  border-color:color-mix(in srgb, var(--color-nutrition-primary) 40%, transparent);
+  color:var(--color-nutrition-primary);
+  box-shadow:0 0 16px color-mix(in srgb, var(--color-nutrition-primary) 30%, transparent);
+  animation:analyzing-pulse 1.5s var(--animation-ease-smooth) infinite;
+}
+.capture-status-icon{
+  display:flex; align-items:center; justify-content:center;
+  width:1rem; height:1rem; border-radius:50%;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(4px);
+  transition:all 200ms var(--glass-ease);
+}
+.capture-status-badge--captured .capture-status-icon{
+  background:color-mix(in srgb, var(--color-nutrition-primary) 30%, transparent);
+  box-shadow:0 0 8px color-mix(in srgb, var(--color-nutrition-primary) 50%, transparent);
+}
+.capture-status-badge--analyzing .capture-status-icon{
+  background:color-mix(in srgb, var(--color-nutrition-primary) 25%, transparent);
+  box-shadow:0 0 6px color-mix(in srgb, var(--color-nutrition-primary) 40%, transparent);
+}
+.capture-status-text{ font-weight:500; letter-spacing:.025em; }
+
+/* Analysis canvas + overlays */
+.analysis-viewport{ transform:translateZ(0); backface-visibility:hidden; will-change:transform; overflow:visible; }
+.analysis-overlays{ position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:.8; z-index:5; }
+.nutrition-keypoints{ position:absolute; inset:0; pointer-events:none; }
+.nutrition-keypoint{ position:relative; transform:translateZ(0); backface-visibility:hidden; will-change:transform,opacity; }
+
+/* Results cards */
+.nutrition-stat-card,
+.food-item-card,
+.confidence-indicator{
+  position:relative; transform:translateZ(0); backface-visibility:hidden;
+}
+.nutrition-stat-card{ transition:transform 200ms var(--glass-ease); overflow:visible; z-index:10; }
+.nutrition-stat-card:hover{
+  transform:translateY(-3px) scale(var(--interaction-scale-hover)) translateZ(0);
+  box-shadow:0 12px 40px rgba(0,0,0,.25),
+             0 0 30px rgba(255,255,255,.12),
+             0 0 60px color-mix(in srgb, var(--color-nutrition-primary) 20%, transparent);
+  z-index:var(--z-dropdown);
+}
+.food-item-card{ will-change:transform, background, border-color; cursor:pointer; overflow:visible; z-index:10; }
+.food-item-card:hover{
+  transform:translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0);
+  z-index:var(--z-dropdown);
+}
+
+/* Card variants */
+.glass-card--capture-preview{
+  border:2px solid rgba(16,185,129,.3);
+  box-shadow:0 8px 32px rgba(0,0,0,.2), 0 0 20px rgba(16,185,129,.15), inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+/* Success overlay */
+.success-overlay{ position:relative; z-index:10; }
+.success-icon-container{ position:relative; transform:translateZ(0); backface-visibility:hidden; will-change:transform, box-shadow; }
+.success-icon-glow{ position:relative; z-index:1; }
+
+/* Performance containment */
+.meal-capture-container,
+.meal-analysis-container,
+.meal-results-container{ contain:layout style paint; transform:var(--gpu-acceleration); backface-visibility:hidden; }
+.analysis-overlays,
+.nutrition-keypoints,
+.data-flow-container{ transform:var(--gpu-acceleration); backface-visibility:hidden; will-change:var(--will-change-transform), opacity; }
+
+/* Celebration */
+.celebration-active .glass-card--summary{ animation:celebration-glow var(--animation-duration-slow) var(--animation-ease-smooth) infinite; }
+
+/* High contrast */
+@media (prefers-contrast:high){
+  .capture-status-badge,
+  .nutrition-stat-card,
+  .food-item-card{ border-width:2px; }
+  .glass-card--capture-preview{ border-width:3px; }
+}
+
+/* Touch optimizations */
+@media (hover:none), (pointer:coarse){
+  .nutrition-stat-card:active{
+    transform:scale(var(--interaction-scale-tap)) translateZ(0);
+    transition:transform var(--animation-duration-fast) ease-out;
+  }
+  .food-item-card:active{
+    background:var(--glass-opacity-lg);
+    transform:scale(var(--interaction-scale-active)) translateZ(0);
+    transition:all var(--animation-duration-fast) ease-out;
+  }
+  .btn-breathing:active{
+    transform:scale(var(--interaction-scale-tap)) translateZ(0);
+    transition:transform var(--animation-duration-fast) ease-out;
+  }
+}
+
+/* ===== Mobile perf: tone down heavy animations ===== */
+@media (max-width:768px){
+  .urgent-forge-glow-css,
+  .dynamic-particle-css,
+  .dynamic-shimmer-css,
+  .progression-glow-css,
+  .metric-icon-glow-css,
+  .metric-particle-css{ animation:none !important; }
+  .urgent-forge-glow-css{ opacity:.8 !important; transform:scale(1.2) translateZ(0) !important; }
+  .dynamic-particle-css{ opacity:.6 !important; transform:translateY(-8px) scale(1.2) translateZ(0) !important; }
+  .progression-glow-css{ opacity:.7 !important; transform:scale(1.2) translateZ(0) !important; }
+  .meal-capture-container{ padding:.5rem; }
+  .meal-capture-guide{ aspect-ratio:3/2; }
+}
+
+/* ===== Reduced motion (comprehensive) ===== */
+@media (prefers-reduced-motion:reduce){
+  .urgent-forge-glow-css,
+  .dynamic-particle-css,
+  .dynamic-shimmer-css,
+  .progression-glow-css,
+  .progression-icon-glow-css,
+  .metric-icon-glow-css,
+  .metric-particle-css,
+  .scan-line-vertical,
+  .scan-line-horizontal,
+  .analysis-grid,
+  .nutrition-keypoint,
+  .ai-focus-overlay,
+  .data-particle{ animation:none !important; }
+  .urgent-forge-glow-css{ opacity:.8 !important; transform:scale(1.2) translateZ(0) !important; }
+  .dynamic-particle-css{ opacity:.8 !important; transform:translateY(-8px) scale(1.2) translateZ(0) !important; }
+  .dynamic-shimmer-css{ opacity:.4 !important; transform:translateX(0) translateZ(0) !important; }
+  .progression-glow-css{ opacity:.7 !important; transform:scale(1.2) translateZ(0) !important; }
+  .metric-icon-glow-css{ transform:scale(1.05) translateZ(0) !important; }
+  .metric-particle-css{ opacity:.8 !important; transform:translateY(-6px) scale(1.2) translateZ(0) !important; }
+  .scan-line-vertical{ opacity:.6 !important; transform:translateX(-50%) translateY(50%) translateZ(0) !important; }
+  .scan-line-horizontal{ opacity:.4 !important; transform:translateY(-50%) translateX(50%) translateZ(0) !important; }
+  .analysis-grid{ opacity:.3 !important; }
+  .nutrition-keypoint{ opacity:.8 !important; transform:scale(1.2) translateZ(0) !important; }
+  .ai-focus-overlay{ opacity:.4 !important; }
+  .data-particle{ opacity:.7 !important; transform:translateY(-6px) scale(1.1) translateZ(0) !important; }
+}
+
+/* ===== Feature-specific keyframes (kept) ===== */
+@keyframes urgent-forge-glow-css{
+  0%,100%{ opacity:.6; transform:scale(1.1) translateZ(0); }
+  50%{ opacity:1; transform:scale(1.4) translateZ(0); }
+}
+@keyframes dynamic-particle-float-css{
+  0%,100%{ transform:translateY(0) scale(1) translateZ(0); opacity:.6; }
+  50%{ transform:translateY(-12px) scale(1.3) translateZ(0); opacity:1; }
+}
+@keyframes dynamic-shimmer-css{ 0%{ transform:translateX(-100%) translateZ(0);} 100%{ transform:translateX(200%) translateZ(0);} }
+@keyframes metric-badge-enter{ from{ opacity:0; transform:scale(.8) translateZ(0);} to{ opacity:1; transform:scale(1) translateZ(0);} }
+@keyframes slide-enter-right{ from{ opacity:0; transform:translateX(20px) translateZ(0);} to{ opacity:1; transform:translateX(0) translateZ(0);} }
+@keyframes fade-enter{ from{opacity:0;} to{opacity:1;} }
+
+@keyframes captured-glow{
+  0%,100%{ box-shadow:0 0 20px color-mix(in srgb, var(--color-nutrition-primary) 40%, transparent), var(--glass-3d-inset-top); }
+  50%{ box-shadow:0 0 30px color-mix(in srgb, var(--color-nutrition-primary) 60%, transparent), 0 0 60px color-mix(in srgb, var(--color-nutrition-primary) 30%, transparent), var(--glass-3d-hover-inset-top); }
+}
+@keyframes analyzing-pulse{
+  0%,100%{ box-shadow:0 0 16px color-mix(in srgb, var(--color-nutrition-primary) 30%, transparent); border-color:color-mix(in srgb, var(--color-nutrition-primary) 40%, transparent); }
+  50%{ box-shadow:0 0 24px color-mix(in srgb, var(--color-nutrition-primary) 50%, transparent); border-color:color-mix(in srgb, var(--color-nutrition-primary) 60%, transparent); }
+}
+
+/* Analysis overlays */
+@keyframes scanLineVertical{
+  0%,100%{ transform:translateX(-50%) translateY(-20%); opacity:.4; }
+  50%{ transform:translateX(-50%) translateY(120%); opacity:.8; }
+}
+@keyframes scanLineHorizontal{
+  0%,100%{ transform:translateY(-50%) translateX(-20%); opacity:.3; }
+  50%{ transform:translateY(-50%) translateX(120%); opacity:.6; }
+}
+@keyframes gridPulse{ 0%{opacity:.15;} 100%{opacity:.35;} }
+@keyframes analysisZone{ 0%,100%{ transform:scale(1) translateZ(0); opacity:.5;} 50%{ transform:scale(1.3) translateZ(0); opacity:.9;} }
+@keyframes aiFocus{ 0%,100%{ opacity:.2; transform:scale(1) translateZ(0);} 33%{ opacity:.5; transform:scale(1.05) translateZ(0);} 66%{ opacity:.7; transform:scale(.95) translateZ(0);} }
+@keyframes dataParticle{
+  0%,100%{ transform:translateY(0) translateX(0) scale(1) translateZ(0); opacity:.6; }
+  25%{ transform:translateY(-8px) translateX(4px) scale(1.2) translateZ(0); opacity:.9; }
+  50%{ transform:translateY(-12px) translateX(-2px) scale(1.3) translateZ(0); opacity:1; }
+  75%{ transform:translateY(-8px) translateX(-4px) scale(1.1) translateZ(0); opacity:.8; }
+}
+@keyframes spinHalo{ 0%{transform:rotate(0);} 100%{transform:rotate(360deg);} }
+
+/* Breathing button */
+.btn-breathing{ position:relative; overflow:hidden; }
+.btn-breathing::before{
+  content:""; position:absolute; inset:-2px; border-radius:inherit;
+  background:radial-gradient(circle at center, var(--scan-primary) 30% 0%, transparent 70%);
+  opacity:0; transition:opacity var(--animation-duration-slow) var(--animation-ease-smooth); z-index:-1;
+}
+@media (hover:hover) and (pointer:fine){
+  .btn-breathing:hover::before{ opacity:1; animation:breathing-glow var(--animation-duration-slower) var(--animation-ease-smooth) infinite; }
+}

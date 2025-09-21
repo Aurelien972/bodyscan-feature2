@@ -1,0 +1,213 @@
+/* =========================================
+   AVATAR INSIGHTS – Morphology & Summary
+   ========================================= */
+
+/* Grid */
+.morphology-insights-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--spacing-lg);
+  margin-bottom:var(--spacing-xl);
+}
+
+/* Glass rounded helper (24px) – ensures Safari respects radius with backdrop-filter */
+.morphology-insight-item,
+.insight-card,
+.summary-metric-card{
+  border-radius:24px;
+  overflow:hidden;
+  -webkit-mask-image:-webkit-radial-gradient(white, black);
+          mask-image:radial-gradient(white, black);
+  transform:translateZ(0);
+  backface-visibility:hidden;
+}
+
+/* Insight tiles */
+.morphology-insight-item{
+  position:relative;
+  padding:var(--spacing-lg);
+  text-align:center;
+  cursor:pointer;
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 8%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-base);
+  border:1px solid color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 25%, transparent);
+  backdrop-filter:blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter:blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  box-shadow:var(--glass-shadow-sm), 0 0 16px color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 10%, transparent);
+  transition:transform var(--glass-transition-medium), box-shadow var(--glass-transition-medium), background var(--glass-transition-medium), border-color var(--glass-transition-medium);
+}
+.morphology-insight-item:hover{
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 12%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-lg);
+  border-color:color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 35%, transparent);
+  box-shadow:var(--glass-shadow-lg), 0 0 24px color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 20%, transparent);
+  transform:translateY(-2px) scale(1.02) translateZ(0);
+}
+
+/* Icon badge */
+.morphology-insight-icon-container{
+  width:3rem;height:3rem;margin:0 auto 1rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.2) 0%, transparent 60%),
+    linear-gradient(135deg, color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 35%, transparent), color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 25%, transparent));
+  border:2px solid color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 50%, transparent);
+  box-shadow:0 0 20px color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 30%, transparent);
+}
+
+/* Texts */
+.morphology-insight-value{
+  font-size:1.25rem;font-weight:700;margin-bottom:.5rem;
+  color:var(--insight-color, var(--color-body-scan-primary));
+  text-shadow:0 0 8px color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 40%, transparent);
+}
+.morphology-insight-title{
+  font-size:.875rem;font-weight:600;color:#fff;line-height:1.3;
+}
+
+/* Summary card */
+.morphology-summary-card{
+  margin-top:var(--spacing-xl);padding:var(--spacing-lg);
+  border-radius:var(--glass-radius-lg);
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-primary) 6%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-sm);
+  border:1px solid color-mix(in srgb, var(--color-body-scan-primary) 15%, transparent);
+  backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+  -webkit-backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+  text-align:center;overflow:hidden;
+  -webkit-clip-path:inset(0 round var(--glass-radius-lg));
+          clip-path:inset(0 round var(--glass-radius-lg));
+}
+
+/* Insight card system */
+.insight-card{
+  position:relative;cursor:pointer;padding:var(--spacing-lg);
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 6%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-base);
+  border:1px solid color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 20%, transparent);
+  backdrop-filter:blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter:blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  box-shadow:var(--glass-shadow-sm), 0 0 12px color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 8%, transparent);
+  transition:transform var(--glass-transition-medium), box-shadow var(--glass-transition-medium), background var(--glass-transition-medium), border-color var(--glass-transition-medium);
+}
+.insight-card:hover{
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 10%, transparent) 0%, transparent 60%),
+    var(--glass-opacity-md);
+  border-color:color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 30%, transparent);
+  box-shadow:var(--glass-shadow-md), 0 0 20px color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 15%, transparent);
+  transform:translateY(-2px) scale(1.01) translateZ(0);
+}
+.insight-card-header{display:flex;align-items:flex-start;gap:var(--spacing-md);}
+.insight-card-icon-container{
+  width:2.5rem;height:2.5rem;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.15) 0%, transparent 60%),
+    linear-gradient(135deg, color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 30%, transparent), color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 20%, transparent));
+  border:1px solid color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 40%, transparent);
+  box-shadow:0 0 12px color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 20%, transparent);
+}
+.insight-card-content{flex:1;min-width:0;}
+.insight-card-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;}
+.insight-card-title{font-size:1rem;font-weight:600;color:#fff;line-height:1.3;}
+.insight-card-value-badge{
+  padding:.25rem .5rem;border-radius:var(--glass-radius-sm);
+  background:color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 15%, transparent);
+  border:1px solid color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 25%, transparent);
+  color:var(--insight-color, var(--color-body-scan-primary));font-size:.75rem;font-weight:600;white-space:nowrap;
+}
+.insight-card-description{color:rgba(255,255,255,.8);font-size:.875rem;line-height:1.4;margin-bottom:.75rem;}
+.insight-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;}
+.insight-card-type{display:flex;align-items:center;gap:.25rem;}
+.insight-card-type-text{font-size:.75rem;font-weight:500;text-transform:capitalize;}
+.insight-card-confidence{font-size:.75rem;color:rgba(255,255,255,.6);font-weight:500;}
+.insight-card-actionable{margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.1);}
+.insight-card-action-button{
+  background:none;border:none;color:var(--insight-color, var(--color-body-scan-primary));
+  font-size:.875rem;font-weight:600;cursor:pointer;padding:.5rem 1rem;border-radius:var(--glass-radius-sm);
+  transition:background var(--glass-transition-fast), color var(--glass-transition-fast);
+  text-decoration:underline;text-underline-offset:2px;
+}
+.insight-card-action-button:hover{background:color-mix(in srgb, var(--insight-color, var(--color-body-scan-primary)) 10%, transparent);text-decoration:none;}
+
+/* Summary dashboard cards */
+.summary-metric-card{
+  padding:var(--spacing-lg);text-align:center;cursor:pointer;
+  transition:transform var(--glass-transition-medium), box-shadow var(--glass-transition-medium);
+  box-shadow:0 0 0 transparent;
+}
+.summary-metric-card--blue{  --metric-color:#3B82F6; background:color-mix(in srgb, var(--metric-color) 12%, transparent); border:1px solid color-mix(in srgb, var(--metric-color) 25%, transparent); box-shadow:0 0 16px color-mix(in srgb, var(--metric-color) 10%, transparent);}
+.summary-metric-card--green{ --metric-color:#22C55E; background:color-mix(in srgb, var(--metric-color) 12%, transparent); border:1px solid color-mix(in srgb, var(--metric-color) 25%, transparent); box-shadow:0 0 16px color-mix(in srgb, var(--metric-color) 10%, transparent);}
+.summary-metric-card--purple{--metric-color:#8B5CF6; background:color-mix(in srgb, var(--metric-color) 12%, transparent); border:1px solid color-mix(in srgb, var(--metric-color) 25%, transparent); box-shadow:0 0 16px color-mix(in srgb, var(--metric-color) 10%, transparent);}
+.summary-metric-card--orange{--metric-color:#F59E0B; background:color-mix(in srgb, var(--metric-color) 12%, transparent); border:1px solid color-mix(in srgb, var(--metric-color) 25%, transparent); box-shadow:0 0 16px color-mix(in srgb, var(--metric-color) 10%, transparent);}
+.summary-metric-card:hover{
+  transform:translateY(-2px) scale(1.02) translateZ(0);
+  box-shadow:var(--glass-shadow-md), 0 0 24px color-mix(in srgb, var(--metric-color, var(--color-body-scan-primary)) 20%, transparent);
+}
+.summary-metric-value{font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.1;}
+.summary-metric-label{font-size:.875rem;font-weight:500;color:rgba(255,255,255,.8);line-height:1.3;}
+
+/* History grid */
+.bodyscan-history-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:var(--spacing-lg);
+  margin-top:var(--spacing-lg);
+}
+.bodyscan-history-card{
+  transition:transform var(--glass-transition-medium), box-shadow var(--glass-transition-medium);
+  cursor:pointer;transform:translateZ(0);backface-visibility:hidden;
+}
+.bodyscan-history-card:hover{
+  transform:translateY(-2px) scale(1.01) translateZ(0);
+  box-shadow:var(--glass-shadow-lg), 0 0 20px color-mix(in srgb, var(--color-body-scan-primary) 15%, transparent);
+}
+.bodyscan-history-card-footer{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);}
+
+/* Metric rows */
+.history-metric-row{
+  padding:var(--spacing-sm) var(--spacing-md);
+  border-radius:var(--glass-radius-md);
+  background:color-mix(in srgb, var(--color-body-scan-primary) 4%, transparent);
+  border:1px solid color-mix(in srgb, var(--color-body-scan-primary) 12%, transparent);
+  backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+  -webkit-backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+  transition:transform var(--glass-transition-medium), background var(--glass-transition-medium), border-color var(--glass-transition-medium);
+  margin-bottom:var(--spacing-xs);
+}
+.history-metric-row:hover{
+  background:color-mix(in srgb, var(--color-body-scan-primary) 8%, transparent);
+  border-color:color-mix(in srgb, var(--color-body-scan-primary) 20%, transparent);
+  transform:translateY(-1px) scale(1.01) translateZ(0);
+}
+.history-metric-row:last-child{margin-bottom:0;}
+
+/* Responsive */
+@media (max-width:768px){
+  .morphology-insights-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--spacing-md);}
+  .morphology-insight-icon-container{width:2.5rem;height:2.5rem;}
+  .morphology-insight-value{font-size:1.125rem;}
+  .morphology-insight-title{font-size:.8125rem;}
+  .summary-metric-value{font-size:1.5rem;}
+  .summary-metric-label{font-size:.8125rem;}
+  .bodyscan-history-grid{grid-template-columns:1fr;gap:var(--spacing-md);}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .morphology-insight-item:hover,
+  .insight-card:hover,
+  .summary-metric-card:hover,
+  .bodyscan-history-card:hover{transform:none !important;animation:none !important;}
+  .morphology-insight-item,
+  .insight-card,
+  .summary-metric-card,
+  .bodyscan-history-card{
+    transition:background var(--animation-duration-medium) ease, border-color var(--animation-duration-medium) ease !important;
+  }
+}

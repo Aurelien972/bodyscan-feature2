@@ -1,0 +1,69 @@
+/* =========================================
+   DEBUG UTILITIES - Phase 9.77
+   ========================================= */
+
+/* Hide performance monitoring debug elements */
+.tsqd-open-btn-container svg circle:nth-child(2) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide any other debug circles that might appear */
+.tsqd-open-btn-container svg circle {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide the entire debug button container if needed */
+.tsqd-open-btn-container {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide React Query DevTools button in production */
+.tsqd-open-btn {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide any performance monitoring overlays */
+[data-testid="react-query-devtools"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide FPS monitor if it appears */
+.perf-monitor,
+.perf-monitor::before {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide any debug overlays that might appear during loading */
+.debug-overlay,
+.performance-debug,
+.fps-counter {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Ensure debug elements don't interfere with layout */
+.tsqd-open-btn-container,
+.tsqd-open-btn,
+[data-testid="react-query-devtools"] {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}

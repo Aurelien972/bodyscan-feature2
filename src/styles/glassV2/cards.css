@@ -1,0 +1,29 @@
+/* =========================================
+   GLASS CARDS - Phase 9.77
+   ========================================= */
+
+/* Glass card styles - consolidated from cards subdirectory */
+.glass-card {
+  /* Uses centralized glass system variables */
+  background: var(--glass-opacity-base);
+  border: 1px solid var(--glass-border-base);
+  backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  box-shadow: var(--glass-shadow-base);
+  transition: all var(--glass-transition-medium);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card:hover {
+  background: var(--glass-opacity-lg);
+  border-color: var(--glass-border-lg);
+  box-shadow: var(--glass-shadow-lg);
+  transform: translateY(-2px) scale(1.02) translateZ(0);
+}
+
+.glass-card:active {
+  background: var(--glass-opacity-md);
+  transform: scale(0.98) translateZ(0);
+  transition: all 150ms ease-out;
+}

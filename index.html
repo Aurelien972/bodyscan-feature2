@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Favicon TwinForge -->
+    <link rel="icon" type="image/png" href="https://kwipydbtjagypocpvbwn.supabase.co/storage/v1/object/public/Logos%20TWINFORGE/TwinForgeLogoMobile.png" />
+    <link rel="apple-touch-icon" href="https://kwipydbtjagypocpvbwn.supabase.co/storage/v1/object/public/Logos%20TWINFORGE/TwinForgeLogoMobile.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>TwinForge</title>
+    
+    <!-- Critical font preload - Phase 4.2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload critical font weights -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v26/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v26/JTUSjIg1_i6t8kCHKm459W1hyyTh89Y.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v26/JTUSjIg1_i6t8kCHKm459WRhyyTh89Y.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- Load font CSS with display=swap -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" />
+    
+    <!-- Critical assets preload -->
+    <link rel="preload" as="image" href="/brand/twinforge-logo.svg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/brand/dual-ingot.svg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/icons/192.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/icons/256.png" fetchpriority="high" />
+    
+    <!-- Anti-FOUC + DVH + Device Handshake -->
+    <script>
+      (function () {
+        const html = document.documentElement;
+        html.style.setProperty('--initial-opacity', '0');
+        
+        function setDVH() { 
+          html.style.setProperty('--dvh', innerHeight * 0.01 + 'px'); 
+        }
+        setDVH(); 
+        addEventListener('resize', setDVH, { passive: true });
+        
+        addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => {
+          html.style.setProperty('--initial-opacity', '1');
+        }));
+        
+        html.dataset.device = 
+          /Mobi|Android/i.test(navigator.userAgent) || navigator.maxTouchPoints > 0 ? 'mobile' : 'desktop';
+        html.dataset.preferredMotion = 
+          matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full';
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,288 @@
+/* =========================================
+   PERFORMANCE OPTIMIZATIONS - Phase 10.0 Consolidated
+   ========================================= */
+
+:root{
+  --performance-budget-ms:16.67;
+  --animation-budget-max:8;
+  --will-change-timeout:250ms;
+
+  --gpu-acceleration:translateZ(0);
+  --gpu-layer-promotion:translate3d(0,0,0);
+
+  --contain-layout:layout;
+  --contain-style:style;
+  --contain-paint:paint;
+  --contain-size:size;
+  --contain-all:layout style paint size;
+
+  --content-visibility-auto:auto;
+  --content-visibility-hidden:hidden;
+  --content-visibility-visible:visible;
+}
+
+/* GPU helpers */
+.gpu-layer,.transform-gpu,.gpu-optimized{
+  transform:var(--gpu-acceleration);
+  backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  will-change:transform;
+}
+.gpu-layer-promote{
+  transform:var(--gpu-layer-promotion);
+  backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  transform-style:preserve-3d; -webkit-transform-style:preserve-3d;
+}
+.gpu-only-transform{ transform:var(--gpu-acceleration); backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+
+/* Will-change */
+.will-change-transform-important{ will-change:transform !important; }
+.will-change-auto-important{ will-change:auto !important; }
+.will-change-opacity{ will-change:opacity; }
+.will-change-filter{ will-change:filter; }
+.will-change-scroll{ will-change:scroll-position; }
+
+/* Containment */
+.contain-layout{ contain:var(--contain-layout); }
+.contain-style{ contain:var(--contain-style); }
+.contain-paint{ contain:var(--contain-paint); }
+.contain-size{ contain:var(--contain-size); }
+.contain-all{ contain:var(--contain-all); }
+
+/* Strategic containment */
+.heavy-section{ contain:layout style paint; content-visibility:auto; contain-intrinsic-size:600px; }
+.animation-heavy-section{ contain:layout style paint; content-visibility:auto; contain-intrinsic-size:400px; }
+.chart-section{ contain:layout style paint; content-visibility:auto; contain-intrinsic-size:300px 400px; }
+
+/* Content visibility */
+.content-visibility-auto{ content-visibility:var(--content-visibility-auto); contain-intrinsic-size:200px; }
+.content-visibility-hidden{ content-visibility:var(--content-visibility-hidden); }
+.content-visibility-visible{ content-visibility:var(--content-visibility-visible); }
+.content-card{ content-visibility:auto; contain-intrinsic-size:300px; }
+.content-list{ content-visibility:auto; contain-intrinsic-size:200px 800px; }
+.content-modal{ content-visibility:auto; contain-intrinsic-size:400px 600px; }
+
+/* Scroll perf */
+.momentum-scroll{ -webkit-overflow-scrolling:touch; scroll-behavior:smooth; overscroll-behavior:contain; scroll-snap-type:y proximity; }
+.momentum-scroll-enhanced{
+  -webkit-overflow-scrolling:touch; scroll-behavior:smooth; overscroll-behavior:contain;
+  scroll-snap-type:y proximity; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.1) transparent;
+}
+.modal-scroll-lock{ overscroll-behavior:none; -webkit-overflow-scrolling:auto; }
+
+/* Scroll performance mode */
+.scroll-performance-mode{ --scroll-performance-mode:1; --scroll-blur-reduction:.7; }
+.scroll-performance-mode .glass-card{
+  backdrop-filter:blur(calc(var(--glass-blur) * var(--scroll-blur-reduction, .7)));
+  transition:none !important;
+}
+.scroll-performance-mode .glass-card:hover{ transform:none !important; box-shadow:none !important; }
+
+/* Animation budget */
+.animation-budget-exceeded *{
+  animation:none !important;
+  transition:background-color 200ms ease, color 200ms ease !important;
+}
+.animation-budget-exceeded .glass-card:hover,
+.animation-budget-exceeded .spatial-icon:hover{ transform:none !important; box-shadow:none !important; }
+
+/* IMPORTANT: ne pas couper les braises par défaut */
+.essential-animations-only .breathing-icon,
+.essential-animations-only .icon-pulse-css,
+.essential-animations-only .particle-css{ animation:none !important; }
+/* On laisse .forge-particle actif pour garder le fond vivant; si besoin, ajouter .essential-animations-only .forge-particle { animation:none } dans des cas extrêmes. */
+
+.essential-animations-only .loader-essential{ animation:icon-spin-css 2s linear infinite !important; }
+
+/* Memory optimization */
+.low-memory-mode .glass-card{
+  backdrop-filter:none !important;
+  background:rgba(255,255,255,.05) !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.15) !important;
+}
+.low-memory-mode .glass-card::before,
+.low-memory-mode .glass-card::after,
+.low-memory-mode .cosmic-forge-particles{ display:none !important; }
+
+/* Frame rate optimizations */
+@media (min-resolution:120dpi) and (min-width:1024px){
+  :root{ --supports-120fps:1; }
+}
+@media (max-resolution:119dpi){ :root{ --supports-120fps:0; } }
+
+/* Battery optimization */
+.low-power-mode .glass-card,.low-power-mode .btn-glass{
+  backdrop-filter:none !important; background:rgba(255,255,255,.05) !important; transition:background 200ms ease !important;
+}
+.low-power-mode .glass-card::before,.low-power-mode .glass-card::after{ display:none !important; }
+.low-power-mode .glass-card:hover{ transform:none !important; box-shadow:none !important; background:rgba(255,255,255,.08) !important; }
+.low-power-mode .breathing-icon,.low-power-mode .icon-pulse-css,.low-power-mode .particle-css{ animation:none !important; }
+/* On garde les .forge-particle (très légères) actives; pour les couper, ajoute .low-power-mode .forge-particle{animation:none !important;} */
+
+/* Critical rendering path */
+.above-fold{ content-visibility:visible; contain:none; }
+.below-fold{ content-visibility:auto; contain:layout style paint; contain-intrinsic-size:400px; }
+.critical-path{ will-change:auto; contain:none; content-visibility:visible; }
+.non-critical-path{ content-visibility:auto; contain:layout style paint; }
+
+/* Intersection observer helpers */
+.lazy-animate{ opacity:0; transform:translateY(20px) translateZ(0); transition:opacity .6s ease, transform .6s ease; }
+.lazy-animate.in-view{ opacity:1; transform:translateY(0) translateZ(0); }
+.lazy-animate.out-of-view{ opacity:0; transform:translateY(20px) translateZ(0); }
+
+/* Non-blocking */
+.non-blocking{ contain:layout style; content-visibility:auto; }
+.non-blocking-paint{ contain:layout style paint; content-visibility:auto; }
+.render-critical{ contain:none; content-visibility:visible; will-change:auto; }
+
+/* Memory leak prevention */
+.cleanup-on-unmount{ will-change:auto; }
+.cleanup-on-unmount:not(.active){
+  animation:none !important; transition:none !important; transform:none !important; filter:none !important;
+}
+
+/* Browser specifics */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .safari-optimized{
+    -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-transform:translateZ(0);
+  }
+}
+@-moz-document url-prefix(){
+  .firefox-optimized{ animation-timing-function:ease-in-out; }
+  .glass-card{ background:linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.04)); }
+}
+@supports (backdrop-filter: blur(1px)) and (not (-webkit-backdrop-filter: blur(1px))) {
+  .chrome-optimized{ backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate)); }
+}
+
+/* Monitoring */
+.perf-monitor{ display:none; }
+.perf-critical{ contain:layout style paint; will-change:auto; }
+.perf-heavy{ content-visibility:auto; contain:layout style paint; contain-intrinsic-size:400px; }
+.perf-light{ contain:layout style; }
+
+/* Device capability */
+.high-end-device{ --glass-blur:var(--glass-blur-xl); --glass-saturate:var(--glass-saturate-xl); --animation-duration-multiplier:1; }
+.mid-range-device{ --glass-blur:var(--glass-blur-md); --glass-saturate:var(--glass-saturate-md); --animation-duration-multiplier:1.2; }
+.low-end-device{ --glass-blur:var(--glass-blur-sm); --glass-saturate:var(--glass-saturate-sm); --animation-duration-multiplier:1.5; }
+.low-end-device .glass-card{
+  backdrop-filter:blur(6px);
+  background:linear-gradient(145deg, rgba(0,0,0,.05), rgba(0,0,0,.02));
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+}
+.low-end-device .glass-card:hover{
+  background:linear-gradient(145deg, rgba(0,0,0,.08), rgba(0,0,0,.04));
+  transform:translateZ(0); transition:background 100ms ease;
+}
+.low-end-device .glass-card::before,.low-end-device .glass-card::after{ display:none !important; }
+
+/* Scroll perf (set #2) */
+.scroll-optimized{ -webkit-overflow-scrolling:touch; scroll-behavior:smooth; overscroll-behavior:contain; will-change:scroll-position; }
+.scroll-performance-active{ --scroll-performance-mode:1; --scroll-blur-reduction:.7; }
+.scroll-performance-active .glass-card{ backdrop-filter:blur(calc(var(--glass-blur) * var(--scroll-blur-reduction))); transition:none !important; }
+.scroll-performance-active .glass-card:hover{ transform:none !important; box-shadow:none !important; }
+
+/* Animation perf */
+.animation-optimized{ transform:var(--gpu-acceleration); backface-visibility:hidden; will-change:transform; contain:layout style paint; }
+.animation-lightweight{ transform:var(--gpu-acceleration); will-change:transform; }
+.animation-heavy{ transform:var(--gpu-acceleration); backface-visibility:hidden; will-change:transform,opacity; contain:layout style paint; content-visibility:auto; contain-intrinsic-size:300px; }
+
+/* Layout/paint/composite helpers */
+.layout-stable{ contain:layout; will-change:auto; }
+.layout-isolated{ contain:layout style; isolation:isolate; }
+.layout-critical{ contain:none; will-change:auto; position:static; transform:none; filter:none; }
+.paint-optimized{ contain:paint; will-change:auto; }
+.paint-heavy{ contain:layout style paint; content-visibility:auto; contain-intrinsic-size:400px; }
+.paint-light{ contain:style; }
+.composite-layer{ transform:var(--gpu-acceleration); will-change:transform; isolation:isolate; }
+.composite-layer-heavy{ transform:var(--gpu-acceleration); will-change:transform,opacity,filter; isolation:isolate; contain:layout style paint; }
+
+/* Memory classes */
+.memory-optimized{ contain:layout style; content-visibility:auto; }
+.memory-heavy{ contain:layout style paint; content-visibility:auto; contain-intrinsic-size:600px; }
+.memory-critical{ contain:none; content-visibility:visible; }
+
+/* Network helpers */
+.preload-critical{ content-visibility:visible; contain:none; }
+.preload-lazy{ content-visibility:auto; contain:layout style paint; }
+
+/* Mobile simplifications */
+@media (max-width:768px){
+  .glass-card{ backdrop-filter:blur(var(--glass-blur-mobile)); -webkit-backdrop-filter:blur(var(--glass-blur-mobile)); }
+  .glass-card::before,.glass-card::after{ display:none; }
+
+  /* Ne PAS désactiver les braises */
+  .breathing-icon,.icon-pulse-css,.particle-css{
+    animation:none !important;
+    transform:scale(1.02) translateZ(0) !important;
+  }
+  .loader-essential{ animation:icon-spin-css 2s linear infinite !important; }
+  .mobile-heavy-section{ contain:layout style paint; content-visibility:auto; contain-intrinsic-size:300px; }
+}
+
+/* Tablet tuning */
+@media (min-width:769px) and (max-width:1024px){
+  .glass-card{ backdrop-filter:blur(var(--glass-blur-tablet)); -webkit-backdrop-filter:blur(var(--glass-blur-tablet)); }
+  .glass-card::before{ opacity:.5; }
+  .glass-card::after{ opacity:.3; }
+}
+
+/* Desktop tuning */
+@media (min-width:1025px){
+  .glass-card{
+    backdrop-filter:blur(var(--glass-blur-desktop)) saturate(var(--glass-saturate-desktop));
+    -webkit-backdrop-filter:blur(var(--glass-blur-desktop)) saturate(var(--glass-saturate-desktop));
+  }
+  .glass-card::before{ opacity:.8; }
+  .glass-card::after{ opacity:.6; }
+}
+
+/* Intersection perf */
+.intersection-optimized{ content-visibility:auto; contain:layout style paint; }
+.intersection-optimized.in-viewport{ content-visibility:visible; }
+.intersection-optimized.out-of-viewport{ content-visibility:hidden; }
+
+/* Critical utilities */
+.render-immediate{ content-visibility:visible !important; contain:none !important; will-change:auto !important; }
+.render-deferred{ content-visibility:auto; contain:layout style paint; contain-intrinsic-size:200px; }
+.performance-critical{ contain:none; content-visibility:visible; will-change:auto; transform:none; filter:none; perspective:none; isolation:auto; }
+
+/* Debug helpers */
+.perf-debug{ display:none; }
+.perf-debug.enabled{
+  display:block; position:fixed; top:10px; right:10px; background:rgba(0,0,0,.8); color:#fff;
+  padding:.5rem; border-radius:4px; font-size:.75rem; z-index:9999;
+}
+.paint-debug *{ outline:1px solid red !important; }
+.layout-debug *{ outline:1px solid blue !important; }
+.composite-debug *{ outline:1px solid green !important; }
+
+/* Fallbacks */
+@supports not (content-visibility: auto){
+  .content-visibility-auto,.heavy-section,.animation-heavy-section{ contain:layout style; }
+}
+@supports not (contain: layout){
+  .contain-layout,.contain-all,.heavy-section{ transform:var(--gpu-acceleration); will-change:transform; }
+}
+
+/* Perf media */
+@media (prefers-reduced-data: reduce){
+  .glass-card{ backdrop-filter:none !important; background:rgba(255,255,255,.05) !important; }
+  /* Particules: simplifiées mais VISIBLES */
+  .cosmic-forge-particles{ opacity:.4 !important; }
+  .breathing-icon,.icon-pulse-css,.particle-css{
+    animation:none !important; opacity:.3 !important; transform:scale(1.1) translateZ(0) !important;
+  }
+  .forge-particle{
+    animation-duration:45s !important; opacity:.25 !important; transform:translateZ(0) !important;
+    width:1px !important; height:1px !important; box-shadow:0 0 1px var(--color-ember-copper), 0 0 2px var(--color-ember-copper) !important;
+  }
+  .cosmic-forge-particles .forge-particle:nth-child(n+9){ display:none !important; }
+}
+@media (prefers-reduced-motion: reduce){
+  .breathing-icon,.icon-pulse-css,.particle-css,.glass-shimmer{ animation:none !important; }
+  .loader-essential{ animation:icon-spin-css 3s linear infinite !important; }
+  *{ transition-duration:.1s !important; }
+  .cosmic-forge-particles{ opacity:.4 !important; }
+  .forge-particle{ animation-duration:60s !important; opacity:.4 !important; }
+}

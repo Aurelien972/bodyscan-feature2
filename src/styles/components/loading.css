@@ -1,0 +1,146 @@
+/* =========================================
+   LOADING & SKELETON - Phase 10.0 Harmonized
+   Uses centralized animation variables
+   ========================================= */
+
+.skeleton-glass {
+  background: linear-gradient(110deg, 
+    var(--glass-opacity-md) 25%, 
+    var(--glass-opacity-lg) 37%, 
+    var(--glass-opacity-md) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-visionos 2.5s var(--animation-ease-smooth) infinite;
+  border-radius: var(--glass-radius-md);
+}
+
+.loading-instant {
+  animation: pulse-visionos var(--animation-duration-slower) var(--animation-ease-smooth) infinite;
+}
+
+.loading-minimum {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-pulse {
+  animation: pulse-visionos 2.5s var(--animation-ease-smooth) infinite;
+}
+
+/* =========================================
+   MOBILE OPTIMIZATIONS
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* CRITICAL: Disable skeleton animations on mobile */
+  .skeleton-glass {
+    animation: none !important;
+    background: var(--glass-opacity-lg) !important;
+  }
+  
+  .loading-instant,
+  .loading-pulse {
+    animation: none !important;
+    opacity: 0.8 !important;
+  }
+  
+  /* Keep only essential loaders with simplified animation */
+  .loader-essential {
+    animation: pulse-visionos 2s var(--animation-ease-smooth) infinite !important;
+  }
+
+  /* CRITICAL: Rotation animation for essential loaders */
+  .loader-essential.icon-spin-css,
+  .loader-essential[data-icon="Loader2"] {
+    animation: icon-spin-css 2s linear infinite !important;
+  }
+  
+  .loader-essential {
+    animation: icon-spin-css 2s linear infinite !important;
+    transform: none !important;
+  }
+  
+  .loader-essential svg {
+    animation: inherit !important;
+  }
+}
+
+/* =========================================
+   SKELETON COMPONENTS - HARMONIZED
+   ========================================= */
+
+.skel {
+  background: linear-gradient(180deg, var(--glass-opacity-lg), var(--glass-opacity-sm));
+  border-radius: var(--glass-radius-xs);
+  min-height: 12px;
+  opacity: 0.6;
+  border: 1px solid var(--glass-border-xs);
+}
+
+.skel-text { 
+  background: inherit;
+  border: inherit;
+  border-radius: inherit;
+  height: 1rem; 
+  width: 100%; 
+}
+
+.skel-text-sm { 
+  background: inherit;
+  border: inherit;
+  border-radius: inherit;
+  height: 0.875rem; 
+  width: 75%; 
+}
+
+.skel-avatar { 
+  background: inherit;
+  border: inherit;
+  width: 2.5rem; 
+  height: 2.5rem; 
+  border-radius: 50%; 
+}
+
+.skel-card { 
+  background: inherit;
+  border: inherit;
+  border-radius: inherit;
+  height: 6rem; 
+  width: 100%; 
+}
+
+/* =========================================
+   DATA STATES - HARMONIZED
+   ========================================= */
+
+.data-loading { 
+  opacity: var(--interaction-opacity-active); 
+  pointer-events: none; 
+}
+
+.data-error { 
+  opacity: 0.5; 
+  filter: grayscale(0.3); 
+}
+
+/* =========================================
+   PERFORMANCE OPTIMIZATIONS
+   ========================================= */
+
+/* GPU acceleration for all loading elements */
+.skeleton-glass,
+.loading-instant,
+.loading-pulse,
+.loader-essential {
+  transform: var(--gpu-acceleration);
+  backface-visibility: hidden;
+}
+
+/* Containment for loading sections */
+.loading-section {
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}

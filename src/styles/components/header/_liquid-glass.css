@@ -1,0 +1,107 @@
+/* ================= HEADER LIQUID GLASS — 3D EDGES (v3) =============== */
+/* Fichier: header-liquid-glass.css — composant header avec bords 3D    */
+
+:root{
+  /* Fallbacks si non définis */
+  --header-radius: 20px;
+  --header-border-width: 2px;
+  --header-border-color: color-mix(in srgb, var(--color-plasma-cyan, #22d3ee) 25%, transparent);
+  --header-shadow-outer: 0 8px 32px rgba(0,0,0,.35);
+
+  /* Teintes */
+  --header-bg-a: color-mix(in srgb, var(--brand-primary, #7c3aed) 12%, transparent);
+  --header-bg-b: color-mix(in srgb, var(--color-plasma-cyan, #22d3ee) 8%, transparent);
+  --header-ring-cyan: color-mix(in srgb, var(--color-plasma-cyan, #22d3ee) 22%, transparent);
+  --header-ring-primary: color-mix(in srgb, var(--brand-primary, #7c3aed) 20%, transparent);
+
+  --glass-ease: cubic-bezier(.2,.6,.2,1);
+}
+
+/* Bloc principal */
+.header-liquid-glass{
+  position: fixed !important;
+  top: var(--header-top, 0);
+  left: var(--header-left, 0);
+  right: var(--header-right, 0);
+  z-index: 9999 !important;
+  isolation: isolate;
+  border-radius: var(--header-radius);
+  overflow: hidden;
+
+  /* verre */
+  backdrop-filter: blur(28px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(170%) !important;
+
+  /* fond texturé */
+  background:
+    radial-gradient(ellipse 120% 100% at center, var(--header-bg-a) 0%, transparent 90%),
+    radial-gradient(ellipse 100% 80% at 70% 80%, var(--header-bg-b) 0%, transparent 85%),
+    linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+
+  /* cadre + arêtes 3D (inset) */
+  border: var(--header-border-width) solid var(--header-border-color) !important;
+  box-shadow:
+    var(--header-shadow-outer),
+    0 0 40px color-mix(in srgb, var(--brand-primary, #7c3aed) 15%, transparent),
+    0 0 80px color-mix(in srgb, var(--color-plasma-cyan, #22d3ee) 12%, transparent),
+    inset 0 2px 0 rgba(255,255,255,.22),   /* arête haute */
+    inset 0 -2px 0 rgba(0,0,0,.16),        /* arête basse */
+    inset 2px 0 0 rgba(255,255,255,.10),   /* arête gauche */
+    inset -2px 0 0 rgba(0,0,0,.10) !important; /* arête droite */
+
+  transition:
+    box-shadow 300ms var(--glass-ease),
+    border-color 300ms var(--glass-ease),
+    transform 300ms var(--glass-ease);
+}
+
+/* Reflet liquide */
+.header-liquid-glass::before{
+  content:"";
+  position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background: linear-gradient(135deg, rgba(255,255,255,.02) 0%, transparent 50%, rgba(255,255,255,.01) 100%);
+  z-index:0;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .header-liquid-glass:hover{
+    box-shadow:
+      0 12px 40px rgba(0,0,0,.4),
+      0 0 50px color-mix(in srgb, var(--brand-primary, #7c3aed) 15%, transparent),
+      0 0 100px color-mix(in srgb, var(--color-plasma-cyan, #22d3ee) 12%, transparent),
+      inset 0 2px 0 rgba(255,255,255,.28),
+      inset 0 -2px 0 rgba(0,0,0,.2),
+      inset 2px 0 0 rgba(255,255,255,.12),
+      inset -2px 0 0 rgba(0,0,0,.12) !important;
+  }
+}
+
+/* Mobile — marges latérales */
+@media (max-width: 768px){
+  .header-liquid-glass{
+    left: var(--mobile-horizontal-margin, 8px) !important;
+    right: var(--mobile-horizontal-margin, 8px) !important;
+    top: 6px !important;
+  }
+}
+
+/* Safari — coins nets avec blur sans rogner l’anneau */
+@supports (-webkit-backdrop-filter: blur(1px)){
+  .header-liquid-glass{
+    -webkit-mask-image: radial-gradient(110% 110% at 50% 50%, #000 98.5%, transparent 100%);
+    -webkit-mask-composite: source-over;
+  }
+}
+
+/* Fallback sans color-mix */
+@supports not (background: color-mix(in srgb, red 50%, transparent)){
+  .header-liquid-glass{ border-color: rgba(34,211,238,.25) !important; }
+  .header-liquid-glass::after{
+    background:
+      conic-gradient(from 0deg at 50% 50%,
+        rgba(34,211,238,.22) 0%, transparent 20%,
+        rgba(124,58,237,.20) 35%, transparent 55%,
+        rgba(34,211,238,.22) 70%, transparent 85%,
+        rgba(124,58,237,.20) 100%);
+  }
+}

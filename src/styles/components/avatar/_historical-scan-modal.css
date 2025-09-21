@@ -1,0 +1,96 @@
+/* =========================================
+   HISTORICAL SCAN MODAL
+   ========================================= */
+
+.historical-scan-modal-backdrop{
+  position:fixed;inset:0;z-index:var(--z-modal-backdrop);
+  background:rgba(0,0,0,.8);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;
+  padding:var(--spacing-lg);
+}
+
+.historical-scan-modal-content{
+  width:100%;max-width:900px;max-height:90vh;overflow:hidden;
+}
+
+.historical-scan-modal-card{
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-primary) 12%, transparent) 0%, transparent 60%),
+    radial-gradient(circle at 70% 80%, color-mix(in srgb, var(--color-body-scan-accent) 8%, transparent) 0%, transparent 50%),
+    var(--glass-opacity-lg);
+  border:2px solid color-mix(in srgb, var(--color-body-scan-primary) 30%, transparent);
+  backdrop-filter:blur(var(--glass-blur-xl)) saturate(var(--glass-saturate-xl));
+  -webkit-backdrop-filter:blur(var(--glass-blur-xl)) saturate(var(--glass-saturate-xl));
+  border-radius:var(--glass-radius-xl);
+  box-shadow:0 20px 60px rgba(0,0,0,.4), 0 0 40px color-mix(in srgb, var(--color-body-scan-primary) 20%, transparent), inset 0 2px 0 rgba(255,255,255,.2);
+  overflow:hidden;
+  /* Ensure Safari respects radius with backdrop-filter */
+  -webkit-mask-image:-webkit-radial-gradient(white, black);
+          mask-image:radial-gradient(white, black);
+}
+
+.historical-scan-modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:var(--spacing-xl);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-body-scan-primary) 8%, transparent) 0%, transparent 60%),
+    rgba(255,255,255,.05);
+}
+.historical-scan-modal-title{
+  display:flex;align-items:center;gap:var(--spacing-md);
+  font-size:1.25rem;font-weight:700;color:#fff;min-width:0;
+}
+.historical-scan-modal-close-button{
+  width:2.5rem;height:2.5rem;border-radius:50%;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform var(--glass-transition-medium), background var(--glass-transition-medium), border-color var(--glass-transition-medium);
+  cursor:pointer;flex-shrink:0;
+}
+.historical-scan-modal-close-button:hover{
+  background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);
+  transform:scale(1.05) translateZ(0);
+}
+
+.historical-scan-modal-viewer-container{
+  height:500px;position:relative;margin:var(--spacing-lg);
+  border-radius:var(--glass-radius-lg);overflow:hidden;
+  background:linear-gradient(135deg, rgba(139,92,246,.1), rgba(59,130,246,.1), rgba(6,182,212,.1));
+  border:1px solid rgba(255,255,255,.1);
+}
+.historical-scan-modal-footer{
+  padding:var(--spacing-lg) var(--spacing-xl);
+  border-top:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);
+}
+.historical-scan-modal-metrics-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:var(--spacing-md);
+}
+.historical-scan-modal-metric-item{
+  text-align:center;padding:var(--spacing-md);
+  border-radius:var(--glass-radius-md);
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+}
+.historical-scan-modal-metric-label{
+  font-size:.75rem;color:rgba(255,255,255,.6);margin-bottom:.25rem;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.historical-scan-modal-metric-value{font-size:1.125rem;font-weight:700;color:#fff;}
+
+/* Avatar tab container (kept minimal – visuals handled by component) */
+.avatar-3d-viewer-container{
+  height:var(--avatar-viewer-height);
+  min-height:var(--avatar-viewer-height-mobile);
+  max-height:500px;position:relative;border-radius:var(--glass-radius-xl);overflow:hidden;
+}
+
+/* Responsive */
+@media (max-width:768px){
+  .historical-scan-modal-content{max-width:calc(100vw - 2rem);margin:1rem;}
+  .historical-scan-modal-viewer-container{height:400px;margin:var(--spacing-md);}
+}

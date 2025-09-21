@@ -1,0 +1,262 @@
+/* ============================================================
+   NEW MOBILE BOTTOM BAR — VisionOS 26 (v1.0)
+   Barre de navigation inférieure redesignée avec 5 boutons
+   ============================================================ */
+
+:root {
+  /* Variables de la nouvelle bottom bar */
+  --new-bottom-bar-height: 80px;
+  --new-bottom-bar-horizontal-margin: 16px;
+  --new-bottom-bar-bottom-offset: max(4px, env(safe-area-inset-bottom, 2px));
+  --new-bottom-bar-border-radius: 24px;
+  --new-bottom-bar-padding: 12px;
+  --new-bottom-bar-button-size: 56px;
+  --new-bottom-bar-central-button-size: 80px;
+  --new-bottom-bar-z-index: 9996;
+}
+
+/* Mobile only */
+@media (min-width: 769px) { 
+  .new-mobile-bottom-bar { 
+    display: none !important; 
+  } 
+}
+
+.new-mobile-bottom-bar {
+  position: fixed !important;
+  bottom: var(--new-bottom-bar-bottom-offset) !important;
+  left: 8px !important;
+  right: 8px !important;
+  z-index: var(--new-bottom-bar-z-index) !important;
+  height: var(--new-bottom-bar-height) !important;
+  transform: translate3d(0, 0, 0) !important;
+  will-change: transform !important;
+  contain: layout style paint !important;
+  isolation: isolate !important;
+}
+
+.new-mobile-bottom-bar-container {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--new-bottom-bar-border-radius);
+  padding: var(--new-bottom-bar-padding);
+  overflow: hidden;
+
+  /* Liquid Glass harmonisé avec le header */
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--brand-primary, #3D13B3) 12%, transparent) 0%, transparent 60%),
+    radial-gradient(circle at 70% 80%, color-mix(in srgb, var(--color-plasma-cyan, #18E3FF) 8%, transparent) 0%, transparent 50%),
+    linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06)),
+    rgba(11,14,23,0.85);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+
+  border: 2px solid color-mix(in srgb, var(--color-plasma-cyan, #18E3FF) 25%, transparent);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.4),
+    0 0 40px color-mix(in srgb, var(--brand-primary, #3D13B3) 15%, transparent),
+    0 0 80px color-mix(in srgb, var(--color-plasma-cyan, #18E3FF) 12%, transparent),
+    inset 0 2px 0 rgba(255,255,255,0.2),
+    inset 0 -2px 0 rgba(0,0,0,0.1);
+
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+          mask-image: radial-gradient(white, black);
+}
+
+.new-mobile-bottom-bar-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  gap: 8px;
+}
+
+/* Bouton standard */
+.new-bottom-bar-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  min-width: var(--new-bottom-bar-button-size);
+  min-height: var(--new-bottom-bar-button-size);
+  border-radius: 16px;
+  position: relative;
+  cursor: pointer;
+  background: transparent !important;
+  border: 1px solid transparent;
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), 
+              background-color 0.2s, 
+              border-color 0.2s, 
+              box-shadow 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  flex: 1;
+}
+
+/* Bouton central (plus grand) */
+.new-bottom-bar-button--central {
+  min-width: var(--new-bottom-bar-central-button-size);
+  min-height: var(--new-bottom-bar-central-button-size);
+  border-radius: 20px;
+  flex: 2; /* Beaucoup plus large pour mise en avant */
+  position: relative;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Hover effects (desktop/tablet) */
+@media (hover: hover) and (pointer: fine) {
+  .new-bottom-bar-button:hover {
+    background: transparent !important;
+    border-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    transform: scale(1.05) translateZ(0);
+  }
+
+  .new-bottom-bar-button--central:hover {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: scale(1.08) translateZ(0);
+  }
+}
+
+/* État actif */
+.new-bottom-bar-button[aria-current="page"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  transform: translateY(-1px) translateZ(0);
+}
+
+/* Conteneur d'icône */
+.new-bottom-bar-icon-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.new-bottom-bar-button--central .new-bottom-bar-icon-container {
+  width: 64px;
+  height: 64px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: none;
+}
+
+.new-bottom-bar-icon-container--active {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22) 0%, transparent 60%),
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--button-color) 35%, transparent),
+      color-mix(in srgb, var(--button-color) 25%, transparent));
+  border: 2px solid color-mix(in srgb, var(--button-color) 50%, transparent);
+  box-shadow: 
+    0 0 20px color-mix(in srgb, var(--button-color) 30%, transparent),
+    0 0 40px color-mix(in srgb, var(--button-color) 20%, transparent);
+}
+
+/* État actif spécifique pour le bouton central */
+.new-bottom-bar-button--central .new-bottom-bar-icon-container--active {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22) 0%, transparent 60%),
+    linear-gradient(135deg,
+      color-mix(in srgb, #18E3FF 35%, transparent),
+      color-mix(in srgb, #18E3FF 25%, transparent));
+  border: 2px solid color-mix(in srgb, #18E3FF 50%, transparent);
+  box-shadow: 
+    0 0 20px color-mix(in srgb, #18E3FF 30%, transparent),
+    0 0 40px color-mix(in srgb, #18E3FF 20%, transparent);
+}
+
+/* Label */
+.new-bottom-bar-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.new-bottom-bar-label--active {
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--button-color) 40%, transparent);
+}
+
+/* Petits écrans */
+@media (max-width: 480px) {
+  :root {
+    --new-bottom-bar-button-size: 48px;
+    --new-bottom-bar-central-button-size: 72px;
+    --new-bottom-bar-padding: 10px;
+    --new-bottom-bar-height: 72px;
+  }
+  
+  .new-mobile-bottom-bar-buttons {
+    gap: 6px;
+  }
+  
+  .new-bottom-bar-icon-container {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .new-bottom-bar-button--central .new-bottom-bar-icon-container {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .new-bottom-bar-label {
+    font-size: 9px;
+  }
+}
+
+/* Accessibilité / fallbacks / perf */
+@media (prefers-reduced-motion: reduce) {
+  .new-bottom-bar-button,
+  .new-bottom-bar-icon-container {
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+  }
+  
+  .new-bottom-bar-button:hover,
+  .new-bottom-bar-button[aria-current="page"] {
+    transform: none !important;
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .new-mobile-bottom-bar-container {
+    background: linear-gradient(145deg, rgba(61, 19, 179, 0.9), rgba(24, 227, 255, 0.8)) !important;
+    border: 2px solid rgba(24, 227, 255, 0.6) !important;
+  }
+}
+
+/* Contraste élevé */
+@media (prefers-contrast: high) {
+  .new-mobile-bottom-bar-container {
+    border-width: 3px !important;
+    background: rgba(61, 19, 179, 0.9) !important;
+  }
+  
+  .new-bottom-bar-button {
+    border-width: 2px !important;
+  }
+}

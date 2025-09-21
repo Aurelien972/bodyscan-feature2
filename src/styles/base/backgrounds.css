@@ -1,0 +1,282 @@
+/* =========================================
+   BACKGROUNDS - Forge Spatiale TwinForge (Optimized v3)
+   Système de fond multi-couches + particules braise
+   ========================================= */
+
+:root {
+  /* Couleurs de la Forge Spatiale */
+  --forge-void: #0B0E17;
+  --forge-deep: #0F1419;
+  --forge-medium: #1A1F2E;
+
+  /* Nébuleuses énergétiques */
+  --nebula-hot-core: #FF6B35;
+  --nebula-hot-edge: #FFB347;
+  --nebula-cold-core: #18E3FF;
+  --nebula-cold-edge: #3D13B3;
+
+  /* Particules de forge */
+  --forge-ember: #FF6B35;
+  --forge-ember-bright: #FFB347;
+  --forge-ember-deep: #FF4500;
+  --forge-core-primary: #3D13B3;
+
+  /* Comptes & vitesses (réglage global) */
+  --particle-count-desktop: 16;
+  --particle-count-tablet: 12;
+  --particle-count-mobile: 8;
+  --animation-speed-desktop: 20s;
+  --animation-speed-tablet: 25s;
+  --animation-speed-mobile: 30s;
+}
+
+/* =========================================
+   FOND PRINCIPAL - Respiration cosmique
+   ========================================= */
+
+.bg-twinforge-visionos {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+
+  background:
+    /* Nébuleuse chaude (bas-gauche) */
+    radial-gradient(ellipse 400% 300% at 20% 80%,
+      color-mix(in srgb, var(--nebula-hot-core) 4%, transparent) 0%,
+      color-mix(in srgb, var(--nebula-hot-edge) 2%, transparent) 40%,
+      transparent 70%),
+    /* Nébuleuse froide (haut-droit) */
+    radial-gradient(ellipse 350% 250% at 80% 20%,
+      color-mix(in srgb, var(--nebula-cold-core) 3%, transparent) 0%,
+      color-mix(in srgb, var(--nebula-cold-edge) 2%, transparent) 35%,
+      transparent 65%),
+    /* Gradient cosmique */
+    radial-gradient(circle at 50% 50%, var(--forge-medium) 0%, var(--forge-deep) 40%, var(--forge-void) 100%);
+
+  animation: cosmic-forge-pulse 8s ease-in-out infinite;
+
+  transform: translateZ(0);
+  will-change: background-size;
+  backface-visibility: hidden;
+}
+
+@keyframes cosmic-forge-pulse {
+  0%, 100% { background-size: 400% 300%, 350% 250%, 100% 100%; }
+  50%      { background-size: 420% 320%, 370% 270%, 105% 105%; }
+}
+
+/* =========================================
+   CONTENEUR PARTICULES
+   ========================================= */
+
+.cosmic-forge-particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.5;
+
+  transform: translateZ(0);
+  will-change: opacity;
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 100vw 100vh;
+}
+
+/* =========================================
+   PARTICULES - Braises
+   ========================================= */
+
+.forge-particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+
+  /* Taille contrôlée par --size (définie en JS) */
+  width: var(--size, 1.5px);
+  height: var(--size, 1.5px);
+
+  background:
+    radial-gradient(circle,
+      color-mix(in srgb, var(--forge-ember) 80%, transparent) 0%,
+      color-mix(in srgb, var(--forge-ember-bright) 60%, transparent) 30%,
+      transparent 100%);
+  box-shadow:
+    0 0 1px var(--forge-ember),
+    0 0 2px var(--forge-ember),
+    0 0 3px color-mix(in srgb, var(--forge-ember) 40%, transparent);
+
+  /* Trajectoire basée 100% sur variables CSS (compat max) */
+  animation: ember-rise var(--duration, 20s) linear infinite;
+  animation-delay: var(--delay, 0s);
+
+  transform: translate3d(0, 110vh, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+/* Variations chromatiques légères (garde l’aspect braise) */
+.forge-particle--1, .forge-particle--5, .forge-particle--9, .forge-particle--13 {
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--forge-ember) 75%, transparent) 0%,
+    color-mix(in srgb, var(--forge-ember-bright) 55%, transparent) 40%,
+    transparent 100%);
+}
+.forge-particle--2, .forge-particle--6, .forge-particle--10, .forge-particle--14 {
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--forge-ember-bright) 70%, transparent) 0%,
+    color-mix(in srgb, var(--forge-ember) 50%, transparent) 35%,
+    transparent 100%);
+}
+.forge-particle--3, .forge-particle--7, .forge-particle--11, .forge-particle--15 {
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--forge-ember-deep) 65%, transparent) 0%,
+    color-mix(in srgb, var(--forge-ember) 45%, transparent) 30%,
+    transparent 100%);
+}
+.forge-particle--4, .forge-particle--8, .forge-particle--12, .forge-particle--16 {
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--forge-ember-bright) 68%, transparent) 0%,
+    color-mix(in srgb, var(--forge-ember-deep) 42%, transparent) 25%,
+    transparent 100%);
+}
+
+/* =========================================
+   KEYFRAMES — sans sin(), full-compat
+   Utilise:
+     --x0 : position de base en vw (ex: "37vw")
+     --x1..--x4 : dérives horizontales en px
+   ========================================= */
+
+@keyframes ember-rise {
+  /* Départ sous l’écran, opacité 0 */
+  0% {
+    transform: translate3d(var(--x0, 50vw), 110vh, 0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translate3d(calc(var(--x0, 50vw) + var(--x1, 0px)), 95vh, 0) scale(1);
+    opacity: 0.35;
+  }
+  25% {
+    transform: translate3d(calc(var(--x0, 50vw) + var(--x2, 0px)), 75vh, 0) scale(1.15) rotate(120deg);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(calc(var(--x0, 50vw) + var(--x3, 0px)), 50vh, 0) scale(1.2) rotate(200deg);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate3d(calc(var(--x0, 50vw) + var(--x4, 0px)), 25vh, 0) scale(0.95) rotate(320deg);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translate3d(calc(var(--x0, 50vw) + var(--x4, 0px)), -10vh, 0) scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   TABLETTE
+   ========================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .cosmic-forge-particles { opacity: 0.6; }
+  .forge-particle {
+    width: clamp(2.5px, var(--size, 2.8px), 3.5px);
+    height: clamp(2.5px, var(--size, 2.8px), 3.5px);
+    /* durée pilotée par --duration via JS */
+  }
+  /* Masquer au-delà de 12 pour perf */
+  .cosmic-forge-particles .forge-particle:nth-child(n+13) { display: none; }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+@media (max-width: 768px) {
+  .cosmic-forge-particles { opacity: 0.8 !important; }
+
+  .forge-particle {
+    width: clamp(2px, var(--size, 2.5px), 3px) !important;
+    height: clamp(2px, var(--size, 2.5px), 3px) !important;
+  }
+  /* Garder 8 particules (1..8) pour lisibilité + batterie */
+  .cosmic-forge-particles .forge-particle:nth-child(n+9) { display: none !important; }
+}
+
+/* =========================================
+   REDUCED MOTION / DATA
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  .bg-twinforge-visionos { animation-duration: 20s !important; }
+  .cosmic-forge-particles { opacity: 0.6 !important; }
+  .forge-particle { animation-duration: 60s !important; opacity: 0.5 !important; }
+}
+@media (prefers-reduced-data: reduce) {
+  .bg-twinforge-visionos {
+    background: radial-gradient(circle at 50% 50%, var(--forge-medium) 0%, var(--forge-deep) 60%, var(--forge-void) 100%) !important;
+    animation: none !important;
+  }
+  .cosmic-forge-particles { opacity: 0.4 !important; }
+  .forge-particle {
+    animation-duration: 45s !important;
+    opacity: 0.3 !important;
+    width: 1.5px !important; height: 1.5px !important;
+    box-shadow: 0 0 2px var(--forge-ember), 0 0 4px var(--forge-ember) !important;
+  }
+  .cosmic-forge-particles .forge-particle:nth-child(n+9) { display: none !important; }
+}
+
+/* =========================================
+   DISTORSION THERMIQUE — Desktop
+   ========================================= */
+@media (min-width: 1025px) {
+  .bg-twinforge-visionos::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 200% 150% at 30% 70%,
+        color-mix(in srgb, var(--forge-ember) 1%, transparent) 0%, transparent 60%);
+    animation: thermal-distortion 12s ease-in-out infinite;
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+}
+@keyframes thermal-distortion {
+  0%, 100% { transform: scale(1) rotate(0deg) translateZ(0); opacity: 0.2; }
+  50%      { transform: scale(1.05) rotate(1deg) translateZ(0); opacity: 0.4; }
+}
+
+/* =========================================
+   FALLBACKS
+   ========================================= */
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+  .bg-twinforge-visionos {
+    background: radial-gradient(circle at 50% 50%, #1A1F2E 0%, #0F1419 60%, #0B0E17 100%) !important;
+  }
+  .forge-particle {
+    background: #FF6B35 !important;
+    box-shadow: 0 0 8px #FF6B35, 0 0 16px #FF6B35 !important;
+  }
+}
+@supports not (transform: translateZ(0)) {
+  .forge-particle, .cosmic-forge-particles, .bg-twinforge-visionos { transform: none !important; }
+}
+
+/* Hi-contrast */
+@media (prefers-contrast: high) {
+  .forge-particle {
+    box-shadow: 0 0 4px var(--forge-ember), 0 0 8px var(--forge-ember), 0 0 12px var(--forge-ember) !important;
+    opacity: 0.9 !important;
+  }
+  .bg-twinforge-visionos {
+    background: radial-gradient(circle at 50% 50%, #2A2F3E 0%, #1F2429 60%, #0B0E17 100%) !important;
+  }
+}

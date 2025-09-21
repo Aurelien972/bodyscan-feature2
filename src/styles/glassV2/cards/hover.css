@@ -1,0 +1,85 @@
+/* =========================================
+   GLASS CARDS HOVER EFFECTS - Phase 10.0 Harmonized
+   Standardized hover effects using centralized variables
+   ========================================= */
+
+/* Base hover effect for all glass cards - uses centralized variables */
+.glass-card:hover {
+  /* ACIER SUR VERRE - Standardized hover transformation */
+  transform: translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0);
+  border-color: var(--glass-hover-border);
+  box-shadow: 
+    var(--glass-shadow-hover),
+    var(--glass-3d-hover-inset-top),
+    var(--glass-3d-hover-inset-bottom);
+  backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-saturate-lg));
+  
+  transition: 
+    transform var(--glass-transition-fast), 
+    background var(--glass-transition-fast), 
+    border-color var(--glass-transition-fast), 
+    box-shadow var(--glass-transition-fast), 
+    backdrop-filter var(--glass-transition-fast);
+  
+  z-index: var(--z-dropdown) !important;
+  position: relative;
+  overflow: visible !important;
+}
+
+/* ACIER SUR VERRE - Enhanced hover reflections */
+.glass-card:hover::before {
+  background: var(--glass-highlight-enhanced);
+  opacity: 0.5;
+}
+
+.glass-card:hover::after {
+  background: var(--glass-accent-glow-enhanced);
+  opacity: 0.3;
+}
+
+/* Active state for touch feedback - uses centralized variables */
+.glass-card:active {
+  background: var(--glass-opacity-lg);
+  opacity: var(--interaction-opacity-active);
+  transform: scale(var(--interaction-scale-active)) translateZ(0);
+  transition: all var(--animation-duration-fast);
+  box-shadow: 
+    var(--glass-3d-active-external),
+    var(--glass-3d-active-inset-top),
+    var(--glass-3d-active-inset-bottom);
+}
+
+/* Performance-aware hover effects using centralized system */
+.glass-card[data-hover-effect="high-small"]:hover {
+  box-shadow: var(--glass-shadow-xl);
+  background: var(--glass-tint-enhanced);
+  border-color: var(--glass-hover-border);
+  backdrop-filter: blur(var(--glass-blur-xl)) saturate(var(--glass-saturate-xl));
+  transform: translateY(-2px) scale(1.015) translateZ(0);
+}
+
+.glass-card[data-hover-effect="medium-small"]:hover {
+  box-shadow: var(--glass-shadow-lg);
+  background: var(--glass-tint-medium);
+  border-color: var(--glass-hover-border);
+  backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-saturate-lg));
+  transform: translateY(-1px) scale(1.01) translateZ(0);
+}
+
+.glass-card[data-hover-effect="low-small"]:hover {
+  box-shadow: var(--glass-shadow-md);
+  background: var(--glass-fallback-hover);
+  border-color: var(--glass-border-lg);
+  transform: translateY(-1px) translateZ(0);
+}
+
+/* Enhanced mobile feedback using centralized variables */
+@media (hover: none), (pointer: coarse) {
+  .glass-card:active {
+    background: var(--glass-mobile-active-bg) !important;
+    transform: scale(var(--glass-mobile-scale)) translateZ(0) !important;
+    box-shadow: var(--glass-mobile-shadow) !important;
+    opacity: var(--glass-mobile-opacity) !important;
+    transition: all var(--animation-duration-fast) ease-out !important;
+  }
+}

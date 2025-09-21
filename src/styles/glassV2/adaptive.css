@@ -1,0 +1,209 @@
+/* =========================================
+   ADAPTIVE GLASS SYSTEM - Phase 4.5
+   ========================================= */
+
+/* Dynamic quality scaling based on device capabilities */
+:root {
+  /* Adaptive glass properties */
+  --glass-blur-adaptive: var(--glass-blur-dynamic, 16px);
+  --glass-opacity-adaptive: var(--glass-opacity, rgba(255, 255, 255, 0.06));
+  --glass-saturate-adaptive: var(--glass-saturate-dynamic, 140%);
+  
+  /* Performance-based overrides */
+  --scroll-blur-reduction: 1;
+  --scroll-performance-mode: 0;
+}
+
+/* Ultra quality (8GB+ RAM, 8+ cores) */
+html.quality-ultra {
+  --glass-blur: 24px;
+  --glass-saturate: 180%;
+  --glass-opacity: rgba(255, 255, 255, 0.04);
+  --animation-duration-multiplier: 1;
+  
+  /* Orbe Central - Qualité Ultra */
+  --orbe-blur-enhanced: 28px;
+  --orbe-saturate-enhanced: 180%;
+  --orbe-depth-effect: preserve-3d;
+}
+
+html.quality-ultra .glass-card {
+  backdrop-filter: blur(var(--glass-blur-adaptive)) saturate(var(--glass-saturate-adaptive));
+  background: var(--glass-opacity-adaptive);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(255, 255, 255, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.15);
+}
+
+html.quality-ultra .orbe-central {
+  backdrop-filter: blur(var(--orbe-blur-enhanced)) saturate(var(--orbe-saturate-enhanced));
+  transform-style: var(--orbe-depth-effect);
+}
+
+html.quality-ultra .glass-card:hover {
+  backdrop-filter: blur(28px) saturate(200%);
+  transform: scale(1.02) translateZ(0);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* High quality (4GB+ RAM, 4+ cores) */
+html.quality-high {
+  --glass-blur: 16px;
+  --glass-saturate: 140%;
+  --glass-opacity: rgba(255, 255, 255, 0.06);
+  --animation-duration-multiplier: 1.1;
+  
+  /* Orbe Central - Qualité Haute */
+  --orbe-blur-enhanced: 20px;
+  --orbe-saturate-enhanced: 150%;
+  --orbe-depth-effect: preserve-3d;
+}
+
+html.quality-high .orbe-central {
+  backdrop-filter: blur(var(--orbe-blur-enhanced)) saturate(var(--orbe-saturate-enhanced));
+  transform-style: var(--orbe-depth-effect);
+}
+
+html.quality-high .glass-card {
+  backdrop-filter: blur(var(--glass-blur-adaptive)) saturate(var(--glass-saturate-adaptive));
+  background: var(--glass-opacity-adaptive);
+}
+
+html.quality-high .glass-card:hover {
+  backdrop-filter: blur(20px) saturate(160%);
+  transform: scale(1.015) translateZ(0);
+}
+
+/* Low quality (< 4GB RAM or low-end device) */
+html.quality-low {
+  --glass-blur: 6px;
+  --glass-saturate: 110%;
+  --glass-opacity: rgba(255, 255, 255, 0.08);
+  --animation-duration-multiplier: 1.5;
+  
+  /* Orbe Central - Qualité Basse (Optimisations) */
+  --orbe-blur-enhanced: 8px;
+  --orbe-saturate-enhanced: 120%;
+  --orbe-depth-effect: flat;
+  --orbe-pulse-duration: 4s;
+  --orbe-shimmer-speed: 4s;
+}
+
+html.quality-low .orbe-central {
+  backdrop-filter: blur(var(--orbe-blur-enhanced)) saturate(var(--orbe-saturate-enhanced));
+  transform-style: var(--orbe-depth-effect);
+  animation-duration: var(--orbe-pulse-duration);
+}
+
+html.quality-low .orbe-central::before {
+  animation-duration: var(--orbe-shimmer-speed);
+}
+
+html.quality-low .glass-card {
+  /* FIXED: More transparent background for low performance devices to maintain glass effect */
+  background: linear-gradient(145deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02));
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  will-change: auto;
+  contain: layout style;
+}
+
+html.quality-low .glass-card:hover {
+  background: linear-gradient(145deg, rgba(0,0,0,0.08), rgba(0,0,0,0.04));
+  transform: translateZ(0);
+  transition: background 100ms ease;
+}
+
+/* Disable expensive effects on low quality */
+html.quality-low .glass-card::before,
+html.quality-low .glass-card::after,
+html.quality-low .ambient-glow::after {
+  display: none !important;
+}
+
+/* Disable advanced hover effects on low performance devices */
+html.quality-low .glass-card[data-hover-effect^="high"],
+html.quality-low .glass-card[data-hover-effect^="medium"] {
+  /* Force low-performance hover effects */
+  backdrop-filter: blur(6px) !important;
+  will-change: auto !important;
+}
+
+html.quality-low .glass-card[data-hover-effect]:hover {
+  transform: translateY(-1px) translateZ(0) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  backdrop-filter: blur(6px) !important;
+  transition: transform 80ms ease, background 80ms ease !important;
+}
+
+html.quality-low .glass-card[data-hover-effect]:hover::before,
+html.quality-low .glass-card[data-hover-effect]:hover::after {
+  display: none !important;
+}
+/* Scroll performance mode */
+[style*="--scroll-performance-mode: 1"] .glass-card {
+  backdrop-filter: blur(calc(var(--glass-blur-adaptive) * var(--scroll-blur-reduction, 0.7)));
+  transition: none !important;
+}
+
+[style*="--scroll-performance-mode: 1"] .ambient-glow::after {
+  opacity: 0 !important;
+}
+
+/* Disable hover effects during scroll for performance */
+[style*="--scroll-performance-mode: 1"] .glass-card[data-hover-effect]:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(6px) !important;
+}
+/* 120fps support */
+html.supports-120fps .glass-card {
+  transition-duration: calc(var(--glass-transition-medium) * 0.8);
+}
+
+html.supports-120fps .glass-card[data-hover-effect] {
+  transition-duration: 150ms, 150ms, 150ms, 150ms, 150ms;
+}
+html.supports-120fps .spatial-icon {
+  transition-duration: calc(var(--glass-transition-fast) * 0.8);
+}
+
+/* Low power mode optimizations */
+html.low-power-mode .glass-card,
+html.low-power-mode .glass-button {
+  backdrop-filter: none !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  transition: background 200ms ease !important;
+}
+
+html.low-power-mode .glass-card::before,
+html.low-power-mode .glass-card::after {
+  display: none !important;
+}
+
+/* Disable all hover effects in low power mode */
+html.low-power-mode .glass-card[data-hover-effect]:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+/* GPU layer optimization */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Animation budget classes */
+.anim-budget-exceeded * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.anim-budget-exceeded .glass-card:hover {
+  transform: none !important;
+}

@@ -1,0 +1,111 @@
+/* =========================================
+   BASE RESET & SETUP - Phase 9.77
+   ========================================= */
+
+@layer base {
+  html {
+    opacity: var(--initial-opacity, 0);
+    transition: opacity 300ms ease-out;
+    overscroll-behavior: auto;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    touch-action: manipulation;
+  }
+
+  body {
+    @apply bg-black text-white antialiased;
+    font-feature-settings: "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background: var(--color-obsidian) !important;
+    font-family: inherit;
+    touch-action: manipulation;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overscroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Touch optimization for interactive elements */
+  button, a, [role="button"], input, textarea, select, .glass-card[data-interactive] {
+    touch-action: manipulation;
+  }
+
+  /* Responsive visibility */
+  html[data-device="mobile"] .desktop-only { display: none !important; }
+  html[data-device="desktop"] .mobile-only { display: none !important; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-iteration-count: 1 !important;
+    }
+    :focus-visible {
+      outline: 2px solid var(--brand-primary) !important;
+      outline-offset: 2px;
+    }
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: more) {
+    :root {
+      --brand-primary: color-mix(in oklab, var(--brand-primary) 85%, black 15%);
+      --brand-accent: color-mix(in oklab, var(--brand-accent) 85%, black 15%);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --glass-opacity: rgba(255, 255, 255, 0.1);
+    }
+    
+    .glass-card {
+      border-width: 2px;
+    }
+    
+    button, a, [role="button"] {
+      outline: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  /* CSS Variables for dynamic heights */
+  :root {
+    --header-height: 80px;
+    --tabs-height: 60px;
+  }
+  
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  /* Focus management */
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+    border-radius: inherit;
+  }
+  
+  /* Skip to main content link */
+  .skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--brand-primary);
+    color: var(--brand-bg);
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 9999;
+    transition: top 0.3s;
+  }
+  
+  .skip-to-main:focus {
+    top: 6px;
+  }
+}

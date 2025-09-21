@@ -1,0 +1,144 @@
+/* =========================================
+   INPUTS & FORMS - Phase 9.77
+   ========================================= */
+
+.input {
+  width: 100%;
+  /* ACIER SUR VERRE - Inputs avec teinte indigo */
+  background: color-mix(in srgb, var(--brand-primary) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-silver-mist) 12%, transparent);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: white;
+  font-size: 14px;
+  transition: border-color 200ms ease, background 200ms ease;
+  min-height: 44px;
+}
+
+.input:focus {
+  border-color: color-mix(in srgb, var(--brand-primary) 50%, transparent);
+  background: color-mix(in srgb, var(--brand-primary) 8%, transparent);
+}
+
+/* Glass Input - Unified style for all form inputs */
+.glass-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--brand-primary) 6%, transparent); /* Teinte indigo fumé */
+  border: 1px solid color-mix(in srgb, var(--color-silver-mist) 12%, transparent); /* Bordure acier */
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  color: white;
+  font-size: 14px;
+  transition: border-color 200ms ease, background 200ms ease;
+  min-height: 44px;
+  filter: var(--ambient-shadow-sm);
+}
+
+.glass-input::placeholder {
+  color: color-mix(in srgb, var(--color-silver-mist) 40%, transparent);
+}
+
+.glass-input:focus {
+  border-color: color-mix(in srgb, var(--brand-primary) 50%, transparent);
+  background: color-mix(in srgb, var(--brand-primary) 8%, transparent);
+  outline: none;
+  filter: var(--ambient-shadow-md);
+  transition: all var(--glass-transition-medium);
+}
+
+/* Enhanced input animations */
+.glass-input::placeholder {
+  transition: all var(--glass-transition-medium);
+}
+
+.glass-input:focus::placeholder {
+  transform: translateY(-2px);
+  opacity: 0.6;
+}
+
+.glass-input option {
+  background-color: #1f2937;
+  color: white;
+}
+
+.glass-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Enhanced Progress Bar Animations */
+@keyframes progressShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Progress milestones styling */
+.progress-milestones {
+  position: relative;
+}
+
+.progress-milestones::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255,255,255,0.1) 25%, 
+    rgba(255,255,255,0.1) 75%, 
+    transparent 100%
+  );
+}
+
+/* DatePicker specific styles */
+.dp-select {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px 12px;
+  line-height: 1;
+  outline: none;
+  transition: all 200ms ease;
+  font-size: 12px;
+}
+
+.dp-select:focus {
+  border-color: color-mix(in srgb, var(--brand-primary) 40%, transparent);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dp-select option {
+  background-color: #1f2937;
+  color: white;
+}
+
+.dp-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 200ms ease;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.dp-icon-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.dp-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

@@ -1,0 +1,184 @@
+/* =========================================
+   VISIONOS GRID SYSTEM - Phase 9.77 (Optimized)
+   Neutral containers, safe-areas, meal-scan fixes
+   ========================================= */
+
+/* Neutralize stacking context & keep containers breathable */
+:where(.space-y-6, .space-y-4, .space-y-8, .grid){
+  position: static;
+  transform: none;
+  filter: none;
+  perspective: none;
+  contain: none;
+  isolation: auto;
+  z-index: auto;
+  will-change: auto;
+  overflow: visible;
+}
+
+/* Invisible 8px baseline grid */
+.visionos-grid{ --grid-unit:8px; padding:calc(var(--grid-unit)*2); gap:calc(var(--grid-unit)*2); }
+.visionos-grid-sm{ padding:var(--grid-unit); gap:var(--grid-unit); }
+.visionos-grid-lg{ padding:calc(var(--grid-unit)*3); gap:calc(var(--grid-unit)*3); }
+
+/* Safe Areas */
+.safe-area-top{padding-top:var(--safe-area-top);}
+.safe-area-bottom{padding-bottom:var(--safe-area-bottom);}
+.safe-area-left{padding-left:var(--safe-area-left);}
+.safe-area-right{padding-right:var(--safe-area-right);}
+
+.safe-top{padding-top:var(--safe-area-top);}
+.safe-bottom{padding-bottom:var(--safe-area-bottom);}
+.safe-left{padding-left:var(--safe-area-left);}
+.safe-right{padding-right:var(--safe-area-right);}
+
+/* Touch targets */
+.touch-target{min-width:44px; min-height:44px; display:inline-flex; align-items:center; justify-content:center;}
+button,[role="button"],.glass-card[data-interactive]{touch-action:manipulation;}
+
+/* Enhanced safe-area fallback+env */
+.safe-area-inset-top{padding-top:max(var(--safe-area-top), env(safe-area-inset-top));}
+.safe-area-inset-bottom{padding-bottom:max(var(--safe-area-bottom), env(safe-area-inset-bottom));}
+.safe-area-inset-left{padding-left:max(var(--safe-area-left), env(safe-area-inset-left));}
+.safe-area-inset-right{padding-right:max(var(--safe-area-right), env(safe-area-inset-right));}
+
+/* Keyboard aware */
+.keyboard-safe{padding-bottom:calc(env(safe-area-inset-bottom) + var(--keyboard-height, 0px));}
+
+/* iOS swipe-back & fixed-positioning hardening */
+@supports (-webkit-touch-callout: none){
+  html,body{
+    position:static !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    height:100% !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior-x:none !important;
+    overscroll-behavior-y:auto !important;
+  }
+  #root{
+    position:static !important;
+    overflow:visible !important;
+    min-height:100vh !important;
+    min-height:100dvh !important;
+  }
+  .header-liquid-glass,
+  .fab-nexus-forge,
+  .quick-action-menu,
+  .user-action-panel{
+    position:fixed !important;
+    transform:translate3d(0,0,0) !important;
+    -webkit-transform:translate3d(0,0,0) !important;
+    will-change:transform !important;
+    backface-visibility:hidden !important;
+    -webkit-backface-visibility:hidden !important;
+    -webkit-transform-style:preserve-3d !important;
+    transform-style:preserve-3d !important;
+    -webkit-perspective:1000px !important;
+    perspective:1000px !important;
+    contain:layout style paint !important;
+    isolation:isolate !important;
+  }
+}
+
+/* Children defaults: stay neutral (avoid clipping hover glows) */
+:where(.space-y-6, .space-y-4, .space-y-8, .grid) > *{
+  position:static !important;
+  z-index:auto !important;
+  transform:none !important;
+  filter:none !important;
+  perspective:none !important;
+  contain:none !important;
+  isolation:auto !important;
+  will-change:auto !important;
+  overflow:visible !important;
+}
+
+/* Meal-scan flows — keep everything breathable & non-stacking */
+:is(.meal-scan-step .space-y-6 > *,
+    .meal-scan-step .space-y-4 > *,
+    .meal-analysis-container > *,
+    .meal-results-container > *,
+    .meal-capture-container > *){
+  overflow:visible !important;
+  position:static !important;
+  z-index:auto !important;
+  transform:none !important;
+  filter:none !important;
+  perspective:none !important;
+  contain:none !important;
+  isolation:auto !important;
+}
+
+/* Framer Motion elements in meal scan */
+:is(.meal-scan-step, .meal-analysis-container, .meal-results-container)
+:is(motion-div, [data-framer-component-type="motion.div"]){
+  overflow:visible !important;
+  position:static !important;
+  z-index:auto !important;
+  transform:none !important;
+  filter:none !important;
+  perspective:none !important;
+  contain:none !important;
+  isolation:auto !important;
+}
+
+/* =========================================
+   Responsive content container & sections
+   ========================================= */
+.responsive-content-container{max-width:100%; padding:0;}
+.profile-section-container{padding:1.5rem; margin:0 !important; position:relative !important; overflow:visible !important;}
+.profile-section-container > *{position:relative !important; overflow:visible !important;}
+.glass-card:hover{z-index:20 !important; position:relative !important; overflow:visible !important;}
+.profile-tabs, .profile-tabs .tabs-panel,
+.meals-tabs, .meals-tabs .tabs-panel{overflow:visible !important;}
+
+.meal-scan-flow,
+.meal-scan-step{overflow:visible !important; position:relative !important; z-index:1 !important; min-height:auto !important; padding:0 !important; margin:0 !important;}
+.meal-scan-step > *{position:relative !important; z-index:1 !important;}
+
+:is(.meal-analysis-container, .meal-results-container, .meal-capture-container){
+  overflow:visible !important; position:relative !important; z-index:1 !important; min-height:auto !important; padding:0 !important; margin:0 !important;
+}
+:is(.meal-analysis-container, .meal-results-container, .meal-capture-container) > *{
+  overflow:visible !important; position:relative !important; z-index:1 !important;
+}
+.meal-scan-step .glass-card{overflow:visible !important; position:relative !important; z-index:1 !important;}
+.meal-scan-step .glass-card:hover{
+  z-index:var(--z-dropdown) !important;
+  position:relative !important;
+  overflow:visible !important;
+  transform:translateY(-2px) scale(1.01) translateZ(0) !important;
+}
+
+/* Motion elements inside step */
+.meal-scan-step :is(motion-div, [data-framer-component-type="motion.div"]){
+  overflow:visible !important; position:relative !important; z-index:1 !important; min-height:auto !important;
+}
+
+/* Route container: prevent flex overflow & clipping */
+.route-container{
+  min-width:0; width:100%;
+  overflow:visible !important;
+  position:static !important;
+  transform:none !important;
+  filter:none !important;
+  contain:none !important;
+}
+
+/* Mobile full-width */
+@media (max-width:768px){
+  .responsive-content-container{padding:0 !important; position:static !important; transform:none !important; filter:none !important;}
+  .space-y-6 > *:not(.header-liquid-glass):not(.fab-nexus-forge){
+    margin-left:0 !important; margin-right:0 !important; position:static !important; transform:none !important;
+  }
+  .route-container{padding-left:0 !important; padding-right:0 !important; position:static !important; transform:none !important;}
+}
+
+/* Tablet */
+@media (min-width:769px) and (max-width:1024px){
+  .responsive-content-container{padding:0 !important; position:static !important; transform:none !important;}
+}
+
+/* Avatar section */
+.avatar-section-container{overflow:visible; padding:1rem; position:relative; z-index:1;}

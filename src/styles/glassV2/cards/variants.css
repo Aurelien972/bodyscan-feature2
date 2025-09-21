@@ -1,0 +1,157 @@
+/* =========================================
+   GLASS CARD VARIANTS - Phase 10.0 Harmonized
+   Specialized card variants using centralized variables
+   ========================================= */
+
+/* Nested glass cards for form fields and sub-sections */
+.glass-nested-card {
+  /* CRITICAL: Completely neutral nested cards */
+  position: static !important;
+  z-index: auto !important;
+  transform: none;
+  filter: none;
+  perspective: none;
+  isolation: auto;
+  contain: none;
+  will-change: auto;
+  
+  /* Uses centralized glass system */
+  background: var(--glass-tint-subtle);
+  border: 1px solid var(--glass-border-sm);
+  border-radius: var(--glass-radius-sm);
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+  padding: var(--spacing-lg);
+  transition: 
+    background var(--glass-transition-medium), 
+    border-color var(--glass-transition-medium), 
+    box-shadow var(--glass-transition-medium);
+  box-shadow: var(--glass-shadow-sm);
+}
+
+.glass-nested-card:hover {
+  /* CRITICAL: Create isolated context only on hover */
+  position: relative !important;
+  z-index: var(--z-base) !important;
+  isolation: isolate !important;
+  transform: translateY(-1px) translateZ(0) !important;
+  will-change: var(--will-change-transform) !important;
+  background: var(--glass-tint-medium);
+  border-color: var(--glass-border-md);
+  box-shadow: var(--glass-shadow-md);
+}
+
+/* Field containers within glass cards */
+.glass-field-container {
+  /* CRITICAL: Neutral field containers */
+  position: static !important;
+  z-index: auto !important;
+  transform: none;
+  filter: none;
+  perspective: none;
+  isolation: auto;
+  contain: none;
+  will-change: auto;
+  
+  padding: var(--spacing-lg);
+  border-radius: var(--glass-radius-sm);
+  background: var(--glass-tint-subtle);
+  border: 1px solid var(--glass-border-xs);
+  transition: 
+    background var(--glass-transition-medium), 
+    border-color var(--glass-transition-medium), 
+    box-shadow var(--glass-transition-medium);
+}
+
+.glass-field-container:hover {
+  /* CRITICAL: Create isolated context only on hover */
+  position: relative !important;
+  z-index: 5 !important;
+  isolation: isolate !important;
+  transform: translateY(-1px) translateZ(0) !important;
+  background: var(--glass-tint-medium);
+  border-color: var(--glass-border-sm);
+  box-shadow: var(--glass-shadow-sm);
+}
+
+/* Avatar editor glass - uses centralized variables */
+.avatar-editor-glass {
+  background: var(--glass-tint-primary);
+  border: 1px solid var(--glass-border-base);
+  border-radius: var(--glass-radius-lg);
+  backdrop-filter: blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  padding: var(--spacing-xl);
+  transition: 
+    transform var(--glass-transition-medium), 
+    background var(--glass-transition-medium), 
+    border-color var(--glass-transition-medium), 
+    box-shadow var(--glass-transition-medium);
+  box-shadow: var(--glass-shadow-md);
+}
+
+.avatar-editor-glass:hover {
+  background: var(--glass-tint-enhanced);
+  border-color: var(--glass-border-lg);
+  box-shadow: var(--glass-shadow-lg);
+  transform: translateY(-2px) translateZ(0);
+}
+
+/* Capture cards - Body Scan specific variants */
+.glass-card--capture {
+  position: relative;
+  background: var(--glass-capture-background);
+  border: 1px solid var(--glass-border-base);
+  backdrop-filter: blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  box-shadow: var(--glass-shadow-md);
+  transition: all var(--glass-transition-medium);
+  overflow: hidden;
+  border-radius: var(--glass-radius-xl);
+}
+
+.glass-card--capture-front {
+  background: var(--glass-capture-front-background);
+  border-color: var(--color-body-scan-border);
+  box-shadow: 
+    var(--glass-shadow-md),
+    0 0 16px var(--color-body-scan-glow);
+}
+
+.glass-card--capture-front:hover {
+  background: var(--glass-capture-front-hover);
+  border-color: var(--color-body-scan-border-hover);
+  box-shadow: 
+    var(--glass-shadow-lg),
+    0 0 24px var(--color-body-scan-glow-enhanced);
+  transform: translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0);
+}
+
+.glass-card--capture-profile {
+  background: var(--glass-capture-profile-background);
+  border-color: var(--color-body-scan-accent-border);
+  box-shadow: 
+    var(--glass-shadow-md),
+    0 0 16px var(--color-body-scan-accent-glow);
+}
+
+.glass-card--capture-profile:hover {
+  background: var(--glass-capture-profile-hover);
+  border-color: var(--color-body-scan-accent-border-hover);
+  box-shadow: 
+    var(--glass-shadow-lg),
+    0 0 24px var(--color-body-scan-accent-glow-enhanced);
+  transform: translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0);
+}
+
+/* Enhanced mobile feedback for capture cards */
+@media (hover: none), (pointer: coarse) {
+  .glass-card--capture:active,
+  .glass-card--capture-front:active,
+  .glass-card--capture-profile:active {
+    background: var(--glass-mobile-active-bg) !important;
+    transform: scale(var(--glass-mobile-scale)) translateZ(0) !important;
+    box-shadow: var(--glass-mobile-shadow) !important;
+    transition: all var(--animation-duration-fast) ease-out !important;
+  }
+}

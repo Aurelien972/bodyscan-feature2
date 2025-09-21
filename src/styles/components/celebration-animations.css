@@ -1,0 +1,285 @@
+/* =========================================
+   CELEBRATION ANIMATIONS - Phase 10.0 Consolidated
+   Harmonized with centralized animation system
+   ========================================= */
+
+/* =========================================
+   CELEBRATION ANIMATION CLASSES
+   Uses centralized keyframes (this file + glass-animations.css for forge-glow)
+   ========================================= */
+
+.celebration-ambient-glow {
+  animation: forge-glow var(--animation-duration-slower, 3.2s) var(--animation-ease-smooth) infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.celebration-particle {
+  animation: celebration-particle-float var(--animation-duration-slow, 2.4s) var(--animation-ease-smooth) infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+/* Particle variations */
+.celebration-particle--1  { animation-delay: 0s; }
+.celebration-particle--2  { animation-delay: .2s; }
+.celebration-particle--3  { animation-delay: .4s; }
+.celebration-particle--4  { animation-delay: .6s; }
+.celebration-particle--5  { animation-delay: .8s; }
+.celebration-particle--6  { animation-delay: 1.0s; }
+.celebration-particle--7  { animation-delay: 1.2s; }
+.celebration-particle--8  { animation-delay: 1.4s; }
+.celebration-particle--9  { animation-delay: 1.6s; }
+.celebration-particle--10 { animation-delay: 1.8s; }
+.celebration-particle--11 { animation-delay: 2.0s; }
+.celebration-particle--12 { animation-delay: 2.2s; }
+
+.celebration-ray {
+  animation: celebration-ray-pulse var(--animation-duration-slow, 2.4s) var(--animation-ease-smooth) infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  transform-origin: bottom center;
+}
+.celebration-ray--1{animation-delay:0s;} .celebration-ray--2{animation-delay:.2s;} .celebration-ray--3{animation-delay:.4s;}
+.celebration-ray--4{animation-delay:.6s;} .celebration-ray--5{animation-delay:.8s;} .celebration-ray--6{animation-delay:1s;}
+
+.celebration-icon-outer-glow {
+  animation: glow-pulse var(--animation-duration-slow, 2.4s) var(--animation-ease-smooth) infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.celebration-icon-inner-container {
+  animation: celebration-icon-inner-glow var(--animation-duration-medium, .4s) var(--animation-ease-smooth) infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: box-shadow;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.celebration-icon-pulse-ring {
+  animation: celebration-icon-pulse-ring var(--animation-duration-medium, .4s) ease-out infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.celebration-icon-pulse-ring--1{animation-delay:0s;} .celebration-icon-pulse-ring--2{animation-delay:.4s;} .celebration-icon-pulse-ring--3{animation-delay:.8s;}
+
+.celebration-title-glow {
+  animation: celebration-title-glow-pulse var(--animation-duration-medium, .4s) var(--animation-ease-smooth) infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: text-shadow;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.celebration-cta-shimmer {
+  animation: celebration-cta-shimmer-movement 2.5s linear infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.celebration-cta-sparkle {
+  animation: celebration-cta-sparkle-twinkle 1.5s var(--animation-ease-smooth) infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.celebration-cta-sparkle--1{animation-delay:0s;} .celebration-cta-sparkle--2{animation-delay:.3s;}
+.celebration-cta-sparkle--3{animation-delay:.6s;} .celebration-cta-sparkle--4{animation-delay:.9s;}
+
+.celebration-confetti {
+  animation: celebration-confetti-fall var(--animation-duration-slower, 3.2s) ease-out infinite;
+  transform: var(--gpu-acceleration, translateZ(0));
+  will-change: var(--will-change-transform, transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.celebration-confetti--1{animation-delay:0s;   animation-duration:3s;}
+.celebration-confetti--2{animation-delay:.3s;  animation-duration:3.5s;}
+.celebration-confetti--3{animation-delay:.6s;  animation-duration:4s;}
+.celebration-confetti--4{animation-delay:.9s;  animation-duration:4.5s;}
+.celebration-confetti--5{animation-delay:1.2s; animation-duration:5s;}
+.celebration-confetti--6{animation-delay:1.5s; animation-duration:3.2s;}
+.celebration-confetti--7{animation-delay:1.8s; animation-duration:3.8s;}
+.celebration-confetti--8{animation-delay:2.1s; animation-duration:4.3s;}
+
+/* =========================================
+   CELEBRATION SPECIFIC KEYFRAMES
+   ========================================= */
+
+@keyframes celebration-ambient-glow {
+  0%,100%{ opacity:.15; transform:scale(1) translateZ(0); }
+  50%    { opacity:.25; transform:scale(1.02) translateZ(0); }
+}
+
+@keyframes celebration-ray-pulse {
+  0%,100%{ transform:rotate(0deg) scaleY(.5) translateZ(0); opacity:.2; }
+  33%    { transform:rotate(15deg) scaleY(1.2) translateZ(0); opacity:.8; }
+  66%    { transform:rotate(-15deg) scaleY(1.2) translateZ(0); opacity:.8; }
+}
+
+@keyframes celebration-icon-inner-glow {
+  0%,100%{
+    box-shadow:
+      0 0 60px color-mix(in srgb, var(--celebration-color, #22C55E) 90%, transparent),
+      inset 0 4px 0 rgba(255,255,255,.3);
+  }
+  50%{
+    box-shadow:
+      0 0 80px color-mix(in srgb, var(--celebration-color, #22C55E) 100%, transparent),
+      0 0 120px color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent),
+      inset 0 4px 0 rgba(255,255,255,.4);
+  }
+}
+
+@keyframes celebration-icon-pulse-ring {
+  0%  { transform:scale(1) translateZ(0); opacity:.8; }
+  100%{ transform:scale(2) translateZ(0); opacity:0; }
+}
+
+@keyframes celebration-title-glow-pulse {
+  0%,100%{
+    text-shadow:
+      0 0 20px color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent),
+      0 0 40px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent);
+  }
+  50%{
+    text-shadow:
+      0 0 30px color-mix(in srgb, var(--celebration-color, #22C55E) 80%, transparent),
+      0 0 60px color-mix(in srgb, var(--celebration-color, #22C55E) 60%, transparent),
+      0 0 80px color-mix(in srgb, var(--celebration-color, #22C55E) 40%, transparent);
+  }
+}
+
+@keyframes celebration-cta-shimmer-movement { 0%{transform:translateX(-100%) translateZ(0);} 50%{transform:translateX(100%) translateZ(0);} 100%{transform:translateX(100%) translateZ(0);} }
+
+@keyframes celebration-cta-sparkle-twinkle {
+  0%,100%{ transform:scale(0) translateZ(0); opacity:0; }
+  50%    { transform:scale(1) translateZ(0); opacity:1; }
+}
+
+@keyframes celebration-confetti-fall {
+  0%  { transform:translateY(0) rotate(0deg) translateZ(0); opacity:1; }
+  50% { opacity:.8; }
+  100%{ transform:translateY(calc(100vh + 100px)) rotate(720deg) translateZ(0); opacity:0; }
+}
+
+/* Enhanced particle float for celebration */
+@keyframes celebration-particle-float {
+  0%,100%{ transform:translateY(0) scale(1) translateZ(0); opacity:.8; }
+  25%    { transform:translateY(-10px) scale(1.1) translateZ(0); opacity:1; }
+  50%    { transform:translateY(-5px)  scale(.9)  translateZ(0); opacity:.9; }
+  75%    { transform:translateY(-15px) scale(1.05) translateZ(0); opacity:1; }
+}
+
+/* =========================================
+   MOBILE OPTIMIZATIONS
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* Disable celebration animations on mobile (static states) */
+  .celebration-ambient-glow,
+  .celebration-particle,
+  .celebration-ray,
+  .celebration-icon-outer-glow,
+  .celebration-icon-inner-container,
+  .celebration-icon-pulse-ring,
+  .celebration-title-glow,
+  .celebration-cta-shimmer,
+  .celebration-cta-sparkle,
+  .celebration-confetti { animation: none !important; }
+
+  .celebration-ambient-glow { opacity:.5 !important; transform:scale(1.05) translateZ(0) !important; }
+  .celebration-particle     { opacity:.6 !important; transform:translateY(-30px) scale(1.1) translateZ(0) !important; }
+  .celebration-icon-outer-glow { opacity:.8 !important; transform:scale(1.1) translateZ(0) !important; }
+  .celebration-icon-inner-container {
+    box-shadow: 0 0 60px color-mix(in srgb, var(--celebration-color, #22C55E) 90%, transparent),
+                inset 0 4px 0 rgba(255,255,255,.3) !important;
+  }
+
+  /* Reduce particle/ray/confetti count on mobile */
+  .celebration-particle:nth-child(n+7),
+  .celebration-ray:nth-child(n+5),
+  .celebration-confetti:nth-child(n+5) { display:none; }
+}
+
+/* =========================================
+   REDUCED MOTION SUPPORT
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .celebration-ambient-glow,
+  .celebration-particle,
+  .celebration-ray,
+  .celebration-icon-outer-glow,
+  .celebration-icon-inner-container,
+  .celebration-icon-pulse-ring,
+  .celebration-title-glow,
+  .celebration-cta-shimmer,
+  .celebration-cta-sparkle,
+  .celebration-confetti { animation: none !important; }
+
+  .celebration-ambient-glow { opacity:.4 !important; transform:scale(1.02) translateZ(0) !important; }
+  .celebration-particle     { opacity:.6 !important; transform:translateY(-45px) scale(1.1) translateZ(0) !important; }
+  .celebration-ray          { opacity:.5 !important; transform:rotate(0) scaleY(.8) translateZ(0) !important; }
+  .celebration-icon-outer-glow { opacity:.8 !important; transform:scale(1.15) translateZ(0) !important; }
+  .celebration-icon-inner-container {
+    box-shadow: 0 0 70px var(--celebration-color, #22C55E), var(--glass-3d-hover-inset-top) !important;
+  }
+  .celebration-icon-pulse-ring { opacity:.4 !important; transform:scale(1.5) translateZ(0) !important; }
+  .celebration-title-glow { text-shadow: 0 0 25px var(--celebration-color, #22C55E) !important; }
+  .celebration-cta-shimmer { opacity:.3 !important; transform:translateX(0) translateZ(0) !important; }
+  .celebration-cta-sparkle { opacity:.5 !important; transform:scale(.8) translateZ(0) !important; }
+  .celebration-confetti    { opacity:.3 !important; transform:translateY(50px) rotate(45deg) translateZ(0) !important; }
+}
+
+/* =========================================
+   PERFORMANCE & BATTERY
+   ========================================= */
+
+.celebration-background-effects,
+.celebration-main-content {
+  contain: layout style paint;
+  content-visibility: auto;
+  isolation: isolate;
+}
+.celebration-background-effects { contain-intrinsic-size: 800px; }
+.celebration-main-content       { contain-intrinsic-size: 600px; }
+
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .celebration-ambient-glow { animation-duration: 5s; }
+  .celebration-particle     { animation-duration: 4s; }
+  .celebration-ray          { animation-duration: 3.5s; }
+  .celebration-icon-outer-glow { animation-duration: 3.5s; }
+  .celebration-icon-inner-container { animation-duration: 2.5s; }
+  .celebration-icon-pulse-ring { animation-duration: 2.5s; }
+  .celebration-title-glow   { animation-duration: 2.5s; }
+  .celebration-cta-shimmer  { animation-duration: 3s; }
+  .celebration-cta-sparkle  { animation-duration: 2s; }
+  .celebration-confetti     { animation-duration: 6s; }
+}
+
+/* =========================================
+   LEGACY BROWSER SUPPORT
+   ========================================= */
+
+@supports not (transform: translateZ(0)) {
+  .celebration-ambient-glow,
+  .celebration-particle,
+  .celebration-ray,
+  .celebration-icon-outer-glow,
+  .celebration-icon-inner-container,
+  .celebration-icon-pulse-ring,
+  .celebration-title-glow,
+  .celebration-cta-shimmer,
+  .celebration-cta-sparkle,
+  .celebration-confetti { transform: none !important; }
+}
+
+@supports not (filter: blur(1px)) {
+  .celebration-particle,
+  .celebration-ray { filter: none; opacity:.8; }
+}

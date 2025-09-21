@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&amp;display=swap');
+      .favicon-text {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800;
+        font-style: italic;
+        fill: #FFD400;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+    </style>
+  </defs>
+  
+  <!-- Background circle with subtle gradient -->
+  <circle cx="16" cy="16" r="15" fill="url(#bgGradient)" stroke="#FFD400" stroke-width="1" opacity="0.9"/>
+  
+  <!-- Background gradient -->
+  <defs>
+    <radialGradient id="bgGradient" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- F letter in Montserrat ExtraBold Italic -->
+  <text x="16" y="16" class="favicon-text" font-size="20">F</text>
+  
+  <!-- Subtle glow effect -->
+  <text x="16" y="16" class="favicon-text" font-size="20" opacity="0.3" filter="blur(1px)">F</text>
+</svg>

@@ -1,0 +1,40 @@
+/* =========================================
+   GLASS CARDS INDEX - Phase 10.0 Harmonized
+   Unified glass card system using centralized variables
+   ========================================= */
+
+/* Import all card modules in correct order */
+@import './base.css';
+@import './hover.css';
+@import './interactions.css';
+@import './variants.css';
+
+/* Main glass card classes - now fully harmonized */
+.glass-card {
+  /* All properties are defined in their respective modules using centralized variables */
+}
+
+/* Focus ring for accessibility - uses centralized variables */
+.glass-card:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* Reduced motion support - uses centralized animation variables */
+@media (prefers-reduced-motion: reduce) {
+  .glass-card {
+    transition: background-color var(--animation-duration-medium) ease, 
+                border-color var(--animation-duration-medium) ease !important;
+  }
+  
+  .glass-card:hover {
+    transform: none !important;
+    animation: none !important;
+  }
+  
+  .glass-card::before,
+  .glass-card::after {
+    animation: none !important;
+  }
+}

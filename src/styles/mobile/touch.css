@@ -1,0 +1,167 @@
+/* =========================================
+   TOUCH OPTIMIZATION - Consolidated Mobile Touch Support
+   Fast, accessible touch interactions across devices
+   ========================================= */
+
+html{
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+input, textarea, [contenteditable]{ -webkit-user-select:auto; user-select:auto; }
+
+/* Touch feedback (CSS-only) */
+.touch-feedback{ transition:transform 80ms ease-out, opacity 80ms ease-out; }
+.touch-feedback:active{
+  transform:scale(.94) translateZ(0);
+  opacity:.85;
+  box-shadow:inset 0 6px 12px rgba(0,0,0,.4), inset 0 2px 4px rgba(0,0,0,.6);
+}
+.touch-feedback-css{ transition:transform 80ms ease-out, background 80ms ease-out; }
+.touch-feedback-css:active{
+  transform:scale(.96) translateZ(0);
+  background:rgba(255,255,255,.2) !important;
+}
+
+/* Buttons */
+.btn-touch-feedback:active{
+  transform:scale(.94) translateZ(0);
+  box-shadow:inset 0 4px 8px rgba(0,0,0,.3) !important;
+  transition:all 100ms ease-out;
+}
+
+/* Targets & actions */
+button,[role="button"],.glass-card[data-interactive],.tabs-trigger,.sidebar-item,.nav-item,
+input[type="submit"],input[type="button"]{
+  min-width:var(--touch-target-min,44px) !important;
+  min-height:var(--touch-target-min,44px) !important;
+  position:relative;
+  touch-action:manipulation;
+}
+
+/* Expansion halos */
+.touch-extend::before,.touch-target-expanded::before{
+  content:""; position:absolute; inset:-8px; border-radius:inherit; z-index:-1;
+}
+.touch-target-enhanced{
+  min-width:var(--touch-target-recommended,48px);
+  min-height:var(--touch-target-recommended,48px);
+  display:inline-flex; align-items:center; justify-content:center; position:relative;
+}
+
+/* Scroll UX */
+.momentum-scroll-enhanced{
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  overscroll-behavior:contain;
+  scroll-snap-type:y proximity;
+}
+.modal-scroll-lock{ overscroll-behavior:none; -webkit-overflow-scrolling:auto; }
+
+/* iOS */
+@supports (-webkit-touch-callout: none){
+  body{ overflow-x:hidden; overflow-y:auto; }
+  .ios-optimized{
+    -webkit-overflow-scrolling:touch;
+    -webkit-transform:translate3d(0,0,0);
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ios-keyboard-aware{ height:calc(100vh - env(keyboard-inset-height, 0px)); }
+  input,select,textarea{ font-size:16px !important; }
+}
+
+/* Android */
+@media (pointer:coarse) and (hover:none){
+  .android-optimized{ touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+  .glass-card:active{ background-color:rgba(255,255,255,.1); }
+}
+
+/* Mobile feedback for glass cards */
+@media (max-width:640px){
+  .glass-card:active{
+    background:
+      radial-gradient(circle at center, var(--color-ember-copper,#FF7A45) 6%, transparent 70%),
+      rgba(255,255,255,.15) !important;
+    transform:scale(.94) translateZ(0) !important;
+    box-shadow:
+      inset 0 6px 12px rgba(0,0,0,.4) !important,
+      inset 0 2px 4px rgba(0,0,0,.6) !important,
+      0 0 20px var(--color-ember-copper,#FF7A45) !important;
+    opacity:.85 !important;
+    transition:all 100ms ease-out !important;
+  }
+  .tab-content{
+    max-height:calc(100vh - var(--header-height,80px) - var(--tabs-height,60px));
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+  }
+  .glass-card-child{ padding:.75rem; }
+}
+
+/* Mobile full-width */
+@media (max-width:768px){
+  .responsive-content-container{padding:0 !important; position:static !important; transform:none !important; filter:none !important;}
+  .space-y-6 > *:not(.header-liquid-glass):not(.fab-nexus-forge){
+    margin-left:0 !important; margin-right:0 !important; position:static !important; transform:none !important;
+  }
+  .route-container{padding-left:0 !important; padding-right:0 !important; position:static !important; transform:none !important;}
+
+  /* IMPORTANT: garder les particules actives et visibles sur mobile */
+  .cosmic-forge-particles{ display:block !important; opacity:.8 !important; }
+  .forge-particle{ display:block !important; opacity:.6 !important; }
+  /* On laisse la durée aux variables JS (--duration) pour fluidité */
+}
+
+/* Accessibility */
+@media (prefers-contrast: high){
+  .touch-feedback:active,.touch-feedback-css:active{
+    outline:3px solid var(--brand-primary, #3D13B3);
+    outline-offset:2px;
+  }
+}
+
+/* Larger targets on reduced-data */
+@media (prefers-reduced-data: reduce){
+  button,[role="button"],.glass-card[data-interactive]{
+    min-width:calc(var(--touch-target-min,44px) * 1.2);
+    min-height:calc(var(--touch-target-min,44px) * 1.2);
+  }
+}
+
+/* Low-end throttle */
+.low-performance-device .touch-feedback:active,
+.low-performance-device .touch-feedback-css:active{
+  transform:none !important;
+  box-shadow:none !important;
+  background:rgba(255,255,255,.1) !important;
+  transition:background 100ms ease !important;
+}
+
+/* Gestures */
+.swipe-container{ touch-action:pan-x; -webkit-overflow-scrolling:touch; overscroll-behavior-x:none; }
+.swipe-vertical{ touch-action:pan-y; -webkit-overflow-scrolling:touch; overscroll-behavior-y:contain; }
+.pinch-zoom-enabled{ touch-action:pinch-zoom; }
+.touch-action-none{ touch-action:none; }
+
+/* Scrollbars */
+.touch-scroll-optimized{
+  -webkit-overflow-scrolling:touch; scroll-behavior:smooth; overscroll-behavior:contain;
+  scroll-snap-type:y proximity; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.2) transparent;
+}
+.touch-scroll-optimized::-webkit-scrollbar{ width:8px; height:8px; }
+.touch-scroll-optimized::-webkit-scrollbar-track{ background:transparent; }
+.touch-scroll-optimized::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.2); border-radius:4px; border:1px solid rgba(255,255,255,.1);
+}
+.touch-scroll-optimized::-webkit-scrollbar-thumb:active{ background:rgba(255,255,255,.3); }
+
+/* Ripple */
+.touch-ripple{ position:relative; overflow:hidden; }
+.touch-ripple::before{
+  content:""; position:absolute; top:50%; left:50%; width:0; height:0; border-radius:50%;
+  background:rgba(255,255,255,.3); transform:translate(-50%,-50%);
+  transition:width .3s ease, height .3s ease; pointer-events:none;
+}
+.touch-ripple:active::before{ width:200%; height:200%; }

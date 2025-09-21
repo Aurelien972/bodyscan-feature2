@@ -1,0 +1,290 @@
+/* =========================================
+   MOTION & REDUCED MOTION - Phase 10.0 Harmonized
+   Consolidated motion effects using centralized variables
+   ========================================= */
+
+/* =========================================
+   MOTION CLASSES - USING CENTRALIZED ANIMATIONS
+   ========================================= */
+
+/* Spatial Icon Premium Hover - Uses centralized variables */
+.spatial-icon {
+  position: relative;
+  transition: transform var(--glass-transition-fast);
+}
+
+/* Hover Lift - Uses centralized interaction scales */
+.hover-lift { 
+  transition: transform var(--glass-transition-fast), box-shadow var(--glass-transition-medium); 
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift:hover { 
+    transform: translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0); 
+  }
+  .hover-lift:active { 
+    transform: translateY(0) scale(var(--interaction-scale-active)) translateZ(0); 
+  }
+}
+
+/* Glass Shimmer Effect - Uses centralized keyframes */
+.glass-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255,255,255,0.4), 
+    transparent
+  );
+  animation: shimmer-pass 2s var(--animation-ease-smooth) infinite;
+  will-change: var(--will-change-transform);
+  border-radius: inherit;
+}
+
+@keyframes shimmer-pass {
+  0% { transform: translateX(-100%) translateZ(0); }
+  100% { transform: translateX(200%) translateZ(0); }
+}
+
+/* =========================================
+   TWINFORGE LOGO ANIMATIONS - HARMONIZED
+   ========================================= */
+
+/* Logo style using centralized variables */
+.header-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-xl);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--brand-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  text-shadow: none;
+  will-change: var(--will-change-transform), opacity;
+  transform: var(--gpu-acceleration);
+  transition: transform var(--glass-transition-fast), opacity var(--glass-transition-fast);
+}
+
+.header-logo:hover {
+  transform: scale(var(--interaction-scale-hover)) translateZ(0);
+  opacity: 0.95;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--color-plasma-cyan) 6%, transparent);
+}
+
+/* Dual Ingot Symbol Animations - Uses centralized variables */
+.dual-ingot-symbol {
+  position: relative;
+  display: inline-block;
+  transition: filter var(--glass-transition-fast);
+}
+
+.dual-ingot-symbol:hover {
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-plasma-cyan) 6%, transparent));
+}
+
+/* Ignition Animation - Copper line traversal */
+@keyframes copper-ignition-line {
+  0% {
+    transform: translateX(-100%) translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) translateZ(0);
+    opacity: 1;
+  }
+}
+
+/* Ignition Animation - Cyan halo diffusion */
+@keyframes cyan-halo-diffusion {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateZ(0);
+  }
+  50% {
+    opacity: 0.08;
+    transform: scale(1.2) translateZ(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) translateZ(0);
+  }
+}
+
+/* Ignition state classes */
+.dual-ingot-ignition .copper-ignition-line {
+  animation: copper-ignition-line 160ms var(--animation-ease-glass) forwards;
+}
+
+.dual-ingot-ignition .cyan-glow-overlay {
+  animation: cyan-halo-diffusion 220ms var(--animation-ease-glass) forwards;
+  animation-delay: 160ms;
+}
+
+/* Success Major Animation - Copper flash */
+@keyframes copper-flash {
+  0% {
+    opacity: 0;
+    transform: scale(1) translateZ(0);
+  }
+  30% {
+    opacity: 0.18;
+    transform: scale(1.05) translateZ(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1) translateZ(0);
+  }
+}
+
+/* Success Major Animation - Cyan cooling */
+@keyframes cyan-cooling {
+  0% {
+    opacity: 0.10;
+    transform: scale(1.1) translateZ(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3) translateZ(0);
+  }
+}
+
+/* Success Major state classes */
+.dual-ingot-success-major .copper-flash-overlay {
+  animation: copper-flash 140ms ease-out forwards;
+}
+
+.dual-ingot-success-major .cyan-cooling-overlay {
+  animation: cyan-cooling 220ms ease-out forwards;
+  animation-delay: 140ms;
+}
+
+/* =========================================
+   MOBILE OPTIMIZATIONS - HARMONIZED
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* CRITICAL: Disable icon animations on mobile */
+  .spatial-icon,
+  .icon-container,
+  .breathing-icon,
+  .icon-pulse-css,
+  .icon-breathing-css {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .spatial-icon:hover {
+    transform: none !important;
+  }
+  
+  .spatial-icon:hover::after {
+    opacity: 0 !important;
+  }
+  
+  /* Keep only essential loaders */
+  .icon-spin-css.loader-essential {
+    animation: icon-spin-css 2s linear infinite !important;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION SUPPORT - GLOBAL
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all motion effects */
+  .spatial-icon,
+  .icon-container,
+  .breathing-icon,
+  .icon-pulse-css,
+  .icon-breathing-css,
+  .glass-shimmer,
+  .hover-lift {
+    animation: none !important;
+    transition: background-color var(--animation-duration-fast) ease, 
+                color var(--animation-duration-fast) ease !important;
+  }
+  
+  .spatial-icon:hover,
+  .hover-lift:hover {
+    transform: none !important;
+  }
+  
+  .glass-shimmer::before {
+    animation: none !important;
+    opacity: 0.3 !important;
+  }
+  
+  /* Simplified loader for reduced motion */
+  .loader-essential {
+    animation: icon-spin-css 3s linear infinite !important;
+  }
+  
+  /* Override all transition durations */
+  * {
+    transition-duration: 0.1s !important;
+  }
+}
+
+/* =========================================
+   PERFORMANCE OPTIMIZATIONS
+   ========================================= */
+
+/* GPU acceleration for all motion elements */
+.spatial-icon,
+.hover-lift,
+.glass-shimmer,
+.header-logo,
+.dual-ingot-symbol {
+  transform: var(--gpu-acceleration);
+  backface-visibility: hidden;
+}
+
+/* Will-change optimization */
+.spatial-icon:hover,
+.hover-lift:hover,
+.header-logo:hover {
+  will-change: var(--will-change-transform);
+}
+
+/* Containment for motion sections */
+.motion-heavy-section {
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 400px;
+}
+
+/* =========================================
+   LEGACY BROWSER SUPPORT
+   ========================================= */
+
+/* Fallback for browsers without transform 3D support */
+@supports not (transform: translateZ(0)) {
+  .spatial-icon,
+  .hover-lift,
+  .header-logo,
+  .dual-ingot-symbol {
+    transform: none !important;
+  }
+}
+
+/* Fallback for browsers without will-change support */
+@supports not (will-change: transform) {
+  .spatial-icon,
+  .hover-lift,
+  .header-logo {
+    will-change: auto;
+  }
+}

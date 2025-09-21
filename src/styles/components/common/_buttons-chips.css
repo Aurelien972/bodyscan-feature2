@@ -1,0 +1,173 @@
+/* =========================================
+   BUTTONS & CHIPS – Harmonized v10
+   (deduped, Safari-safe pill rounding)
+   ========================================= */
+
+/* Base glass button */
+.btn-glass{
+  --_radius: var(--glass-radius-pill);
+  background:var(--glass-button-background);
+  color:var(--text-primary);
+  border:1px solid var(--glass-border-base);
+  border-radius:var(--_radius);
+  padding:var(--spacing-sm) var(--spacing-xl);
+  min-height:44px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:var(--font-weight-semibold);
+  box-shadow:var(--glass-shadow-sm);
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  -webkit-backdrop-filter:blur(var(--glass-blur-md)) saturate(var(--glass-saturate-md));
+  transition:
+    transform var(--animation-duration-medium) var(--animation-ease-glass),
+    background var(--glass-transition-medium),
+    box-shadow var(--glass-transition-medium),
+    border-color var(--glass-transition-medium);
+  /* Safari pill fix */
+  -webkit-mask-image:-webkit-radial-gradient(white, black);
+          mask-image:radial-gradient(white, black);
+}
+
+/* Primary */
+.btn-glass--primary{
+  color:#fff !important;
+  background:linear-gradient(135deg,
+              color-mix(in srgb, var(--brand-primary) 85%, transparent),
+              color-mix(in srgb, var(--color-plasma-cyan) 70%, transparent));
+  border:2px solid color-mix(in srgb, var(--brand-primary) 60%, transparent);
+  box-shadow:0 12px 40px color-mix(in srgb, var(--brand-primary) 40%, transparent),
+             0 0 60px color-mix(in srgb, var(--brand-primary) 30%, transparent),
+             inset 0 3px 0 rgba(255,255,255,.4);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+}
+.btn-glass--primary *{color:#fff !important;}
+
+/* Secondary nav */
+.btn-glass--secondary-nav{
+  background:var(--glass-button-secondary-background);
+  border:1px solid var(--glass-border-sm);
+  color:var(--text-secondary);
+  font-weight:var(--font-weight-medium);
+  box-shadow:none;
+  backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+  -webkit-backdrop-filter:blur(var(--glass-blur-sm)) saturate(var(--glass-saturate-sm));
+}
+
+/* Warning */
+.btn-glass--warning{
+  color:#fff !important;
+  background:var(--glass-button-warning-background);
+  border:1px solid var(--glass-button-warning-border);
+  box-shadow:var(--glass-button-warning-shadow);
+  font-weight:var(--font-weight-bold);
+}
+
+/* Hover (pointer fine) */
+@media (hover:hover) and (pointer:fine){
+  .btn-glass:hover{
+    transform:translateY(-2px) scale(var(--interaction-scale-hover));
+    box-shadow:var(--glass-shadow-lg);
+  }
+  .btn-glass--primary:hover{
+    background:linear-gradient(135deg,
+                color-mix(in srgb, var(--brand-primary) 90%, transparent),
+                color-mix(in srgb, var(--color-plasma-cyan) 80%, transparent));
+    box-shadow:0 16px 50px color-mix(in srgb, var(--brand-primary) 50%, transparent),
+               0 0 80px color-mix(in srgb, var(--brand-primary) 40%, transparent),
+               inset 0 3px 0 rgba(255,255,255,.5);
+    border-color:color-mix(in srgb, var(--color-plasma-cyan) 70%, transparent);
+    transform:translateY(-3px) scale(1.03);
+  }
+  .btn-glass--secondary-nav:hover{
+    background:var(--glass-button-secondary-hover);
+    border-color:var(--glass-border-md);
+    color:var(--text-primary);
+    transform:translateY(-1px) scale(var(--interaction-scale-hover));
+    box-shadow:var(--glass-shadow-sm);
+  }
+  .btn-glass--warning:hover{
+    background:var(--glass-button-warning-hover);
+    box-shadow:var(--glass-button-warning-shadow-hover);
+    transform:translateY(-3px) scale(1.03);
+    border-color:var(--glass-button-warning-border-hover);
+  }
+}
+
+/* Touch feedback */
+@media (hover:none), (pointer:coarse){
+  .btn-glass:active{
+    background:var(--glass-mobile-button-active) !important;
+    transform:scale(var(--glass-mobile-scale)) translateZ(0) !important;
+    box-shadow:var(--glass-mobile-shadow) !important;
+    transition:all var(--animation-duration-fast) ease-out !important;
+  }
+  .btn-glass--primary:active{
+    background:linear-gradient(135deg,
+                color-mix(in srgb, var(--brand-primary) 75%, transparent),
+                color-mix(in srgb, var(--color-plasma-cyan) 60%, transparent)) !important;
+    box-shadow:inset 0 4px 8px rgba(0,0,0,.4),
+               0 8px 32px color-mix(in srgb, var(--brand-primary) 30%, transparent) !important;
+  }
+  .btn-glass--secondary-nav:active{
+    background:var(--glass-button-secondary-mobile-active) !important;
+    transform:scale(.95) translateZ(0) !important;
+  }
+  .btn-glass--warning:active{
+    background:var(--glass-button-warning-mobile-active) !important;
+    box-shadow:var(--glass-mobile-shadow-warning) !important;
+  }
+}
+
+/* Breathing effect (optional) */
+.btn-breathing{position:relative;overflow:hidden;}
+.btn-breathing::before{
+  content:'';position:absolute;inset:-2px;border-radius:inherit;
+  background:var(--glass-breathing-glow);opacity:0;z-index:-1;
+  transition:opacity var(--animation-duration-slow) var(--animation-ease-smooth);
+}
+@media (hover:hover) and (pointer:fine){
+  .btn-breathing:hover::before{opacity:1;animation:breathing-glow var(--animation-duration-slower) var(--animation-ease-smooth) infinite;}
+}
+
+/* Chips */
+.chip{
+  border:1px solid var(--glass-border-base);
+  background:var(--glass-opacity-base);
+  backdrop-filter:blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  padding:6px 16px;border-radius:var(--glass-radius-pill);
+  transition:background var(--glass-transition-medium), border-color var(--glass-transition-medium), transform var(--glass-transition-medium);
+  font-size:var(--font-size-sm);font-weight:var(--font-weight-medium);
+  color:var(--text-secondary);
+  min-height:44px;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;box-shadow:var(--glass-shadow-sm);
+  /* Safari pill fix */
+  -webkit-mask-image:-webkit-radial-gradient(white, black);
+          mask-image:radial-gradient(white, black);
+}
+.chip:hover{
+  background:var(--glass-opacity-lg);border-color:var(--glass-hover-border);
+  box-shadow:var(--glass-shadow-md);
+  transform:translateY(-1px) scale(var(--interaction-scale-hover));
+}
+.chip--on{
+  background:var(--glass-chip-active-background);
+  border-color:var(--glass-chip-active-border);
+  color:var(--brand-primary);
+  box-shadow:var(--glass-chip-active-shadow);
+}
+@media (hover:none), (pointer:coarse){
+  .chip:active{
+    background:var(--glass-mobile-active-bg) !important;
+    transform:scale(var(--glass-mobile-scale)) translateZ(0) !important;
+    box-shadow:var(--glass-mobile-shadow) !important;
+  }
+  .chip--on:active{
+    background:var(--glass-chip-mobile-active) !important;
+    box-shadow:var(--glass-mobile-shadow-accent) !important;
+  }
+}
+
+/* Disabled */
+.btn-glass:disabled,
+.chip:disabled{opacity:var(--disabled-opacity);cursor:not-allowed;transform:none !important;}

@@ -1,0 +1,190 @@
+/* =========================================
+   BODYSCAN VARIABLES - Module Spécialisé
+   Variables CSS spécifiques au BodyScan uniquement
+   ========================================= */
+
+:root {
+  /* =========================================
+     COULEURS SPÉCIFIQUES BODYSCAN
+     ========================================= */
+  
+  /* Couleurs principales du BodyScan */
+  --color-body-scan-primary: #8B5CF6;      /* Purple - Couleur principale */
+  --color-body-scan-secondary: #3D13B3;    /* Deep Forge Indigo - Couleur secondaire */
+  --color-body-scan-accent: #A855F7;       /* Light Purple - Couleur d'accent */
+  --color-body-scan-success: #22C55E;      /* Vert - Succès */
+  --color-body-scan-warning: #F59E0B;      /* Orange - Avertissement */
+  --color-body-scan-error: #EF4444;        /* Rouge - Erreur */
+  
+  /* Couleurs de bordure et de fond */
+  --color-body-scan-border: color-mix(in srgb, var(--color-body-scan-primary) 25%, transparent);
+  --color-body-scan-border-hover: color-mix(in srgb, var(--color-body-scan-primary) 35%, transparent);
+  --color-body-scan-glow: color-mix(in srgb, var(--color-body-scan-primary) 15%, transparent);
+  --color-body-scan-glow-enhanced: color-mix(in srgb, var(--color-body-scan-primary) 25%, transparent);
+  
+  /* Couleurs d'accent pour les variantes */
+  --color-body-scan-accent-border: color-mix(in srgb, var(--color-body-scan-accent) 25%, transparent);
+  --color-body-scan-accent-border-hover: color-mix(in srgb, var(--color-body-scan-accent) 35%, transparent);
+  --color-body-scan-accent-glow: color-mix(in srgb, var(--color-body-scan-accent) 15%, transparent);
+  --color-body-scan-accent-glow-enhanced: color-mix(in srgb, var(--color-body-scan-accent) 25%, transparent);
+  
+  /* Couleurs de teinte pour les fonds */
+  --color-body-scan-tint: color-mix(in srgb, var(--color-body-scan-primary) 8%, transparent);
+  --color-body-scan-tint-medium: color-mix(in srgb, var(--color-body-scan-primary) 12%, transparent);
+  --color-body-scan-tint-enhanced: color-mix(in srgb, var(--color-body-scan-primary) 15%, transparent);
+  
+  /* =========================================
+     VARIABLES D'ANIMATION BODYSCAN
+     ========================================= */
+  
+  /* Vitesses d'animation spécifiques */
+  --scan-line-speed: 2s;
+  --grid-pulse-speed: 2s;
+  --keypoint-pulse-speed: 1.5s;
+  --analysis-zone-speed: 3s;
+  --ai-focus-speed: 4s;
+  --data-particle-speed: 4s;
+  
+  /* Opacités pour les overlays */
+  --scan-line-opacity: 0.7;
+  --grid-opacity-base: 0.25;
+  --grid-opacity-pulse: 0.35;
+  --keypoint-opacity-base: 0.8;
+  --keypoint-opacity-pulse: 1.0;
+  --ai-focus-opacity: 0.2;
+  --ai-focus-opacity-peak: 0.5;
+  
+  /* Tailles des éléments d'analyse */
+  --keypoint-size: 8px;
+  --analysis-zone-size: 64px;
+  --data-particle-size: 12px;
+  --scan-line-width: 4px;
+  
+  /* =========================================
+     VARIABLES DE CAPTURE
+     ========================================= */
+  
+  /* Guide de capture */
+  --photo-guide-frame-width: min(300px, 65vw);
+  --photo-guide-frame-height: min(400px, 60vh);
+  --photo-guide-border-color: rgba(255, 255, 255, 0.3);
+  --photo-guide-bg-color: rgba(255, 255, 255, 0.03);
+  --photo-guide-breathing-duration: 4s;
+  
+  /* Status badges */
+  --capture-status-badge-padding: 0.5rem 0.75rem;
+  --capture-status-badge-radius: var(--glass-radius-md);
+  --capture-status-icon-size: 1rem;
+  
+  /* Camera controls */
+  --camera-control-size: 4rem;
+  --camera-control-size-sm: 4.5rem;
+  --camera-capture-size: 6rem;
+  --camera-capture-size-sm: 7rem;
+  
+  /* =========================================
+     VARIABLES DE CÉLÉBRATION
+     ========================================= */
+  
+  /* Couleurs de célébration dynamiques */
+  --celebration-color: #22C55E; /* Valeur par défaut, surchargée dynamiquement */
+  --celebration-particle-count: 12;
+  --celebration-ray-count: 6;
+  --celebration-confetti-count: 8;
+  
+  /* Timings de célébration */
+  --celebration-entrance-duration: 1.2s;
+  --celebration-particle-duration: 3s;
+  --celebration-ray-duration: 2.5s;
+  --celebration-glow-duration: 2s;
+  --celebration-confetti-duration: 4s;
+  
+  /* Tailles des éléments de célébration */
+  --celebration-icon-size: 10rem;
+  --celebration-particle-size: 0.75rem;
+  --celebration-ray-width: 0.25rem;
+  --celebration-ray-height: 5rem;
+  --celebration-confetti-width: 0.5rem;
+  --celebration-confetti-height: 1.5rem;
+  
+  /* =========================================
+     VARIABLES DE REVUE
+     ========================================= */
+  
+  /* Viewer 3D */
+  --avatar-viewer-height: 600px;
+  --avatar-viewer-border-radius: var(--glass-radius-xl);
+  --avatar-viewer-bg: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+  
+  /* Contrôles morphologiques */
+  --morph-control-button-size: 2.5rem;
+  --morph-control-spacing: 1rem;
+  --morph-adjustment-step: 0.05;
+  
+  /* Cartes de mesures */
+  --measurement-card-min-height: 120px;
+  --measurement-summary-card-height: 140px;
+  
+  /* =========================================
+     VARIABLES RESPONSIVES
+     ========================================= */
+  
+  /* Mobile adjustments */
+  --photo-guide-frame-width-mobile: min(280px, 80vw);
+  --photo-guide-frame-height-mobile: min(360px, 70vh);
+  --avatar-viewer-height-mobile: 400px;
+  --celebration-particle-count-mobile: 6;
+  --celebration-icon-size-mobile: 6rem;
+  --camera-control-size-mobile: 3.5rem;
+  --camera-capture-size-mobile: 5.5rem;
+  
+  /* Tablet adjustments */
+  --photo-guide-frame-width-tablet: min(320px, 60vw);
+  --photo-guide-frame-height-tablet: min(420px, 65vh);
+  --avatar-viewer-height-tablet: 500px;
+  
+  /* Desktop adjustments */
+  --photo-guide-frame-width-desktop: min(380px, 45vw);
+  --photo-guide-frame-height-desktop: min(500px, 50vh);
+  --avatar-viewer-height-desktop: 500px;
+}
+
+/* =========================================
+   RESPONSIVE VARIABLE OVERRIDES
+   ========================================= */
+
+@media (max-width: 768px) {
+  :root {
+    --photo-guide-frame-width: var(--photo-guide-frame-width-mobile);
+    --photo-guide-frame-height: var(--photo-guide-frame-height-mobile);
+    --avatar-viewer-height: var(--avatar-viewer-height-mobile);
+    --celebration-particle-count: var(--celebration-particle-count-mobile);
+    --celebration-icon-size: var(--celebration-icon-size-mobile);
+    --camera-control-size: var(--camera-control-size-mobile);
+    --camera-capture-size: var(--camera-capture-size-mobile);
+    
+    /* Réduction des animations sur mobile */
+    --scan-line-speed: 3s;
+    --grid-pulse-speed: 3s;
+    --keypoint-pulse-speed: 2s;
+    --celebration-particle-duration: 4s;
+    --celebration-glow-duration: 3s;
+    --celebration-ray-duration: 3.5s;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --photo-guide-frame-width: var(--photo-guide-frame-width-tablet);
+    --photo-guide-frame-height: var(--photo-guide-frame-height-tablet);
+    --avatar-viewer-height: var(--avatar-viewer-height-tablet);
+  }
+}
+
+@media (min-width: 1025px) {
+  :root {
+    --photo-guide-frame-width: var(--photo-guide-frame-width-desktop);
+    --photo-guide-frame-height: var(--photo-guide-frame-height-desktop);
+    --avatar-viewer-height: var(--avatar-viewer-height-desktop);
+  }
+}

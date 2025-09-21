@@ -1,0 +1,440 @@
+/* =========================================
+   GLASS V2 ANIMATIONS - Phase 10.0 Consolidated
+   Centralized animation system using unified variables
+   ========================================= */
+
+:root {
+  /* =========================================
+     ANIMATION SYSTEM - CONSOLIDATED
+     Uses centralized animation variables from variables.css
+     ========================================= */
+
+  /* Safety fallbacks to avoid invalid var() */
+  --will-change-transform: transform;
+
+  /* Legacy Animation Mappings */
+  --glass-ease: var(--animation-ease-glass);
+  --glass-ease-bounce: var(--animation-ease-bounce);
+  --glass-ease-visionos: var(--animation-ease-smooth);
+  --glass-ease-gentle: var(--animation-ease-spring);
+
+  /* Transition Mappings */
+  --glass-transition-fast: var(--animation-duration-fast) var(--animation-ease-glass);
+  --glass-transition-medium: var(--animation-duration-medium) var(--animation-ease-glass);
+  --glass-transition-slow: var(--animation-duration-slow) var(--animation-ease-glass);
+
+  /* Micro-interactions */
+  --tap-scale: var(--interaction-scale-tap);
+  --tap-opacity: var(--interaction-opacity-active);
+  --halo-glow: 0 0 20px rgba(255, 255, 255, 0.15);
+  --reflection-gradient: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(255,255,255,0.04) 100%);
+
+  /* Ambient Shadows - GPU Friendly */
+  --ambient-shadow-dynamic: var(--glass-shadow-sm);
+  --ambient-shadow-hover: var(--glass-shadow-lg);
+
+  /* =========================================
+     BODY SCAN ANIMATION EXTENSIONS
+     ========================================= */
+  --body-scan-entrance-duration: 0.8s;
+  --body-scan-processing-duration: 2s;
+  --body-scan-success-duration: 1.2s;
+
+  --analysis-scan-speed: 2s;
+  --analysis-grid-speed: 2s;
+  --analysis-keypoint-speed: 1.5s;
+  --analysis-zone-speed: 3s;
+  --analysis-focus-speed: 4s;
+  --analysis-particle-speed: 4s;
+}
+
+/* =========================================
+   CORE ANIMATION KEYFRAMES - CONSOLIDATED
+   ========================================= */
+
+@keyframes shimmer-visionos { 0%{background-position:-200% 0;} 100%{background-position:200% 0;} }
+@keyframes progressShimmer  { 0%{transform:translateX(-100%) translateZ(0);} 100%{transform:translateX(200%) translateZ(0);} }
+
+@keyframes breathing-glow {
+  0%,100%{ transform:scale(1) translateZ(0); opacity:.6; }
+  50%    { transform:scale(1.05) translateZ(0); opacity:1; }
+}
+
+@keyframes icon-breathing-css {
+  0%,100%{ transform:scale(1) translateZ(0); }
+  50%    { transform:scale(1.03) translateZ(0); }
+}
+
+@keyframes pulse-visionos {
+  0%,100%{ transform:scale(1) translateZ(0); opacity:1; }
+  50%    { transform:scale(1.05) translateZ(0); opacity:.8; }
+}
+
+@keyframes icon-pulse-css {
+  0%,100%{ transform:scale(1) translateZ(0); opacity:.8; }
+  50%    { transform:scale(1.1) translateZ(0); opacity:1; }
+}
+
+@keyframes icon-spin-css { from{transform:rotate(0deg) translateZ(0);} to{transform:rotate(360deg) translateZ(0);} }
+@keyframes spin-smooth   { from{transform:rotate(0deg) translateZ(0);} to{transform:rotate(360deg) translateZ(0);} }
+
+@keyframes glow-pulse {
+  0%,100%{ box-shadow:0 0 20px var(--glow-color, rgba(255,255,255,.3)); }
+  50%    { box-shadow:0 0 30px var(--glow-color, rgba(255,255,255,.5)); }
+}
+
+@keyframes float-gentle {
+  0%,100%{ transform:translateY(0) translateX(0) scale(1) translateZ(0); opacity:.6; }
+  50%    { transform:translateY(-8px) translateX(2px) scale(1.1) translateZ(0); opacity:1; }
+}
+
+@keyframes particle-float {
+  0%,100%{ transform:translateY(0) translateX(0) scale(1) translateZ(0); opacity:.6; }
+  25%    { transform:translateY(-8px) translateX(4px) scale(1.2) translateZ(0); opacity:.9; }
+  50%    { transform:translateY(-12px) translateX(-2px) scale(1.3) translateZ(0); opacity:1; }
+  75%    { transform:translateY(-8px) translateX(-4px) scale(1.1) translateZ(0); opacity:.8; }
+}
+
+@keyframes scale-enter { from{opacity:0; transform:scale(.9) translateZ(0);} to{opacity:1; transform:scale(1) translateZ(0);} }
+@keyframes slide-enter { from{opacity:0; transform:translateY(20px) translateZ(0);} to{opacity:1; transform:translateY(0) translateZ(0);} }
+@keyframes flash-active{ 0%{opacity:1;} 100%{opacity:0;} }
+
+/* =========================================
+   ANIMATIONS BODYSCAN GLOBALES
+   ========================================= */
+
+@keyframes bodyscan-scan-line {
+  0%{transform:translateY(-100%); opacity:0;}
+  10%,90%{ opacity:var(--scan-line-opacity); }
+  100%{transform:translateY(100vh); opacity:0;}
+}
+
+@keyframes bodyscan-grid-pulse   { 0%,100%{opacity:var(--grid-opacity-base);} 50%{opacity:var(--grid-opacity-pulse);} }
+@keyframes bodyscan-keypoint-pulse{ 0%,100%{opacity:var(--keypoint-opacity-base); transform:scale(1);} 50%{opacity:var(--keypoint-opacity-pulse); transform:scale(1.2);} }
+
+@keyframes bodyscan-analysis-zone {
+  0%{transform:scale(.8); opacity:0;}
+  50%{transform:scale(1.1); opacity:.8;}
+  100%{transform:scale(1); opacity:.6;}
+}
+
+@keyframes bodyscan-ai-focus {
+  0%,100%{ opacity:var(--ai-focus-opacity); transform:scale(1); }
+  50%    { opacity:var(--ai-focus-opacity-peak); transform:scale(1.05); }
+}
+
+@keyframes bodyscan-data-particle {
+  0%{ transform:translateY(0) scale(0); opacity:0; }
+  10%{ transform:translateY(-10px) scale(1); opacity:1; }
+  90%{ transform:translateY(-50px) scale(1); opacity:1; }
+  100%{ transform:translateY(-60px) scale(0); opacity:0; }
+}
+
+/* =========================================
+   BODY SCAN SPECIFIC KEYFRAMES
+   ========================================= */
+
+@keyframes body-scan-entrance {
+  from{opacity:0; transform:translateY(30px) scale(.95) translateZ(0);}
+  to  {opacity:1; transform:translateY(0)    scale(1)   translateZ(0);}
+}
+
+@keyframes photo-analysis-entrance {
+  from{opacity:0; transform:scale(.9) translateZ(0); filter:blur(4px);}
+  to  {opacity:1; transform:scale(1)  translateZ(0); filter:blur(0);}
+}
+
+@keyframes analysis-processing-pulse {
+  0%,100%{ opacity:.7; transform:scale(1) translateZ(0); }
+  50%    { opacity:1;  transform:scale(1.05) translateZ(0); }
+}
+
+@keyframes body-scan-success-celebration {
+  0%  {opacity:0; transform:scale(.8) rotate(-10deg) translateZ(0);}
+  50% {opacity:1; transform:scale(1.1) rotate(5deg)  translateZ(0);}
+  100%{opacity:1; transform:scale(1)   rotate(0)     translateZ(0);}
+}
+
+@keyframes morphological-analysis-glow {
+  0%,100%{
+    box-shadow:
+      0 0 40px color-mix(in srgb, var(--color-body-scan-primary) 30%, transparent),
+      var(--glass-3d-inset-top);
+  }
+  50%{
+    box-shadow:
+      0 0 60px color-mix(in srgb, var(--color-body-scan-primary) 50%, transparent),
+      0 0 120px color-mix(in srgb, var(--color-body-scan-accent) 25%, transparent),
+      var(--glass-3d-hover-inset-top);
+  }
+}
+
+@keyframes avatar-generation-pulse {
+  0%,100%{ opacity:.8; transform:scale(1) translateZ(0); filter:hue-rotate(0deg); }
+  33%    { opacity:1;  transform:scale(1.03) translateZ(0); filter:hue-rotate(15deg); }
+  66%    { opacity:.9; transform:scale(.98)  translateZ(0); filter:hue-rotate(-10deg); }
+}
+
+@keyframes scan-completion-ripple {
+  0%  { transform:scale(.8) translateZ(0); opacity:0; }
+  50% { transform:scale(1.2) translateZ(0); opacity:.8; }
+  100%{ transform:scale(2)   translateZ(0); opacity:0; }
+}
+
+/* =========================================
+   TWINFORGE SPECIFIC ANIMATIONS
+   ========================================= */
+
+@keyframes cosmic-forge-pulse {
+  0%,100%{
+    background-size:cover, 120% 120%, 80% 80%, 60% 60%, 150% 100%, 120% 80%, 100% 120%, cover;
+  }
+  50%{
+    background-size:cover, 130% 130%, 85% 85%, 65% 65%, 155% 105%, 125% 85%, 105% 125%, cover;
+  }
+}
+
+@keyframes particle-drift {
+  0%  { transform:translateY(100vh) translateX(0) scale(0) translateZ(0); opacity:0; }
+  10% { opacity:.8; transform:translateY(90vh)  translateX(calc(sin(var(--particle-phase,0))*20px)) scale(1)   translateZ(0); }
+  50% { opacity:1;  transform:translateY(50vh)  translateX(calc(sin(var(--particle-phase,0))*40px)) scale(1.2) translateZ(0); }
+  90% { opacity:.6; transform:translateY(10vh)  translateX(calc(sin(var(--particle-phase,0))*30px)) scale(.8)  translateZ(0); }
+  100%{ transform:translateY(-10vh) translateX(calc(sin(var(--particle-phase,0))*10px)) scale(0)   translateZ(0); opacity:0; }
+}
+
+@keyframes forge-glow {
+  0%,100%{ opacity:.6; transform:scale(1.1) translateZ(0); }
+  50%    { opacity:.9; transform:scale(1.3) translateZ(0); }
+}
+
+/* =========================================
+   MEAL SCAN SPECIFIC ANIMATIONS
+   ========================================= */
+
+@keyframes meal-capture-enter { from{opacity:0; transform:translateY(20px) translateZ(0);} to{opacity:1; transform:translateY(0) translateZ(0);} }
+
+@keyframes urgent-forge-glow-css {
+  0%,100%{ opacity:.6; transform:scale(1.1) translateZ(0); }
+  50%    { opacity:1;  transform:scale(1.4) translateZ(0); }
+}
+
+@keyframes dynamic-particle-float-css {
+  0%,100%{ transform:translateY(0) scale(1) translateZ(0); opacity:.6; }
+  50%    { transform:translateY(-12px) scale(1.3) translateZ(0); opacity:1; }
+}
+
+@keyframes dynamic-shimmer-css { 0%{transform:translateX(-100%) translateZ(0);} 100%{transform:translateX(200%) translateZ(0);} }
+@keyframes metric-badge-enter  { from{opacity:0; transform:scale(.8) translateZ(0);} to{opacity:1; transform:scale(1) translateZ(0);} }
+
+/* =========================================
+   UTILITY ANIMATION CLASSES
+   ========================================= */
+
+.breathing-icon {
+  animation: icon-breathing-css var(--animation-duration-slower, 3.2s) var(--animation-ease-smooth) infinite;
+  transform: translateZ(0);
+  will-change: var(--will-change-transform);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.icon-pulse-css {
+  animation: icon-pulse-css var(--animation-duration-slow, 2.4s) var(--animation-ease-smooth) infinite;
+  transform: translateZ(0);
+  will-change: var(--will-change-transform);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.icon-spin-css,
+.loader-essential {
+  animation: icon-spin-css 2s linear infinite;
+  transform: translateZ(0);
+  will-change: var(--will-change-transform);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.particle-css {
+  animation: particle-float var(--animation-duration-slow, 2.4s) var(--animation-ease-smooth) infinite;
+  transform: translateZ(0);
+  will-change: var(--will-change-transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.particle-css--1 { animation-delay: 0s;   }
+.particle-css--2 { animation-delay: .3s;  }
+.particle-css--3 { animation-delay: .6s;  }
+.particle-css--4 { animation-delay: .9s;  }
+.particle-css--5 { animation-delay: 1.2s; }
+.particle-css--6 { animation-delay: 1.5s; }
+
+/* =========================================
+   BODY SCAN ANIMATION CLASSES
+   ========================================= */
+
+.body-scan-entrance {
+  animation: body-scan-entrance var(--body-scan-entrance-duration) var(--animation-ease-glass) forwards;
+  opacity: 0;
+}
+
+.photo-analysis-entrance {
+  animation: photo-analysis-entrance var(--body-scan-entrance-duration) var(--animation-ease-glass) forwards;
+  opacity: 0;
+}
+
+.analysis-processing-pulse {
+  animation: analysis-processing-pulse var(--body-scan-processing-duration) var(--animation-ease-smooth) infinite;
+  transform: translateZ(0);
+  will-change: var(--will-change-transform), opacity;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.body-scan-success-celebration {
+  animation: body-scan-success-celebration var(--body-scan-success-duration) var(--animation-ease-bounce) forwards;
+  opacity: 0;
+}
+
+.morphological-analysis-glow {
+  animation: morphological-analysis-glow var(--analysis-focus-speed) var(--animation-ease-smooth) infinite;
+  transform: translateZ(0);
+  will-change: box-shadow;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.avatar-generation-pulse {
+  animation: avatar-generation-pulse var(--analysis-particle-speed) var(--animation-ease-smooth) infinite;
+  transform: translateZ(0);
+  will-change: var(--will-change-transform), opacity, filter;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+.scan-completion-ripple {
+  animation: scan-completion-ripple 1.5s var(--animation-ease-glass) forwards;
+  opacity: 0;
+}
+
+/* =========================================
+   PERFORMANCE OPTIMIZATIONS (generic)
+   ========================================= */
+
+.breathing-icon,
+.icon-pulse-css,
+.icon-spin-css,
+.loader-essential,
+.particle-css,
+.body-scan-entrance,
+.photo-analysis-entrance,
+.analysis-processing-pulse,
+.body-scan-success-celebration,
+.morphological-analysis-glow,
+.avatar-generation-pulse,
+.scan-completion-ripple {
+  transform: translateZ(0);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+.will-change-transform-important { will-change: transform !important; }
+.will-change-auto-important      { will-change: auto !important; }
+
+/* =========================================
+   MOBILE OPTIMIZATIONS
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* Disable most non-essential animations on mobile */
+  .breathing-icon,
+  .icon-breathing-css,
+  .icon-pulse-css,
+  .particle-css {
+    animation: none !important;
+    transform: scale(1.02) translateZ(0) !important;
+  }
+
+  /* Keep only essential loaders animated */
+  .loader-essential,
+  .icon-spin-css.loader-essential {
+    animation: icon-spin-css 2s linear infinite !important;
+  }
+
+  /* Disable heavy body scan animations on mobile (static fallbacks) */
+  .body-scan-entrance,
+  .photo-analysis-entrance,
+  .analysis-processing-pulse,
+  .body-scan-success-celebration,
+  .morphological-analysis-glow,
+  .avatar-generation-pulse,
+  .scan-completion-ripple { animation: none !important; }
+
+  .body-scan-entrance { opacity:1 !important; transform:translateY(0) scale(1) translateZ(0) !important; }
+  .photo-analysis-entrance { opacity:1 !important; transform:scale(1) translateZ(0) !important; filter:blur(0) !important; }
+  .analysis-processing-pulse { opacity:.8 !important; transform:scale(1.02) translateZ(0) !important; }
+  .morphological-analysis-glow {
+    box-shadow: 0 0 40px color-mix(in srgb, var(--color-body-scan-primary) 30%, transparent), var(--glass-3d-inset-top) !important;
+  }
+  .avatar-generation-pulse { opacity:.9 !important; transform:scale(1.02) translateZ(0) !important; filter:hue-rotate(0) !important; }
+  .scan-completion-ripple  { opacity:1 !important; transform:scale(1) translateZ(0) !important; }
+
+  /* Slightly slower durations on mobile to save battery */
+  :root{
+    --animation-duration-fast: 200ms;
+    --animation-duration-medium: 300ms;
+    --animation-duration-slow: 500ms;
+    --animation-duration-slower: 800ms;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION SUPPORT
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .breathing-icon,
+  .icon-breathing-css,
+  .icon-pulse-css,
+  .particle-css,
+  .loader-essential { animation: none !important; }
+
+  .breathing-icon, .icon-breathing-css { transform: scale(1.02) translateZ(0) !important; }
+  .icon-pulse-css { opacity:.9 !important; transform: scale(1.05) translateZ(0) !important; }
+  .particle-css   { opacity:.8 !important; transform: translateY(-6px) scale(1.1) translateZ(0) !important; }
+
+  .loader-essential { animation: icon-spin-css 3s linear infinite !important; }
+
+  /* Shorten transitions globally */
+  * { transition-duration: .1s !important; }
+
+  /* Disable body scan animations with static fallbacks */
+  .body-scan-entrance,
+  .photo-analysis-entrance,
+  .analysis-processing-pulse,
+  .body-scan-success-celebration,
+  .morphological-analysis-glow,
+  .avatar-generation-pulse,
+  .scan-completion-ripple { animation: none !important; }
+
+  .body-scan-entrance { opacity:1 !important; transform:translateY(0) scale(1) translateZ(0) !important; }
+  .photo-analysis-entrance { opacity:1 !important; transform:scale(1) translateZ(0) !important; filter:blur(0) !important; }
+  .analysis-processing-pulse { opacity:.8 !important; transform:scale(1.02) translateZ(0) !important; }
+  .morphological-analysis-glow {
+    box-shadow: 0 0 40px color-mix(in srgb, var(--color-body-scan-primary) 30%, transparent), var(--glass-3d-inset-top) !important;
+  }
+  .avatar-generation-pulse { opacity:.9 !important; transform:scale(1.02) translateZ(0) !important; filter:hue-rotate(0) !important; }
+  .scan-completion-ripple  { opacity:1 !important; transform:scale(1) translateZ(0) !important; }
+}
+
+/* =========================================
+   LEGACY SUPPORT
+   ========================================= */
+
+@supports not (transform: translateZ(0)) {
+  .breathing-icon,
+  .icon-pulse-css,
+  .icon-spin-css,
+  .particle-css { transform: none !important; }
+}
+
+@supports not (will-change: transform) {
+  .breathing-icon,
+  .icon-pulse-css,
+  .icon-spin-css,
+  .particle-css { will-change: auto; }
+}

@@ -1,0 +1,132 @@
+/* ================= GLASS 3D – v10.3 (central tokens) ================ */
+/* Fichier: glass-core.css — tokens + bases + fallbacks + guard header  */
+
+:root{
+  /* Teintes “acier sur verre” (fallbacks sûrs) */
+  --brand-bg: #0b0f1a;
+  --brand-primary: #7c3aed;
+  --color-plasma-cyan: #22d3ee;
+  --color-silver-mist: #cdd6f4;
+  --color-obsidian: #0b1220;
+
+  /* Easing/par défaut */
+  --glass-ease: cubic-bezier(.2,.6,.2,1);
+
+  /* Tokens de verre génériques (avec valeurs de repli) */
+  --glass-bg: color-mix(in oklab, var(--brand-bg), transparent 68%);
+  --glass-tint: color-mix(in oklab, var(--color-silver-mist), transparent 90%);
+  --glass-border: color-mix(in oklab, var(--color-silver-mist), transparent 80%);
+  --glass-inner: color-mix(in oklab, var(--color-obsidian), transparent 92%);
+  --spotlight-opacity: 0;
+
+  /* Base background/border/blurs (fallbacks si non définis ailleurs) */
+  --glass-base-background: var(--glass-bg);
+  --glass-border-base: color-mix(in oklab, var(--color-silver-mist) 16%, transparent);
+  --glass-shadow-base: 0 8px 28px rgba(0,0,0,.28), 0 0 18px rgba(255,255,255,.06);
+  --glass-shadow-sm: 0 6px 20px rgba(0,0,0,.22), 0 0 12px rgba(255,255,255,.05);
+  --glass-shadow-md: 0 10px 32px rgba(0,0,0,.32), 0 0 20px rgba(255,255,255,.07);
+  --glass-shadow-lg: 0 16px 48px rgba(0,0,0,.42), 0 0 30px rgba(255,255,255,.08);
+
+  --glass-blur-base: 18px;
+  --glass-saturate-base: 140%;
+  --glass-transition-fast: 160ms var(--glass-ease);
+  --glass-transition-medium: 260ms var(--glass-ease);
+}
+
+/* Base glass container */
+.glass-base{
+  background: var(--glass-base-background);
+  border: 1px solid var(--glass-border-base);
+  color: rgba(255,255,255,.92);
+  box-shadow: var(--glass-shadow-base);
+  backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  will-change: transform, filter;
+}
+
+/* Elevations utilitaires */
+.glass-elev-sm{ box-shadow: var(--glass-shadow-sm); }
+.glass-elev-md{ box-shadow: var(--glass-shadow-md); }
+.glass-elev-lg{ box-shadow: var(--glass-shadow-lg); }
+
+/* Focus ring accessible et discret */
+.glass-focus:focus-visible{
+  outline: 2px solid color-mix(in oklab, var(--brand-primary) 70%, #fff);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* Carte “verre” (pas de clip ici pour éviter de couper les effets externes) */
+.glass-card{
+  border-radius: 24px;
+  transition:
+    transform var(--glass-transition-fast),
+    box-shadow var(--glass-transition-medium),
+    background var(--glass-transition-medium),
+    filter var(--glass-transition-fast);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  overflow: visible; /* important pour garder les reflets/ombres */
+}
+
+/* Reflet local — activé desktop uniquement */
+.glass-sheen{
+  --mx:.5; --my:.5; --sheen-visible:0;
+  --sx: calc(var(--mx) * 100%); --sy: calc(var(--my) * 100%);
+  --sheen-size: 200px;
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  opacity: var(--sheen-visible, 0);
+  background:
+    radial-gradient(120px 80px at var(--sx) var(--sy),
+      rgba(255,255,255,.06), transparent 70%);
+  -webkit-mask-image: radial-gradient(var(--sheen-size) var(--sheen-size) at var(--sx) var(--sy),
+                        #000 50%, transparent 75%);
+          mask-image: radial-gradient(var(--sheen-size) var(--sheen-size) at var(--sx) var(--sy),
+                        #000 50%, transparent 75%);
+  transition: opacity .18s cubic-bezier(.3,.7,.2,1);
+}
+@media (hover:hover) and (pointer:fine){
+  .glass-card:hover .glass-sheen{ --sheen-visible: 1; }
+}
+@media (hover:none), (pointer:coarse){
+  .glass-sheen{ display: none; }
+}
+
+/* VisionOS 26 scroll styling */
+.visionos-scroll{ scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.15) transparent; }
+.visionos-scroll::-webkit-scrollbar{ width: 6px; height: 6px; }
+.visionos-scroll::-webkit-scrollbar-track{ background: transparent; border-radius: 3px; }
+.visionos-scroll::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.15);
+  border-radius: 3px; border: 1px solid rgba(255,255,255,.05);
+}
+.visionos-scroll::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.25); }
+.visionos-scroll::-webkit-scrollbar-corner{ background: transparent; }
+
+/* Touch tuning */
+@media (hover:none), (pointer:coarse){
+  .glass-base{ backdrop-filter: blur(16px) saturate(116%); }
+}
+
+/* Fallback sans backdrop-filter */
+@supports not (backdrop-filter: blur(1px)){
+  .glass-base{
+    background: linear-gradient(180deg, rgba(24,28,44,.6), rgba(14,18,32,.5));
+    border: 1px solid rgba(255,255,255,.15);
+  }
+}
+/* Support iOS (-webkit-backdrop-filter) */
+@supports (-webkit-backdrop-filter: blur(1px)){
+  .glass-base{ -webkit-backdrop-filter: blur(16px) saturate(115%); }
+}
+
+/* --------------------------------------------------------------
+   GUARD — Empêche .glass-base d’écraser les composants à cadre custom
+   (ex: header-liquid-glass)
+---------------------------------------------------------------- */
+.glass-base--no-frame,
+.header-liquid-glass.glass-base{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}

@@ -1,0 +1,51 @@
+/* =========================================
+   CIRCUIT HOVER EFFECTS - Phase 9.77
+   ========================================= */
+
+/* Circuit hover (Factorisé) */
+[data-circuit]:hover {
+  /* ACIER SUR VERRE - Hover avec teinte indigo et auréole cyan */
+  background: color-mix(in srgb, var(--brand-primary) 8%, transparent) !important;
+  border-color: color-mix(in srgb, var(--color-plasma-cyan) 25%, transparent) !important;
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.25),
+    0 0 30px color-mix(in srgb, var(--color-plasma-cyan) 12%, transparent) !important;
+  backdrop-filter: var(--glass-hover-blur) !important;
+  transition: all 0.25s var(--glass-ease) !important;
+}
+
+/* Premium sparkle effect on hover */
+[data-circuit]:hover::before {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-silver-mist) 12%, transparent) 0%, transparent 50%, color-mix(in srgb, var(--color-silver-mist) 6%, transparent) 100%) !important;
+  opacity: 0.6 !important;
+}
+
+/* Ambient glow for premium interactions */
+.ambient-glow {
+  position: relative;
+}
+
+.ambient-glow::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--color-silver-mist) 10%, transparent) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--glass-transition-medium);
+  pointer-events: none;
+}
+
+.ambient-glow:hover::after {
+  opacity: 1;
+}
+
+/* VisionOS Ambient Shadows */
+.ambient-shadow-sm { filter: var(--ambient-shadow-sm); }
+.ambient-shadow-md { filter: var(--ambient-shadow-md); }
+.ambient-shadow-lg { filter: var(--ambient-shadow-lg); }
+
+/* Glass Light Diffusion Effect */
+.glass-light-hover {
+  background-image: var(--glass-light-diffusion);
+}

@@ -1,0 +1,106 @@
+/* =========================================
+   GLASS CARDS BASE - Phase 10.0 Harmonized
+   Core glass card foundation using centralized variables
+   ========================================= */
+
+/* Core glass card foundation */
+.glass-card {
+  /* CRITICAL: Neutral by default, allow scrolling */
+  position: static;
+  z-index: auto;
+  transform: none;
+  filter: none;
+  perspective: none;
+  isolation: auto;
+  contain: none;
+  will-change: auto;
+  backface-visibility: visible;
+  transform-style: flat;
+  overflow: hidden;
+  
+  /* ACIER SUR VERRE - Uses centralized variables */
+  background: 
+    linear-gradient(180deg, var(--glass-highlight-subtle), transparent 100%),
+    var(--glass-tint-primary);
+  border: 1px solid var(--glass-border-base);
+  border-radius: inherit; /* CRITICAL: Inherit border-radius from parent classes */
+  backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  
+  /* ACIER SUR VERRE - Standardized 3D effects */
+  box-shadow: 
+    var(--glass-shadow-base),
+    var(--glass-3d-inset-top),
+    var(--glass-3d-inset-bottom);
+  
+  transition: 
+    background var(--glass-transition-medium), 
+    border-color var(--glass-transition-medium), 
+    box-shadow var(--glass-transition-medium), 
+    backdrop-filter var(--glass-transition-medium);
+  
+  /* Force rounded corners with backdrop-filter */
+  -webkit-clip-path: inset(0 round inherit);
+  clip-path: inset(0 round inherit);
+}
+
+/* Ensure hover effects can breathe */
+.glass-card:hover {
+  /* Create isolated stacking context only on hover */
+  position: relative;
+  z-index: var(--z-dropdown);
+  isolation: isolate;
+  transform: translateY(-2px) scale(var(--interaction-scale-hover)) translateZ(0);
+  will-change: var(--will-change-transform);
+  overflow: visible;
+}
+
+/* Glass card pseudo-elements for depth - uses centralized variables */
+.glass-card::before,
+.glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity var(--animation-duration-fast) var(--animation-ease-glass);
+}
+
+.glass-card::before {
+  /* ACIER SUR VERRE - Standardized highlight */
+  background: var(--glass-highlight-top);
+  opacity: 0.3;
+}
+
+.glass-card::after {
+  inset: -1px;
+  /* ACIER SUR VERRE - Standardized accent glow */
+  background: var(--glass-accent-glow);
+  opacity: 0.1;
+  transform: translateZ(0) rotate(0.001deg);
+}
+
+/* Backdrop fallback for unsupported browsers */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-card {
+    background: var(--glass-fallback-background);
+    border: 1px solid var(--glass-fallback-border);
+  }
+}
+
+/* WebKit backdrop filter support */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .glass-card {
+    -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturate-base));
+  }
+}
+
+/* CRITICAL: Force border-radius inheritance on mobile */
+@media (max-width: 768px) {
+  .glass-card::before,
+  .glass-card::after {
+    border-radius: inherit !important;
+    -webkit-border-radius: inherit !important;
+    -moz-border-radius: inherit !important;
+  }
+}
