@@ -17,12 +17,6 @@ import { Header } from './shell/Header/Header';
 import Sidebar from './shell/Sidebar';
 import NewMobileBottomBar from './shell/NewMobileBottomBar';
 
-/* PWA + Toast (design file additions) */
-import { usePWAInstall } from '../hooks/usePWAInstall';
-import { usePWAUpdate } from '../hooks/usePWAUpdate';
-import { useToast } from '../ui/components/ToastProvider';
-import InstallPrompt from '../ui/components/InstallPrompt';
-import UpdateNotification from '../ui/components/UpdateNotification';
 import logger from '../lib/utils/logger';
 
 /* Pages (functional file) */
@@ -43,11 +37,6 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
   const { authReady } = useUserStore();
-
-  /* Design-file: PWA + toasts */
-  const { isInstallable, isInstalled } = usePWAInstall();
-  const { isUpdateAvailable, updateInfo, applyUpdate, dismissUpdate } = usePWAUpdate();
-  const { showToast } = useToast();
 
   /* Design-file: overlay -> lock/unlock body scroll */
   const { isAnyOpen } = useOverlayStore();
@@ -172,50 +161,6 @@ function AppContent() {
           </div>
         </main>
       </div>
-
-      {/* PWA Install Prompt (design file) */}
-      {isInstallable && !isInstalled && (
-        <InstallPrompt
-          variant="floating"
-          onInstallSuccess={() =>
-            showToast({
-              type: 'success',
-              title: 'TwinForge installé !',
-              message: "L'application est maintenant disponible sur votre écran d'accueil",
-              duration: 4000,
-            })
-          }
-        />
-      )}
-
-      {/* PWA Update Notification (design file) */}
-      <UpdateNotification
-        isVisible={isUpdateAvailable}
-        onUpdate={async () => {
-          try {
-            await applyUpdate();
-            showToast({
-              type: 'success',
-              title: 'Mise à jour appliquée',
-              message: 'TwinForge redémarre avec la nouvelle version',
-              duration: 4000,
-            });
-          } catch (error) {
-            logger.error('PWA_UPDATE', 'Failed to apply update', {
-              error: error instanceof Error ? error.message : 'Unknown error',
-              timestamp: new Date().toISOString(),
-            });
-            showToast({
-              type: 'error',
-              title: 'Erreur de mise à jour',
-              message: "Impossible d'appliquer la mise à jour. Réessayez plus tard.",
-              duration: 4000,
-            });
-          }
-        }}
-        onDismiss={dismissUpdate}
-        updateInfo={updateInfo}
-      />
 
       {/* Bottom bar (design file) */}
       <NewMobileBottomBar />
